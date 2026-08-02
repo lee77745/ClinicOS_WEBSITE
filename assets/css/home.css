@@ -1,0 +1,236 @@
+/* =====================================================================
+   ClinicOS — Home
+   Reading rhythm: open → close → open → close. Every screen breathes.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   Hero
+   --------------------------------------------------------------------- */
+.hero {
+  padding-top: calc(var(--header-h) + clamp(4.5rem, 2rem + 11vw, 11rem));
+  padding-bottom: clamp(4rem, 2rem + 6vw, 8rem);
+  position: relative;
+}
+
+.hero__inner { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gap); }
+.hero__copy { grid-column: 1 / -1; }
+@media (min-width: 1000px) { .hero__copy { grid-column: 1 / 10; } }
+
+.hero__title {
+  margin-top: var(--sp-6);
+  max-width: 18ch;
+}
+.hero__title .soft { color: var(--c-text-mute); }
+
+.hero__lead {
+  margin-top: var(--sp-6);
+  max-width: 44ch;
+}
+
+.hero__actions {
+  margin-top: var(--sp-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+.hero__signature { margin-top: var(--sp-7); }
+
+.hero__meta {
+  margin-top: var(--sp-8);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4) var(--sp-7);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+  max-width: 46rem;
+}
+
+/* Full-bleed hero image band */
+.hero-band {
+  padding-inline: var(--grid-gutter);
+  padding-bottom: var(--section-y-tight);
+}
+.hero-band__frame {
+  max-width: 1560px;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+}
+.hero-band .media { border-radius: var(--r-lg); }
+.hero-band__caption {
+  max-width: 1560px;
+  margin: var(--sp-4) auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.1em;
+  color: var(--c-text-mute);
+}
+
+/* ---------------------------------------------------------------------
+   Story — the quiet, narrow, book-like passage
+   --------------------------------------------------------------------- */
+.story__head { max-width: 60ch; }
+.story__title { margin-top: var(--sp-6); }
+
+.story__body {
+  margin-top: var(--sp-8);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-6);
+}
+.story__col { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .story__col--a { grid-column: 1 / 7; }
+  .story__col--b { grid-column: 7 / 12; }
+}
+.story__p + .story__p { margin-top: var(--sp-5); }
+
+.pullquote {
+  margin-top: var(--section-y-tight);
+  padding-top: var(--sp-7);
+  border-top: 1px solid var(--c-line);
+}
+.pullquote__text {
+  font-family: var(--ff-display);
+  font-size: var(--fs-h2);
+  line-height: 1.5;
+  font-weight: 400;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+.pullquote__cite {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+  font-style: normal;
+  display: block;
+}
+
+/* ---------------------------------------------------------------------
+   Brand — dark, definitional, confident
+   --------------------------------------------------------------------- */
+.brand__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-8);
+  align-items: start;
+}
+.brand__left { grid-column: 1 / -1; }
+.brand__right { grid-column: 1 / -1; }
+@media (min-width: 950px) {
+  .brand__left { grid-column: 1 / 6; position: sticky; top: calc(var(--header-h) + 3rem); }
+  .brand__right { grid-column: 7 / 13; }
+}
+
+.definition { margin-top: 0; }
+.definition__label {
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  color: var(--c-accent-soft);
+}
+.definition__text { margin-top: var(--sp-5); }
+.definition__body { margin-top: var(--sp-6); max-width: 48ch; }
+
+/* ---------------------------------------------------------------------
+   Workflow — three movements, no icons, no grid of features
+   --------------------------------------------------------------------- */
+.flow__head { max-width: 56ch; }
+.flow__title { margin-top: var(--sp-6); }
+.flow__intro { margin-top: var(--sp-6); max-width: 46ch; }
+
+.flow__list {
+  margin-top: var(--section-y-tight);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.movement {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-6);
+  padding-block: clamp(2.5rem, 1.5rem + 3.4vw, 5rem);
+  border-top: 1px solid var(--c-line);
+  align-items: start;
+}
+.movement:last-child { border-bottom: 1px solid var(--c-line); }
+
+.movement__index {
+  grid-column: 1 / -1;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.2em;
+  color: var(--c-text-mute);
+  padding-top: 0.4rem;
+}
+.movement__title { grid-column: 1 / -1; }
+.movement__body { grid-column: 1 / -1; max-width: 52ch; }
+
+@media (min-width: 900px) {
+  .movement__index { grid-column: 1 / 2; }
+  .movement__title { grid-column: 2 / 7; }
+  .movement__body { grid-column: 8 / 13; margin-top: 0.35rem; }
+}
+
+.movement__aside {
+  grid-column: 1 / -1;
+  margin-top: var(--sp-2);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+}
+@media (min-width: 900px) { .movement__aside { grid-column: 8 / 13; } }
+
+.flow__figure { margin-top: var(--section-y-tight); }
+
+/* ---------------------------------------------------------------------
+   Value — what changes, said quietly
+   --------------------------------------------------------------------- */
+.value__grid {
+  margin-top: var(--sp-9);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-8);
+}
+.value__item { grid-column: 1 / -1; }
+@media (min-width: 800px) { .value__item { grid-column: span 4; } }
+.value__title { margin-top: var(--sp-5); }
+.value__body { margin-top: var(--sp-4); max-width: 34ch; }
+
+/* ---------------------------------------------------------------------
+   Closing CTA
+   --------------------------------------------------------------------- */
+.closing { text-align: left; }
+.closing__inner { max-width: 34ch; }
+.closing__title { margin-top: var(--sp-6); }
+.closing__body { margin-top: var(--sp-6); max-width: 42ch; }
+.closing__actions {
+  margin-top: var(--sp-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+.closing__signature { margin-top: var(--sp-9); }
+
+.closing__note {
+  margin-top: var(--sp-7);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-invert-mute);
+}
