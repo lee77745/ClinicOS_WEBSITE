@@ -36,41 +36,28 @@
 
 .hero__signature { margin-top: var(--sp-7); }
 
-.hero__meta {
-  margin-top: var(--sp-8);
-  padding-top: var(--sp-5);
-  border-top: 1px solid var(--c-line);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-4) var(--sp-7);
-  font-size: var(--fs-meta);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--c-text-mute);
-  max-width: 46rem;
+/* A breath, not a picture. The image sits small and off to one side so the
+   words stay in charge, and so the page does not start reading again yet. */
+.hero-band { padding-bottom: var(--section-y); }
+.hero-band__frame {
+  max-width: 620px;
+  margin-left: auto;
+  overflow: hidden;
+  border-radius: var(--r-md);
+}
+.hero-band .media { border-radius: var(--r-md); }
+/* keep it a strip on phones too — the global 4:3 fallback made it a picture again */
+@media (max-width: 700px) {
+  .hero-band .media--21-9 { aspect-ratio: 16 / 9; }
 }
 
-/* Full-bleed hero image band */
-.hero-band {
-  padding-inline: var(--grid-gutter);
-  padding-bottom: var(--section-y-tight);
-}
-.hero-band__frame {
-  max-width: 1560px;
-  margin-inline: auto;
-  overflow: hidden;
-  border-radius: var(--r-lg);
-}
-.hero-band .media { border-radius: var(--r-lg); }
-.hero-band__caption {
-  max-width: 1560px;
-  margin: var(--sp-4) auto 0;
-  display: flex;
-  justify-content: space-between;
-  gap: var(--sp-5);
-  font-size: var(--fs-meta);
-  letter-spacing: 0.1em;
-  color: var(--c-text-mute);
+/* ---------------------------------------------------------------------
+   Brand moment — the page stops here. One line, nothing else to do.
+   --------------------------------------------------------------------- */
+.moment { padding-block: var(--section-y-vast); }
+.moment__line { max-width: 16ch; }
+@media (min-width: 900px) {
+  .moment__line { margin-left: 8.333%; }
 }
 
 /* ---------------------------------------------------------------------
@@ -201,11 +188,12 @@
 
 .flow__figure { margin-top: var(--section-y-tight); }
 
-/* The method figure supports the copy — it must not out-shout it. */
+/* The loosest section on the page: little text, a small picture, much air. */
+.method { padding-block: var(--section-y-vast); }
 .method__aside { margin-top: var(--sp-7); }
 .method__figure { margin-top: var(--section-y-tight); }
 @media (min-width: 900px) {
-  .method__figure { width: 62%; margin-left: auto; }
+  .method__figure { width: 44%; margin-left: auto; }
 }
 
 /* ---------------------------------------------------------------------
@@ -258,7 +246,16 @@
   flex-wrap: wrap;
   gap: var(--sp-4);
 }
-.closing__signature { margin-top: var(--sp-9); }
+/* The last thing anyone reads. It gets the whole width and its own silence. */
+.closing__signature {
+  grid-column: 1 / -1;
+  margin-top: var(--section-y-tight);
+  padding-top: var(--sp-7);
+  border-top: 1px solid var(--c-line-invert-soft);
+}
+@media (min-width: 900px) {
+  .closing__signature { font-size: var(--fs-h2); }
+}
 
 .closing__note {
   margin-top: var(--sp-7);
