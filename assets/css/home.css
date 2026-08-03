@@ -168,6 +168,10 @@
 }
 .movement:last-child { border-bottom: 1px solid var(--c-line); }
 
+/* One moment in the day is allowed to sit longer than the others —
+   without this every entry breathes at exactly the same rate. */
+.movement--peak { padding-block: clamp(3.75rem, 2rem + 5.4vw, 7.5rem); }
+
 .movement__index {
   grid-column: 1 / -1;
   font-family: var(--ff-mono);
@@ -197,6 +201,13 @@
 
 .flow__figure { margin-top: var(--section-y-tight); }
 
+/* The method figure supports the copy — it must not out-shout it. */
+.method__aside { margin-top: var(--sp-7); }
+.method__figure { margin-top: var(--section-y-tight); }
+@media (min-width: 900px) {
+  .method__figure { width: 62%; margin-left: auto; }
+}
+
 /* ---------------------------------------------------------------------
    Value — what changes, said quietly
    --------------------------------------------------------------------- */
@@ -212,13 +223,35 @@
 .value__title { margin-top: var(--sp-5); }
 .value__body { margin-top: var(--sp-4); max-width: 34ch; }
 
+/* An honest footnote — keeps the section from reading as a promise. */
+.value__note {
+  margin-top: var(--sp-9);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+  max-width: 52ch;
+  font-size: var(--fs-small);
+  color: var(--c-text-mute);
+}
+
 /* ---------------------------------------------------------------------
    Closing CTA
    --------------------------------------------------------------------- */
 .closing { text-align: left; }
-.closing__inner { max-width: 34ch; }
+.closing__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-8);
+  align-items: start;
+}
+.closing__inner { grid-column: 1 / -1; }
+.closing__aside { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .closing__inner { grid-column: 1 / 7; }
+  .closing__aside { grid-column: 8 / 13; padding-top: 0.6rem; }
+}
 .closing__title { margin-top: var(--sp-6); }
-.closing__body { margin-top: var(--sp-6); max-width: 42ch; }
+.closing__body { margin-top: 0; max-width: 40ch; }
 .closing__actions {
   margin-top: var(--sp-8);
   display: flex;
