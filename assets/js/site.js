@@ -59,6 +59,22 @@
   }
 
   /* ---------------------------------------------------------------
+     Static contact form — there is no backend yet, so never imply
+     the message was sent. Point the visitor at a channel that works.
+     --------------------------------------------------------------- */
+  var staticForm = document.querySelector('[data-form-static]');
+  if (staticForm) {
+    staticForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var status = staticForm.querySelector('[data-form-status]');
+      if (!status) return;
+      status.textContent = '線上表單尚未啟用。請直接來信 hello@clinicos.com，'
+        + '附上診所名稱與方便聯繫的時段，我們會在一個工作日內回覆您。';
+      status.hidden = false;
+    });
+  }
+
+  /* ---------------------------------------------------------------
      Scroll reveal — one observer, staggered by data-reveal-group
      --------------------------------------------------------------- */
   var revealables = document.querySelectorAll('[data-reveal], [data-reveal-line]');

@@ -173,6 +173,9 @@
 }
 .nav__link:hover { color: var(--c-text); }
 .nav__link:hover::after { transform: scaleX(1); transform-origin: left center; }
+.nav__link[aria-current="page"] { color: var(--c-text); }
+.nav__link[aria-current="page"]::after { transform: scaleX(1); opacity: 0.3; }
+.menu__link[aria-current="page"] { color: var(--c-accent); }
 
 .header__actions { display: flex; align-items: center; gap: var(--sp-4); }
 .header__cta { display: none; }
@@ -319,7 +322,7 @@
 }
 .statement em {
   font-style: normal;
-  color: var(--c-accent-soft);
+  color: var(--c-accent);   /* deep pine on paper */
 }
 .section--ink .statement em { color: var(--c-accent-soft); }
 

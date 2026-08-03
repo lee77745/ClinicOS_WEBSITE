@@ -1,0 +1,284 @@
+/* =====================================================================
+   ClinicOS — Inner pages
+   Shared layout for every page other than Home. Consumes the same
+   tokens and components; adds no new colour, type or motion vocabulary.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   Page hero — quieter than the Home hero, same rhythm
+   --------------------------------------------------------------------- */
+.page-hero {
+  padding-top: calc(var(--header-h) + clamp(3.5rem, 1.5rem + 8vw, 8.5rem));
+  padding-bottom: clamp(3rem, 1.5rem + 5vw, 6.5rem);
+}
+.page-hero__title { margin-top: var(--sp-6); max-width: 20ch; }
+.page-hero__lead { margin-top: var(--sp-6); max-width: 44ch; }
+.page-hero__meta {
+  margin-top: var(--sp-8);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4) var(--sp-7);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+}
+
+/* ---------------------------------------------------------------------
+   Duo — heading column beside a reading column
+   --------------------------------------------------------------------- */
+.duo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-7);
+  align-items: start;
+}
+.duo__head { grid-column: 1 / -1; }
+.duo__body { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .duo__head { grid-column: 1 / 6; }
+  .duo__body { grid-column: 7 / 13; }
+}
+.duo__title { margin-top: var(--sp-5); }
+
+/* ---------------------------------------------------------------------
+   Prose — a reading column, never wider than the eye can track
+   --------------------------------------------------------------------- */
+.prose { max-width: 46ch; }
+.prose p + p { margin-top: var(--sp-5); }
+.prose .lead + p { margin-top: var(--sp-6); }
+.section--ink .prose p { color: var(--c-text-invert-soft); }
+
+/* ---------------------------------------------------------------------
+   Rows — hairline list. Replaces every temptation to build a card grid.
+   --------------------------------------------------------------------- */
+.rows { margin-top: var(--section-y-tight); }
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-4);
+  padding-block: clamp(2.25rem, 1.4rem + 2.8vw, 4rem);
+  border-top: 1px solid var(--c-line);
+  align-items: start;
+}
+.rows .row:last-child { border-bottom: 1px solid var(--c-line); }
+.row__index {
+  grid-column: 1 / -1;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.2em;
+  color: var(--c-text-mute);
+  padding-top: 0.45rem;
+}
+.row__term { grid-column: 1 / -1; }
+.row__body { grid-column: 1 / -1; max-width: 52ch; }
+.row__note {
+  grid-column: 1 / -1;
+  margin-top: var(--sp-2);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+}
+@media (min-width: 900px) {
+  .row__index { grid-column: 1 / 2; }
+  .row__term { grid-column: 2 / 7; }
+  .row__body { grid-column: 8 / 13; margin-top: 0.3rem; }
+  .row__note { grid-column: 8 / 13; }
+}
+.section--ink .row { border-top-color: var(--c-line-invert); }
+.section--ink .rows .row:last-child { border-bottom-color: var(--c-line-invert); }
+.section--ink .row__index,
+.section--ink .row__note { color: var(--c-text-invert-mute); }
+
+/* Rows without an index column read as a plain hairline list */
+.row--plain .row__term { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .row--plain .row__term { grid-column: 1 / 6; }
+  .row--plain .row__body { grid-column: 6 / 13; }
+}
+
+/* ---------------------------------------------------------------------
+   Statement block — one sentence, alone
+   --------------------------------------------------------------------- */
+.say { max-width: 26ch; }
+.say__body { margin-top: var(--sp-6); max-width: 44ch; }
+
+/* ---------------------------------------------------------------------
+   Figure — always supporting, never leading
+   --------------------------------------------------------------------- */
+.page-figure { margin-top: var(--section-y-tight); }
+@media (min-width: 900px) {
+  .page-figure { width: 62%; margin-left: auto; }
+  .page-figure--left { margin-left: 0; margin-right: auto; }
+}
+
+/* ---------------------------------------------------------------------
+   Closing band — the same invitation on every page
+   --------------------------------------------------------------------- */
+.band {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-8);
+  align-items: start;
+}
+.band__head { grid-column: 1 / -1; }
+.band__aside { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .band__head { grid-column: 1 / 7; }
+  .band__aside { grid-column: 8 / 13; padding-top: 0.6rem; }
+}
+.band__title { margin-top: var(--sp-6); }
+.band__actions {
+  margin-top: var(--sp-7);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+.band__note {
+  margin-top: var(--sp-7);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-invert-mute);
+}
+
+/* ---------------------------------------------------------------------
+   Situations — one scenario per block, stacked, never a grid of tiles
+   --------------------------------------------------------------------- */
+.scene { border-top: 1px solid var(--c-line); padding-block: clamp(3rem, 1.8rem + 4vw, 6rem); }
+.scenes .scene:last-child { border-bottom: 1px solid var(--c-line); }
+.scene__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-6);
+  align-items: start;
+}
+.scene__head { grid-column: 1 / -1; }
+.scene__col { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .scene__head { grid-column: 1 / 5; }
+  .scene__col--a { grid-column: 5 / 9; }
+  .scene__col--b { grid-column: 9 / 13; }
+}
+.scene__role { margin-top: var(--sp-4); }
+.scene__label {
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+}
+.scene__text { margin-top: var(--sp-4); max-width: 34ch; }
+
+/* ---------------------------------------------------------------------
+   FAQ — plain question and answer. No accordion, no JavaScript.
+   --------------------------------------------------------------------- */
+.qa { border-top: 1px solid var(--c-line); padding-block: clamp(2rem, 1.4rem + 2.2vw, 3.25rem); }
+.qa:last-child { border-bottom: 1px solid var(--c-line); }
+.qa__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-4);
+  align-items: start;
+}
+.qa__q { grid-column: 1 / -1; }
+.qa__a { grid-column: 1 / -1; max-width: 54ch; }
+@media (min-width: 900px) {
+  .qa__q { grid-column: 1 / 6; }
+  .qa__a { grid-column: 6 / 13; margin-top: 0.2rem; }
+}
+
+/* ---------------------------------------------------------------------
+   Form — static markup; quiet fields, no boxes
+   --------------------------------------------------------------------- */
+.form { margin-top: var(--sp-7); }
+.form__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: var(--sp-6);
+}
+.field { grid-column: 1 / -1; }
+@media (min-width: 700px) { .field--half { grid-column: span 6; } }
+.field__label {
+  display: block;
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+  margin-bottom: var(--sp-3);
+}
+.field__input,
+.field__select,
+.field__textarea {
+  width: 100%;
+  font: inherit;
+  font-size: var(--fs-body);
+  color: var(--c-text);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--c-line);
+  border-radius: 0;
+  padding: var(--sp-3) 0;
+  transition: border-color var(--dur-base) var(--ease-out);
+  appearance: none;
+}
+.field__textarea { min-height: 7.5rem; resize: vertical; line-height: var(--lh-body); }
+.field__input:hover,
+.field__select:hover,
+.field__textarea:hover { border-bottom-color: var(--c-text-mute); }
+.field__input:focus,
+.field__select:focus,
+.field__textarea:focus {
+  outline: none;
+  border-bottom-color: var(--c-accent);
+}
+.field__input::placeholder,
+.field__textarea::placeholder { color: var(--c-text-mute); opacity: 0.7; }
+.form__foot {
+  margin-top: var(--sp-8);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-5);
+}
+.form__hint { font-size: var(--fs-small); color: var(--c-text-mute); max-width: 40ch; }
+
+/* ---------------------------------------------------------------------
+   Contact details
+   --------------------------------------------------------------------- */
+.details { margin-top: var(--sp-7); }
+.details__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-6);
+  padding-block: var(--sp-4);
+  border-top: 1px solid var(--c-line);
+}
+.details__row:last-child { border-bottom: 1px solid var(--c-line); }
+.details__term {
+  flex: 0 0 8rem;
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+  padding-top: 0.25rem;
+}
+.details__desc { flex: 1 1 16rem; font-size: var(--fs-small); color: var(--c-text-soft); }
+
+/* ---------------------------------------------------------------------
+   Steps — a short numbered sequence (used only for how a demo works)
+   --------------------------------------------------------------------- */
+.steps { margin-top: var(--sp-8); display: grid; gap: var(--sp-6); }
+@media (min-width: 800px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--grid-gap); } }
+.step { border-top: 1px solid var(--c-line); padding-top: var(--sp-5); }
+.step__index { font-family: var(--ff-mono); font-size: var(--fs-meta); letter-spacing: 0.2em; color: var(--c-text-mute); }
+.step__title { margin-top: var(--sp-4); }
+.step__body { margin-top: var(--sp-3); max-width: 30ch; }
