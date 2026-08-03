@@ -176,16 +176,6 @@
   .movement__body { grid-column: 8 / 13; margin-top: 0.35rem; }
 }
 
-.movement__aside {
-  grid-column: 1 / -1;
-  margin-top: var(--sp-2);
-  font-size: var(--fs-meta);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--c-text-mute);
-}
-@media (min-width: 900px) { .movement__aside { grid-column: 8 / 13; } }
-
 .flow__figure { margin-top: var(--section-y-tight); }
 
 /* The loosest section on the page: little text, a small picture, much air. */

@@ -293,22 +293,31 @@
 }
 
 /* ---------------------------------------------------------------------
-   Card — used sparingly; hairline, not boxed
+   Index label — a small monospace marker above a block
    --------------------------------------------------------------------- */
-.card {
-  padding: var(--sp-6) 0 0;
-  border-top: 1px solid var(--c-line);
-}
 .card__index {
   font-family: var(--ff-mono);
   font-size: var(--fs-meta);
   letter-spacing: 0.16em;
   color: var(--c-text-mute);
 }
-.card__title { margin-top: var(--sp-5); }
-.card__body { margin-top: var(--sp-4); }
-.section--ink .card { border-top-color: var(--c-line-invert); }
 .section--ink .card__index { color: var(--c-text-invert-mute); }
+
+/* ---------------------------------------------------------------------
+   Brand moment — every page has exactly one. Same voice, same type,
+   same colour; the measure, the indent and the air vary per page so the
+   eight moments read as a family rather than a template.
+   --------------------------------------------------------------------- */
+.quote { max-width: 24ch; }
+.quote--tight { max-width: 20ch; }
+.quote--wide { max-width: 28ch; }
+@media (min-width: 900px) {
+  .quote--indent { margin-left: 8.333%; }
+}
+
+/* How much silence a moment gets depends on how little it says. */
+.section--quote-airy { padding-block: calc(var(--section-y-vast) * 1.3); }
+.section--quote-close { padding-block: var(--section-y); }
 
 /* ---------------------------------------------------------------------
    Statement — an oversized editorial line, alone on the page

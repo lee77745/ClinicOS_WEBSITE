@@ -102,11 +102,19 @@
   .row--plain .row__body { grid-column: 6 / 13; }
 }
 
+/* Second-tier proof under a row: formal names, deliberately one step quieter
+   than the sentences above them. Never a tag cloud, never a pill. */
+.row__cover {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-small);
+  line-height: 1.85;
+  color: var(--c-text-soft);
+}
+
 /* ---------------------------------------------------------------------
    Statement block — one sentence, alone
    --------------------------------------------------------------------- */
 .say { max-width: 26ch; }
-.say__body { margin-top: var(--sp-6); max-width: 44ch; }
 
 /* ---------------------------------------------------------------------
    Figure — always supporting, never leading
@@ -147,34 +155,6 @@
   text-transform: uppercase;
   color: var(--c-text-invert-mute);
 }
-
-/* ---------------------------------------------------------------------
-   Situations — one scenario per block, stacked, never a grid of tiles
-   --------------------------------------------------------------------- */
-.scene { border-top: 1px solid var(--c-line); padding-block: clamp(3rem, 1.8rem + 4vw, 6rem); }
-.scenes .scene:last-child { border-bottom: 1px solid var(--c-line); }
-.scene__grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--grid-gap);
-  row-gap: var(--sp-6);
-  align-items: start;
-}
-.scene__head { grid-column: 1 / -1; }
-.scene__col { grid-column: 1 / -1; }
-@media (min-width: 900px) {
-  .scene__head { grid-column: 1 / 5; }
-  .scene__col--a { grid-column: 5 / 9; }
-  .scene__col--b { grid-column: 9 / 13; }
-}
-.scene__role { margin-top: var(--sp-4); }
-.scene__label {
-  font-size: var(--fs-meta);
-  letter-spacing: var(--ls-meta);
-  text-transform: uppercase;
-  color: var(--c-text-mute);
-}
-.scene__text { margin-top: var(--sp-4); max-width: 34ch; }
 
 /* ---------------------------------------------------------------------
    FAQ — plain question and answer. No accordion, no JavaScript.
@@ -273,12 +253,3 @@
 }
 .details__desc { flex: 1 1 16rem; font-size: var(--fs-small); color: var(--c-text-soft); }
 
-/* ---------------------------------------------------------------------
-   Steps — a short numbered sequence (used only for how a demo works)
-   --------------------------------------------------------------------- */
-.steps { margin-top: var(--sp-8); display: grid; gap: var(--sp-6); }
-@media (min-width: 800px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--grid-gap); } }
-.step { border-top: 1px solid var(--c-line); padding-top: var(--sp-5); }
-.step__index { font-family: var(--ff-mono); font-size: var(--fs-meta); letter-spacing: 0.2em; color: var(--c-text-mute); }
-.step__title { margin-top: var(--sp-4); }
-.step__body { margin-top: var(--sp-3); max-width: 30ch; }
