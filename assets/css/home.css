@@ -45,10 +45,11 @@
   overflow: hidden;
   border-radius: var(--r-md);
 }
-.hero-band .media { border-radius: var(--r-md); }
-/* keep it a strip on phones too — the global 4:3 fallback made it a picture again */
-@media (max-width: 700px) {
-  .hero-band .media--21-9 { aspect-ratio: 16 / 9; }
+.hero-band .media { border-radius: var(--r-md); --media-pos: center 52%; }
+/* On a phone the strip is too thin to read as a room, so this one image —
+   and only this one — opens up to 4:3. */
+@media (max-width: 767px) {
+  .media--band.media--21-9 { aspect-ratio: 4 / 3; }
 }
 
 /* ---------------------------------------------------------------------
@@ -182,6 +183,7 @@
 .method { padding-block: var(--section-y-vast); }
 .method__aside { margin-top: var(--sp-7); }
 .method__figure { margin-top: var(--section-y-tight); }
+.method__figure .media { --media-pos: center 45%; }
 @media (min-width: 900px) {
   .method__figure { width: 44%; margin-left: auto; }
 }

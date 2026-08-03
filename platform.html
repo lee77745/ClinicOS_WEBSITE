@@ -144,7 +144,18 @@
     </div>
 
     <figure class="page-figure" data-reveal>
-      <div class="media media--16-9"><span class="media__label">Placeholder — 平台</span></div>
+      <div class="media media--16-9 media--photo">
+        <picture>
+          <source type="image/avif" sizes="(min-width: 1347px) 546px, (min-width: 900px) 40vw, calc(100vw - 44px)"
+                  srcset="assets/img/scale-400.avif 400w, assets/img/scale-720.avif 720w, assets/img/scale-1120.avif 1120w">
+          <source type="image/webp" sizes="(min-width: 1347px) 546px, (min-width: 900px) 40vw, calc(100vw - 44px)"
+                  srcset="assets/img/scale-400.webp 400w, assets/img/scale-720.webp 720w, assets/img/scale-1120.webp 1120w">
+          <img src="assets/img/scale-720.jpg" sizes="(min-width: 1347px) 546px, (min-width: 900px) 40vw, calc(100vw - 44px)"
+               srcset="assets/img/scale-400.jpg 400w, assets/img/scale-720.jpg 720w, assets/img/scale-1120.jpg 1120w"
+               width="720" height="405" alt="經營者在辦公桌前，看著螢幕上的營運概況。"
+               loading="lazy" decoding="async" fetchpriority="low">
+        </picture>
+      </div>
     </figure>
   </div>
 </section>

@@ -121,8 +121,23 @@
 <div class="hero-band">
   <div class="shell">
     <div class="hero-band__frame" data-reveal>
-      <figure class="media media--21-9" data-parallax role="img" aria-label="打烊後的診所（示意）">
-        <span class="media__label">Placeholder — 打烊後的診所</span>
+      <figure class="media media--21-9 media--photo media--band" data-parallax>
+        <picture>
+          <source type="image/avif" media="(max-width: 767px)" sizes="calc(100vw - 44px)"
+                  srcset="assets/img/band-sm-375.avif 375w, assets/img/band-sm-560.avif 560w, assets/img/band-sm-768.avif 768w">
+          <source type="image/webp" media="(max-width: 767px)" sizes="calc(100vw - 44px)"
+                  srcset="assets/img/band-sm-375.webp 375w, assets/img/band-sm-560.webp 560w, assets/img/band-sm-768.webp 768w">
+          <source type="image/jpeg" media="(max-width: 767px)" sizes="calc(100vw - 44px)"
+                  srcset="assets/img/band-sm-375.jpg 375w, assets/img/band-sm-560.jpg 560w, assets/img/band-sm-768.jpg 768w">
+          <source type="image/avif" sizes="620px"
+                  srcset="assets/img/band-768.avif 768w, assets/img/band-992.avif 992w, assets/img/band-1240.avif 1240w, assets/img/band-1536.avif 1536w">
+          <source type="image/webp" sizes="620px"
+                  srcset="assets/img/band-768.webp 768w, assets/img/band-992.webp 992w, assets/img/band-1240.webp 1240w, assets/img/band-1536.webp 1536w">
+          <img src="assets/img/band-768.jpg" sizes="620px"
+               srcset="assets/img/band-768.jpg 768w, assets/img/band-992.jpg 992w, assets/img/band-1240.jpg 1240w, assets/img/band-1536.jpg 1536w"
+               width="1240" height="532" alt="診所接待區，工作人員與顧客一起看著平板。"
+               loading="lazy" decoding="async" fetchpriority="low">
+        </picture>
       </figure>
     </div>
   </div>
@@ -245,8 +260,17 @@
     </div>
 
     <figure class="method__figure" data-reveal>
-      <div class="media media--16-9">
-        <span class="media__label">Placeholder — 方法</span>
+      <div class="media media--16-9 media--photo">
+        <picture>
+          <source type="image/avif" sizes="(min-width: 1347px) 546px, (min-width: 900px) 40vw, calc(100vw - 44px)"
+                  srcset="assets/img/method-400.avif 400w, assets/img/method-720.avif 720w, assets/img/method-1120.avif 1120w">
+          <source type="image/webp" sizes="(min-width: 1347px) 546px, (min-width: 900px) 40vw, calc(100vw - 44px)"
+                  srcset="assets/img/method-400.webp 400w, assets/img/method-720.webp 720w, assets/img/method-1120.webp 1120w">
+          <img src="assets/img/method-720.jpg" sizes="(min-width: 1347px) 546px, (min-width: 900px) 40vw, calc(100vw - 44px)"
+               srcset="assets/img/method-400.jpg 400w, assets/img/method-720.jpg 720w, assets/img/method-1120.jpg 1120w"
+               width="720" height="405" alt="診間裡，醫師正向顧客說明。"
+               loading="lazy" decoding="async" fetchpriority="low">
+        </picture>
       </div>
     </figure>
   </div>

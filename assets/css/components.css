@@ -243,30 +243,19 @@
   background: var(--c-paper-sunken);
   border-radius: var(--r-md);
 }
-.media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      -45deg,
-      rgba(20, 23, 26, 0.022) 0 1px,
-      transparent 1px 9px
-    );
-  pointer-events: none;
+.media > picture { display: block; height: 100%; }
+.media > picture > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--media-pos, center);
 }
-.media__label {
-  position: absolute;
-  left: var(--sp-5);
-  bottom: var(--sp-5);
-  z-index: 1;
-  font-size: var(--fs-meta);
-  letter-spacing: var(--ls-meta);
-  text-transform: uppercase;
-  color: var(--c-text-mute);
-}
+/* The photography runs a little cooler than the paper it sits on. A hairline
+   gives that edge somewhere to land — a mat, not a frame: no shadow, no
+   border-box shift, nothing that reads as a card. */
+.media--photo { box-shadow: inset 0 0 0 1px var(--c-line); }
 .media--ink { background: var(--c-ink-raised); }
-.media--ink .media__label { color: var(--c-text-invert-mute); }
 .media--ink::after {
   background: repeating-linear-gradient(
     -45deg,

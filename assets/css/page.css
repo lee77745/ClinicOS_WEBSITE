@@ -120,6 +120,8 @@
    Figure — always supporting, never leading
    --------------------------------------------------------------------- */
 .page-figure { margin-top: var(--section-y-tight); }
+.page-figure .media { --media-pos: center 50%; }
+.page-figure--positions .media { --media-pos: center 48%; }
 @media (min-width: 900px) {
   .page-figure { width: 44%; margin-left: auto; }
   .page-figure--left { margin-left: 0; margin-right: auto; }
