@@ -15,10 +15,13 @@
 <meta property="og:title" content="為何是 ClinicOS｜ClinicOS 珂立雲">
 <meta property="og:description" content="我們在櫃檯後面站了很久。">
 <meta property="og:url" content="https://www.clinicos.com/why-clinicos.html">
-<meta property="og:image" content="https://www.clinicos.com/assets/og-cover.png">
+<meta property="og:image" content="https://www.clinicos.com/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Serif+TC:wght@400;500&display=swap">
@@ -34,7 +37,7 @@
 <header class="header" data-header>
   <div class="header__inner">
     <a class="brandmark" href="index.html" aria-label="ClinicOS 首頁">
-      <span class="brandmark__dot" aria-hidden="true"></span>
+      <img class="brandmark__mark" src="assets/brand/clinicos-symbol-light.png" alt="" width="32" height="32" decoding="async">
       <span>ClinicOS</span>
       <span class="brandmark__sub">珂立雲</span>
     </a>
@@ -71,17 +74,20 @@
 
 <main id="main">
 
+<!-- 01 · 不是從系統開始 -->
 <section class="page-hero" aria-labelledby="page-title">
   <div class="shell">
-    <p class="eyebrow" data-reveal>現場</p>
+    <p class="eyebrow" data-reveal>為何是 ClinicOS</p>
     <h1 class="display page-hero__title" id="page-title" data-reveal data-reveal-step="1">我們在櫃檯後面<br>站了很久。</h1>
-    <p class="lead page-hero__lead" data-reveal data-reveal-step="2">不是訪談，也不是問卷。是站在旁邊，看一天怎麼開始，怎麼結束。</p>
+    <p class="lead page-hero__lead" data-reveal data-reveal-step="2">ClinicOS 不是從一套系統開始的。它是從一間診所的一天開始的。</p>
   </div>
 </section>
 
+<!-- 02 · 我們看見了什麼 -->
 <section class="section section--tight" aria-labelledby="seen-title">
   <div class="shell">
-    <h2 class="h2" id="seen-title" data-reveal style="max-width: 22ch;">一天裡，有很多事沒有被留下來。</h2>
+    <p class="eyebrow" data-reveal>我們看見了什麼</p>
+    <h2 class="h2" id="seen-title" data-reveal data-reveal-step="1" style="margin-top: var(--sp-5); max-width: 22ch;">一天裡，有很多事沒有被留下來。</h2>
 
     <div class="rows">
       <article class="row row--plain" data-reveal>
@@ -91,14 +97,6 @@
       <article class="row row--plain" data-reveal>
         <h3 class="h3 row__term">改約</h3>
         <div class="row__body"><p class="body">顧客改一次時間，三個人各自記在三個地方。</p></div>
-      </article>
-      <article class="row row--plain" data-reveal>
-        <h3 class="h3 row__term">LINE</h3>
-        <div class="row__body"><p class="body">問題在 LINE 裡，答案在櫃檯的腦子裡。</p></div>
-      </article>
-      <article class="row row--plain" data-reveal>
-        <h3 class="h3 row__term">病歷</h3>
-        <div class="row__body"><p class="body">病歷寫完了，護理師還是得再問一次剛剛發生什麼。</p></div>
       </article>
       <article class="row row--plain" data-reveal>
         <h3 class="h3 row__term">新人</h3>
@@ -131,22 +129,57 @@
   </div>
 </section>
 
+<!-- 03 · 我們開始思考 -->
+<section class="section section--sunken" aria-labelledby="think-title">
+  <div class="shell duo">
+    <div class="duo__head">
+      <p class="eyebrow" data-reveal>我們開始思考</p>
+      <h2 class="h2 duo__title" id="think-title" data-reveal data-reveal-step="1">真正需要改變的，<br>不是再多一套工具。</h2>
+    </div>
+    <div class="duo__body prose" data-reveal data-reveal-step="2">
+      <p class="lead">而是一套能陪著診所一起成長的平台。</p>
+      <p class="body">工具解決當下那一件事；平台留下的是做事的方式。診所會長大、人會換、流程會調整——需要被延續的，是這些。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · ClinicOS 的答案 -->
+<section class="section" aria-labelledby="answer-title">
+  <div class="shell">
+    <p class="eyebrow" data-reveal>ClinicOS 的答案</p>
+    <h2 class="h2" id="answer-title" data-reveal data-reveal-step="1" style="margin-top: var(--sp-5); max-width: 22ch;">讓一天累積下來的東西，留得住。</h2>
+
+    <div class="rows">
+      <article class="row row--plain" data-reveal>
+        <h3 class="h3 row__term">資料</h3>
+        <div class="row__body"><p class="body">今天發生的事，明天還找得到。</p></div>
+      </article>
+      <article class="row row--plain" data-reveal>
+        <h3 class="h3 row__term">流程</h3>
+        <div class="row__body"><p class="body">同一件事，換一個人做，結果還一樣。</p></div>
+      </article>
+      <article class="row row--plain" data-reveal>
+        <h3 class="h3 row__term">知識</h3>
+        <div class="row__body"><p class="body">一個人離開之後，他的做法還留得下來。</p></div>
+      </article>
+      <article class="row row--plain" data-reveal>
+        <h3 class="h3 row__term">判斷</h3>
+        <div class="row__body"><p class="body">要決定的時候，資料就在。</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · 我們相信 -->
 <section class="section section--vast section--ink" aria-labelledby="quote-title">
   <div class="shell">
     <h2 class="display quote quote--tight quote--indent" id="quote-title" data-reveal>沒有被寫下來的事，<br>隔天只會剩下印象。</h2>
   </div>
 </section>
 
-<section class="section" aria-labelledby="after-title">
-  <div class="shell duo">
-    <div class="duo__head">
-      <p class="eyebrow" data-reveal>後來</p>
-      <h2 class="h2 duo__title" id="after-title" data-reveal data-reveal-step="1">所以後來，<br>有了 ClinicOS。</h2>
-    </div>
-    <div class="duo__body prose" data-reveal data-reveal-step="2">
-      <p class="lead">讓那些沒有被寫下來的事，不必再靠誰記得。</p>
-      <p style="margin-top: var(--sp-7);"><a class="link-quiet" href="method.html">我們的方法 <span class="arrow" aria-hidden="true">→</span></a></p>
-    </div>
+<section class="section section--tight" aria-labelledby="close-title">
+  <div class="shell">
+    <p class="statement say" id="close-title" data-reveal>所以後來，<br>有了 ClinicOS。</p>
   </div>
 </section>
 
@@ -173,12 +206,11 @@
   <div class="shell">
     <div class="footer__top">
       <div>
-        <a class="brandmark" href="index.html">
-          <span class="brandmark__dot" aria-hidden="true"></span>
-          <span>ClinicOS</span>
-          <span class="brandmark__sub">珂立雲</span>
+        <a class="footer__logo" href="index.html" aria-label="ClinicOS 珂立雲首頁">
+          <img src="assets/brand/clinicos-logo-light.png" alt="ClinicOS 珂立雲醫療雲端管理系統" width="766" height="326" decoding="async">
         </a>
-        <p class="footer__blurb">診所的營運平台。<br>為診所經營者而做。</p>
+        <p class="footer__brand-name">珂立雲醫療雲端管理系統</p>
+        <p class="footer__blurb">讓診所管理，<br>更專注在重要的事。</p>
       </div>
       <div>
         <p class="footer__col-title">探索</p>

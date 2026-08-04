@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO(pre-deploy): replace REPLACE_WITH_PRODUCTION_DOMAIN with the real host. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/why-clinicos.html</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/platform.html</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/method.html</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/solutions.html</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/products.html</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/contact.html</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/faq.html</loc>
+    <lastmod>2026-08-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+</urlset>

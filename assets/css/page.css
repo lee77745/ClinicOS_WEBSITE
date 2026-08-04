@@ -232,6 +232,33 @@
   gap: var(--sp-5);
 }
 .form__hint { font-size: var(--fs-small); color: var(--c-text-mute); max-width: 40ch; }
+.form__hint[data-form-status] { outline: none; }
+.form__hint.is-error { color: var(--c-text); }
+
+/* 防垃圾誘捕欄位 — 視覺隱藏，但不是 type="hidden"，機器人仍會填入 */
+.form__trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* 連內部控制項本身也收成 1px，避免只靠父層裁切 */
+.form__trap label,
+.form__trap input {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 0;
+  opacity: 0;
+}
 
 /* ---------------------------------------------------------------------
    Contact details
@@ -255,3 +282,170 @@
 }
 .details__desc { flex: 1 1 16rem; font-size: var(--fs-small); color: var(--c-text-soft); }
 
+
+/* =====================================================================
+   Design system roll-out — the home page is the single source of truth.
+   These overrides bring the seven inner pages onto the same scale,
+   rhythm, colour and card language. Copy, IA, images and SEO untouched.
+   ===================================================================== */
+
+main {
+  --navy:      #16274C;
+  --navy-deep: #101D3A;
+  --gold:      #A8814B;
+  --card-r:    18px;
+  --shadow-xs: 0 1px 2px rgba(16, 29, 58, 0.05);
+  --shadow-sm: 0 8px 28px rgba(16, 29, 58, 0.07);
+}
+
+/* ---- Section rhythm: the home page runs denser than the essay pages */
+.section          { padding-block: clamp(3.25rem, 2rem + 3.6vw, 5rem); }
+.section--tight   { padding-block: clamp(2.75rem, 1.7rem + 3vw, 4rem); }
+.section--vast    { padding-block: clamp(4rem, 2.4rem + 4.4vw, 6rem); }
+.section--quote-airy  { padding-block: clamp(4.5rem, 2.6rem + 5vw, 7rem); }
+.section--quote-close { padding-block: clamp(3.25rem, 2rem + 3.6vw, 5rem); }
+
+/* ---- Page hero: same density as the home hero ---------------------- */
+.page-hero {
+  padding-top: calc(var(--header-h) + clamp(3rem, 1.6rem + 4.4vw, 5.5rem));
+  padding-bottom: clamp(2rem, 1.2rem + 2vw, 3rem);
+}
+.page-hero__title {
+  font-size: clamp(2.125rem, 1.3rem + 3vw, 3.5rem);
+  line-height: 1.3;
+  color: var(--navy);
+}
+.page-hero__lead {
+  margin-top: var(--sp-5);
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  max-width: 46ch;
+}
+
+/* ---- Headings: home scale and colour -------------------------------- */
+.h2, .duo__title {
+  font-size: clamp(1.375rem, 1.1rem + 1.15vw, 1.875rem);
+  line-height: 1.5;
+  color: var(--navy);
+}
+.h3, .row__term, .qa__q { font-size: 1.0625rem; line-height: 1.5; color: var(--navy); }
+.statement { font-size: clamp(1.375rem, 1.1rem + 1.15vw, 1.875rem); line-height: 1.5; color: var(--navy); }
+.lead { font-size: 1.0625rem; line-height: 1.85; }
+.body { font-size: 0.9375rem; line-height: 1.85; }
+.row__cover { font-size: 0.8125rem; line-height: 1.8; }
+.eyebrow { font-size: 0.8125rem; }
+
+/* ---- Rows, questions, figures: card language of the home page ------- */
+.row  { padding-block: clamp(1.5rem, 1rem + 1.6vw, 2.25rem); }
+.qa   { padding-block: clamp(1.5rem, 1rem + 1.6vw, 2.25rem); }
+.rows { margin-top: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem); }
+.page-figure { margin-top: clamp(2rem, 1.4rem + 2vw, 3rem); }
+.media { border-radius: var(--card-r); }
+.media--photo { box-shadow: var(--shadow-xs), inset 0 0 0 1px rgba(16, 29, 58, 0.08); }
+
+/* ---- Ink sections carry the brand navy, not near-black -------------- */
+.section--ink { background: var(--navy); }
+.section--ink .band { color: var(--c-text-invert); }
+.quote { font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3rem); line-height: 1.3; }
+
+/* ---- Closing band: home CTA proportions ----------------------------- */
+.band__title { font-size: clamp(1.25rem, 1.05rem + 1vw, 1.625rem); line-height: 1.55; }
+.band__aside .lead { font-size: 0.9375rem; }
+.band__actions { margin-top: var(--sp-6); }
+.band__actions .btn { min-height: 46px; padding-inline: var(--sp-6); font-size: 0.9375rem; }
+.band__note { margin-top: var(--sp-5); font-size: 0.75rem; }
+
+/* ---- Form: same field rhythm as the home cards ---------------------- */
+.field__input, .field__select, .field__textarea { border-radius: 10px; }
+.form__foot .btn { min-height: 50px; font-size: 0.9375rem; }
+
+/* ---------------------------------------------------------------------
+   Scope index — a low-weight, scannable list of what the platform
+   covers. Hairlines only: no card, no shadow, no icon, no hover.
+   --------------------------------------------------------------------- */
+.scope {
+  margin-top: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);
+  display: grid;
+  /* two columns from the smallest screen up — 39 names in one column
+     turns the index into a wall */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(20px, 5vw, 24px);
+  row-gap: clamp(32px, 8vw, 40px);
+}
+@media (min-width: 700px) { .scope { column-gap: 0; row-gap: 0; } }
+@media (min-width: 1000px) { .scope { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.scope__group { padding: var(--sp-5) 0 0; border-top: 1px solid var(--c-line-soft); }
+@media (min-width: 700px) { .scope__group { padding: var(--sp-6) 0; } }
+@media (min-width: 700px) {
+  .scope__name { font-size: 1.0625rem; }
+  .scope__group { padding-right: var(--sp-7); }
+  .scope__group:nth-child(2n) { padding-left: var(--sp-7); border-left: 1px solid var(--c-line-soft); }
+}
+@media (min-width: 1000px) {
+  .scope__group:nth-child(2n) { padding-left: 0; border-left: 0; }
+  .scope__group:not(:nth-child(3n + 1)) { padding-left: var(--sp-7); border-left: 1px solid var(--c-line-soft); }
+}
+.scope__name { font-family: var(--ff-display); font-size: 1rem; font-weight: 500; color: var(--navy); }
+.scope__list { margin-top: var(--sp-4); list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.scope__list li { font-size: 0.8125rem; line-height: 1.7; color: var(--c-text-soft); overflow-wrap: anywhere; }
+@media (min-width: 700px) { .scope__list { gap: var(--sp-2); } .scope__list li { font-size: 0.875rem; line-height: 1.85; } }
+
+@media (min-width: 700px) { .scope__name { font-size: 1.0625rem; } }
+
+/* ---------------------------------------------------------------------
+   FAQ accordion — native <details>, no script. Reuses the existing
+   hairline question rhythm; the only addition is the open/closed mark.
+   --------------------------------------------------------------------- */
+.qa--open { border-top: 1px solid var(--c-line-soft); }
+.qa--open:last-of-type { border-bottom: 1px solid var(--c-line-soft); }
+.qa__summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding-block: clamp(1.25rem, 0.9rem + 1.2vw, 1.75rem);
+  cursor: pointer;
+  list-style: none;
+}
+.qa__summary::-webkit-details-marker { display: none; }
+.qa__summary:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+.qa__mark {
+  flex: none;
+  width: 14px; height: 14px;
+  position: relative;
+  color: var(--c-text-mute);
+}
+.qa__mark::before, .qa__mark::after {
+  content: ""; position: absolute; background: currentColor;
+  transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+}
+.qa__mark::before { top: 6px; left: 0; width: 14px; height: 1px; }
+.qa__mark::after  { left: 6px; top: 0; width: 1px; height: 14px; }
+.qa--open[open] .qa__mark::after { opacity: 0; }
+.qa--open[open] .qa__summary { padding-bottom: var(--sp-4); }
+.qa__answer { padding-bottom: clamp(1.25rem, 0.9rem + 1.2vw, 1.75rem); max-width: 52ch; }
+.qa__answer p { font-size: 0.9375rem; line-height: 1.9; color: var(--c-text-soft); }
+@media (min-width: 900px) { .qa__answer { margin-left: 33.333%; } }
+
+/* ---------------------------------------------------------------------
+   LINE — the single way to reach us. QR left, words right on desktop;
+   on a phone the button comes first, because the phone can open LINE.
+   --------------------------------------------------------------------- */
+.line { display: grid; gap: clamp(2rem, 1.4rem + 2.4vw, 3.5rem); align-items: center; }
+.line__qr { order: 2; justify-self: start; }
+.line__copy { order: 1; }
+.line__qr img {
+  display: block;
+  width: clamp(160px, 44vw, 200px);
+  height: auto;
+  border-radius: var(--card-r);
+  box-shadow: inset 0 0 0 1px rgba(16, 29, 58, 0.08);
+  background: #FFFFFF;
+}
+.line__action { margin-top: var(--sp-6); }
+@media (min-width: 800px) {
+  .line { grid-template-columns: auto 1fr; column-gap: clamp(3rem, 2rem + 4vw, 5rem); }
+  .line__qr { order: 1; }
+  .line__copy { order: 2; }
+  .line__qr img { width: 200px; }
+}

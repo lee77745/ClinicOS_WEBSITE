@@ -1,0 +1,7 @@
+# ClinicOS — robots.txt
+# TODO(pre-deploy): replace REPLACE_WITH_PRODUCTION_DOMAIN with the real host.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://REPLACE_WITH_PRODUCTION_DOMAIN/sitemap.xml

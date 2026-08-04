@@ -24,7 +24,7 @@
   font-family: var(--ff-sans);
   font-size: var(--fs-small);
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   line-height: 1;
   white-space: nowrap;
   transition: background var(--dur-base) var(--ease-out),
@@ -61,7 +61,7 @@
 }
 .btn--ghost-on-ink:hover { --btn-line: var(--c-text-invert); }
 
-.btn--sm { min-height: 40px; padding: 0 var(--sp-5); font-size: var(--fs-meta); }
+.btn--sm { min-height: 42px; padding: 0 var(--sp-5); font-size: var(--fs-small); }
 
 /* Quiet text link with a rule that extends on hover */
 .link-quiet {
@@ -120,27 +120,38 @@
 
 .brandmark {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.55rem;
+  align-items: center;
+  gap: 0.6875rem;              /* 11px between mark and words */
   font-family: var(--ff-display);
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+  font-size: 1rem;             /* ClinicOS — 16px */
+  font-weight: 600;
+  letter-spacing: 0.005em;
 }
-.brandmark__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--c-accent);
-  transform: translateY(-2px);
+/* The footer carries the full horizontal lockup. */
+.footer__logo { display: inline-block; }
+.footer__logo img {
+  display: block;
+  width: auto;
+  height: 62px;
+  max-width: 100%;
+}
+@media (max-width: 640px) { .footer__logo img { height: 50px; } }
+/* Official symbol. Never recoloured, never recropped — only scaled. */
+.brandmark__mark {
+  width: 32px;
+  height: 32px;
   flex: none;
+  display: block;
 }
+@media (max-width: 480px) { .brandmark__mark { width: 30px; height: 30px; } }
 .brandmark__sub {
   font-family: var(--ff-sans);
-  font-size: var(--fs-meta);
-  letter-spacing: var(--ls-meta);
-  text-transform: uppercase;
-  color: var(--c-text-mute);
+  font-size: 0.875rem;         /* 珂立雲 — 14px */
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--c-text);
+  opacity: 0.65;
   padding-left: 0.6rem;
   border-left: 1px solid var(--c-line);
 }
@@ -150,11 +161,13 @@
   .nav {
     display: flex;
     align-items: center;
-    gap: clamp(1.5rem, 2.4vw, 2.75rem);
+    gap: clamp(1.75rem, 2.6vw, 3rem);
   }
 }
 .nav__link {
-  font-size: var(--fs-small);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: var(--c-text-soft);
   position: relative;
   padding-block: 4px;
@@ -178,7 +191,18 @@
 .menu__link[aria-current="page"] { color: var(--c-accent); }
 
 .header__actions { display: flex; align-items: center; gap: var(--sp-4); }
-.header__cta { display: none; }
+/* The header ask is a real button, not a ghost. */
+.header__cta {
+  display: none;
+  --btn-bg: var(--c-ink);
+  --btn-fg: var(--c-text-invert);
+  --btn-line: var(--c-ink);
+  min-height: 44px;
+  padding-inline: var(--sp-6);
+  font-size: 0.9375rem;
+  letter-spacing: 0.06em;
+}
+.header__cta:hover { --btn-bg: var(--c-accent-deep); --btn-line: var(--c-accent-deep); }
 @media (min-width: 900px) { .header__cta { display: inline-flex; } }
 
 /* Menu toggle (mobile) */
@@ -352,7 +376,7 @@
 .footer {
   background: var(--c-paper);
   border-top: 1px solid var(--c-line);
-  padding-block: var(--sp-9) var(--sp-7);
+  padding-block: var(--sp-10) var(--sp-8);
 }
 .footer__top {
   display: grid;
@@ -360,22 +384,28 @@
   grid-template-columns: 1fr;
 }
 @media (min-width: 800px) {
-  .footer__top { grid-template-columns: 1.4fr 1fr 1fr; gap: var(--grid-gap); }
+  .footer__top { grid-template-columns: 1.7fr 1fr 1fr; gap: clamp(3rem, 1.5rem + 6vw, 7rem); }
 }
-.footer__blurb { margin-top: var(--sp-5); max-width: 34ch; font-size: var(--fs-small); color: var(--c-text-soft); }
+.footer__blurb { margin-top: var(--sp-4); max-width: 34ch; font-size: 0.9375rem; line-height: 1.9; color: var(--c-text-soft); }
 .footer__col-title {
-  font-size: var(--fs-meta);
-  letter-spacing: var(--ls-meta);
-  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--ff-display);
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--c-text);
   color: var(--c-text-mute);
   margin-bottom: var(--sp-5);
 }
-.footer__list { display: flex; flex-direction: column; gap: var(--sp-3); }
-.footer__list a { font-size: var(--fs-small); color: var(--c-text-soft); }
+.footer__list { display: flex; flex-direction: column; gap: var(--sp-4); }
+.footer__list a { font-size: 0.9375rem; color: var(--c-text-soft); }
+/* the legal name sits between the lockup and the promise */
+.footer__brand-name { margin-top: 20px; font-size: 1rem; font-weight: 500; font-family: var(--ff-display); color: var(--c-text); }
 .footer__list a:hover { color: var(--c-text); }
+@media (max-width: 640px) { .footer__brand-name { margin-top: 16px; } }
 .footer__bottom {
-  margin-top: var(--sp-9);
-  padding-top: var(--sp-5);
+  margin-top: var(--sp-10);
+  padding-top: var(--sp-6);
   border-top: 1px solid var(--c-line-soft);
   display: flex;
   flex-wrap: wrap;

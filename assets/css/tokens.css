@@ -81,7 +81,7 @@
   --section-y-vast:  clamp(8rem, 4rem + 13vw, 17rem);
 
   /* ---------- Grid ---------- */
-  --grid-max: 1240px;
+  --grid-max: 1300px;
   --grid-narrow: 760px;
   --grid-gutter: clamp(1.25rem, 0.6rem + 3vw, 3.5rem);
   --grid-cols: 12;
@@ -103,9 +103,9 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 180ms;
-  --dur-base: 320ms;
+  --dur-base: 360ms;
   --dur-slow: 720ms;
-  --dur-reveal: 1000ms;
+  --dur-reveal: 1150ms;
 
   /* ---------- Layers ---------- */
   --z-header: 100;
@@ -117,5 +117,5 @@
 }
 
 @media (min-width: 900px) {
-  :root { --header-h: 84px; }
+  :root { --header-h: 88px; }
 }

@@ -59,18 +59,103 @@
   }
 
   /* ---------------------------------------------------------------
-     Static contact form — there is no backend yet, so never imply
-     the message was sent. Point the visitor at a channel that works.
+     Contact form — POST /api/contact, which relays to the official
+     LINE account. Same origin, so no CORS and no absolute URL.
      --------------------------------------------------------------- */
-  var staticForm = document.querySelector('[data-form-static]');
-  if (staticForm) {
-    staticForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var status = staticForm.querySelector('[data-form-status]');
+  var contactForm = document.querySelector('[data-form]');
+  if (contactForm) {
+    var LINE_URL = 'https://lin.ee/sp5MbgH';
+    var status = contactForm.querySelector('[data-form-status]');
+    var submitBtn = contactForm.querySelector('[type="submit"]');
+    var submitLabel = submitBtn ? submitBtn.textContent : '送出';
+    var busy = false;
+
+    /* Render status as plain text lines, plus an optional LINE link.
+       Nothing here is user-supplied, but building it with DOM nodes
+       keeps innerHTML out of the submit path entirely. */
+    var showStatus = function (lines, isError, withLine) {
       if (!status) return;
-      status.textContent = '線上表單尚未啟用。請直接來信 hello@clinicos.com，'
-        + '附上診所名稱與方便聯繫的時段，我們會在一個工作日內回覆您。';
+      while (status.firstChild) status.removeChild(status.firstChild);
+      lines.forEach(function (line, i) {
+        if (i) status.appendChild(document.createElement('br'));
+        status.appendChild(document.createTextNode(line));
+      });
+      if (withLine) {
+        status.appendChild(document.createElement('br'));
+        var link = document.createElement('a');
+        link.href = LINE_URL;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = '加入官方 LINE';
+        status.appendChild(link);
+      }
+      status.classList.toggle('is-error', !!isError);
       status.hidden = false;
+    };
+
+    var setBusy = function (on) {
+      busy = on;
+      if (!submitBtn) return;
+      submitBtn.disabled = on;
+      submitBtn.setAttribute('aria-busy', String(on));
+      submitBtn.textContent = on ? '正在送出…' : submitLabel;
+    };
+
+    var firstInvalid = function () {
+      var controls = contactForm.querySelectorAll('input[name], select[name], textarea[name]');
+      for (var i = 0; i < controls.length; i += 1) {
+        var el = controls[i];
+        if (el.name === 'website') continue;            // honeypot never blocks a human
+        if (el.willValidate && !el.checkValidity()) return el;
+      }
+      return null;
+    };
+
+    var collect = function () {
+      var payload = {};
+      Array.prototype.forEach.call(contactForm.elements, function (el) {
+        if (!el.name || el.disabled) return;
+        if (el.type === 'submit' || el.type === 'button') return;
+        payload[el.name] = el.value;
+      });
+      return payload;
+    };
+
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (busy) return;
+
+      var invalid = firstInvalid();
+      if (invalid) {
+        showStatus(['請確認表單內容。', '標示 * 的欄位為必填，Email 與電話請填寫可聯繫的格式。'], true, false);
+        invalid.focus();
+        return;                                          // 前端驗證失敗：不送 API
+      }
+
+      setBusy(true);
+      showStatus(['正在送出…'], false, false);
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collect())
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return null; })
+            .then(function (data) { return { ok: res.ok, data: data }; });
+        })
+        .then(function (result) {
+          if (!result.ok || !result.data || result.data.ok !== true) throw new Error('request failed');
+          contactForm.reset();
+          showStatus(['已收到您的訊息。', '我們會透過您留下的聯絡方式與您聯繫。'], false, false);
+        })
+        .catch(function () {
+          showStatus(['訊息暫時無法送出。', '請稍後再試，或直接透過官方 LINE 與我們聯繫。'], true, true);
+        })
+        .then(function () {
+          setBusy(false);
+          if (status) status.focus();
+        });
     });
   }
 

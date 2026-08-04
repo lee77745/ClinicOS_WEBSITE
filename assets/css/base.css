@@ -170,7 +170,7 @@ button {
 
 [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(12px);
   transition:
     opacity var(--dur-reveal) var(--ease-editorial),
     transform var(--dur-reveal) var(--ease-editorial);

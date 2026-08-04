@@ -44,9 +44,25 @@ const JOBS = [
   { src: 'P06', name: 'scale',     ratio: 16 / 9, focus: 0.50, widths: [1120, 720, 400] },
   { src: 'P04', name: 'field',     ratio: 16 / 9, focus: 0.50, widths: [1120, 720, 400] },
   { src: 'P08', name: 'positions', ratio: 16 / 9, focus: 0.48, widths: [1120, 720, 400] },
+  // Home v2 — photography carries the layout, so these run taller than a figure.
+  { src: 'P07', name: 'home-hero',  ratio: 4 / 3, focus: 0.42, widths: [1200, 800, 600, 400] },
+  { src: 'P04', name: 'home-day',   ratio: 4 / 3, focus: 0.50, widths: [1200, 800, 600, 400] },
+  { src: 'P06', name: 'home-story', ratio: 4 / 3, focus: 0.50, widths: [1200, 800, 600, 400] },
+  // Home v4 — the hero carries a product shot, so the device frame stays uncropped.
+  // trimmed to the devices themselves so the mockup reads large in the hero
+  { src: 'P10', name: 'hero-device', ratio: 3 / 2, focus: 0.50, widths: [1400, 1000, 700, 480],
+    box: { left: 150, top: 96, width: 1362, height: 908 } },
+  { src: 'P07', name: 'method-hand', ratio: 3 / 2, focus: 0.45, widths: [1000, 700, 480] },
+  // V7 — the page needs more than one aspect ratio to have a rhythm.
+  { src: 'P04', name: 'flow-tall', ratio: 3 / 4, focus: 0.46, widths: [900, 640, 460] },
+  { src: 'P08', name: 'oc-square', ratio: 1 / 1, focus: 0.48, widths: [560, 380] },
+  { src: 'P06', name: 'oc-wide',   ratio: 4 / 3, focus: 0.50, widths: [900, 640, 460] },
+  { src: 'P10', name: 'oc-product',ratio: 1 / 1, focus: 0.50, widths: [560, 380],
+    box: { left: 430, top: 120, width: 800, height: 800 } },
 ];
 
-const cropBox = async (file, ratio, focus) => {
+const cropBox = async (file, ratio, focus, box) => {
+  if (box) return box;
   const img = sharp(file);
   const { width: w, height: h } = await img.metadata();
   let cw = w, ch = Math.round(w / ratio);
@@ -59,7 +75,7 @@ const cropBox = async (file, ratio, focus) => {
 let count = 0;
 for (const job of JOBS) {
   const file = `${SRC}/${job.src}.png`;
-  const box = await cropBox(file, job.ratio, job.focus);
+  const box = await cropBox(file, job.ratio, job.focus, job.box);
   for (const width of job.widths) {
     const base = sharp(file).extract(box).resize({ width, withoutEnlargement: true });
     await base.clone().avif({ quality: 52, effort: 6 }).toFile(`${OUT}/${job.name}-${width}.avif`);
