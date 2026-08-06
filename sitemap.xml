@@ -12,6 +12,31 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/day.html</loc>
+    <lastmod>2026-08-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/day-to-day.html</loc>
+    <lastmod>2026-08-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/trust.html</loc>
+    <lastmod>2026-08-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/management.html</loc>
+    <lastmod>2026-08-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/future.html</loc>
+    <lastmod>2026-08-06</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://REPLACE_WITH_PRODUCTION_DOMAIN/platform.html</loc>
     <lastmod>2026-08-05</lastmod>
     <priority>0.9</priority>

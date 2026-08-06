@@ -1,0 +1,213 @@
+/* =====================================================================
+   ClinicOS — Chapter 05「經營」
+
+   Page-scoped under .mg, plus the Website V2 navigation scoped to
+   [data-nav="v2"] (fifth copy; all five merge when the navigation goes
+   site-wide — see the note in day-to-day.css).
+
+   Shape: hero, then a 2 × 3 editorial grid of six decisions, then the
+   closing band and the CTA. Each cell is a heading, one line, and one
+   runtime frame at exactly the same size as the other five — the point
+   of the page is comparison, so nothing may be bigger than its
+   neighbour. No feature grid, no icon grid, no horizontal flow.
+   ===================================================================== */
+
+.mg {
+  --mg-ink: #1A3B32;
+  --mg-ink-soft: #3F534C;
+  --mg-body: #45514D;
+  --mg-mute: #7C8783;
+  --mg-line: rgba(26, 59, 50, 0.14);
+  --mg-line-soft: rgba(26, 59, 50, 0.08);
+
+  --grid-max: 1360px;
+  --grid-gutter: clamp(20px, 4.4vw, 80px);
+
+  background: var(--c-paper);
+}
+
+/* --- Type ------------------------------------------------------------ */
+.mg .mg-h1 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 1.8rem + 5.4vw, 6.5rem);
+  line-height: 1.16;
+  letter-spacing: 0.16em;
+  color: var(--mg-ink);
+}
+.mg .mg-h3 {
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.625rem);
+  line-height: 1.4;
+  color: var(--mg-ink);
+}
+.mg .mg-lead {
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  line-height: 1.95;
+  color: var(--mg-ink-soft);
+  text-wrap: pretty;
+}
+.mg .mg-body {
+  font-size: clamp(0.9375rem, 0.9rem + 0.24vw, 1rem);
+  line-height: 1.9;
+  color: var(--mg-body);
+  text-wrap: pretty;
+}
+.mg .eyebrow { color: var(--mg-mute); }
+
+.mg .media--screen {
+  border-radius: 6px;
+  background: var(--c-paper-raised);
+  box-shadow:
+    0 1px 1px rgba(26, 59, 50, 0.04),
+    0 8px 20px -12px rgba(26, 59, 50, 0.16),
+    0 24px 60px -28px rgba(26, 59, 50, 0.20),
+    inset 0 0 0 1px var(--mg-line-soft);
+}
+
+/* --- Navigation (fifth copy; see file header) ------------------------- */
+[data-nav="v2"] .nav__link { letter-spacing: 0.08em; }
+[data-nav="v2"] .nav__reveal {
+  position: absolute;
+  top: calc(100% + 1.15rem);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: max-content;
+  max-width: 24em;
+  opacity: 0;
+  transform: translate(-50%, -3px);
+  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
+  pointer-events: none;
+}
+[data-nav="v2"] .nav__link:hover .nav__reveal,
+[data-nav="v2"] .nav__link:focus-visible .nav__reveal { opacity: 1; transform: translate(-50%, 0); }
+[data-nav="v2"] .nav__en {
+  font-family: var(--ff-mono); font-size: 0.6875rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--mg-mute); white-space: nowrap;
+}
+[data-nav="v2"] .nav__say {
+  font-family: var(--ff-display); font-size: 0.875rem; line-height: 1.5;
+  color: var(--mg-ink-soft); white-space: nowrap;
+}
+[data-nav="v2"] .nav__link--soon,
+[data-nav="v2"] .menu__link--soon { color: var(--mg-mute); cursor: default; }
+[data-nav="v2"] .nav__link--soon:hover { color: var(--mg-mute); }
+[data-nav="v2"] .nav__link--soon::after { display: none; }
+[data-nav="v2"] .nav__soon {
+  font-family: var(--ff-mono); font-size: 0.6875rem; letter-spacing: 0.2em;
+  color: var(--mg-mute); white-space: nowrap;
+}
+[data-nav="v2"] .menu__link { display: block; }
+[data-nav="v2"] .menu__en,
+[data-nav="v2"] .menu__soon {
+  display: block; margin-top: 0.3rem; font-family: var(--ff-mono);
+  font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mg-mute);
+}
+
+/* --- Hero ------------------------------------------------------------- */
+.mg-hero {
+  padding-top: calc(var(--header-h) + clamp(2rem, 1.2rem + 3.2vw, 4rem));
+  padding-bottom: clamp(3rem, 2rem + 4vw, 5.5rem);
+}
+.mg-hero__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+  align-items: center;
+}
+.mg-hero__copy { grid-column: 1 / -1; }
+.mg-hero__figure { grid-column: 1 / -1; }
+.mg-hero__title { margin-top: clamp(1rem, 0.8rem + 1vw, 1.75rem); }
+.mg-hero__claim {
+  margin-top: clamp(1.25rem, 1rem + 1.4vw, 2rem);
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.375rem, 1.1rem + 1.4vw, 2rem);
+  line-height: 1.5;
+  color: var(--mg-ink);
+}
+.mg-hero__lead { margin-top: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem); max-width: 18em; }
+@media (min-width: 1000px) {
+  .mg-hero__copy { grid-column: 1 / 6; }
+  .mg-hero__figure { grid-column: 6 / 13; margin-right: calc(var(--grid-gutter) * -1); }
+}
+
+/* --- 2 × 3 editorial grid -------------------------------------------- */
+.mg-grid { padding-bottom: clamp(4rem, 2.6rem + 5vw, 7rem); }
+.mg-grid__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem) clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+}
+@media (min-width: 900px) { .mg-grid__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.mg-cell__head { display: flex; align-items: baseline; gap: 0.75rem; }
+.mg-cell__num {
+  font-family: var(--ff-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.2em;
+  color: var(--mg-mute);
+}
+.mg-cell__line { margin-top: 0.6rem; max-width: 26em; }
+.mg-cell__figure { margin-top: clamp(1.25rem, 1rem + 1.2vw, 1.875rem); }
+/* every frame the same box, so six screens can actually be compared */
+.mg-cell__figure .media { aspect-ratio: 16 / 10; }
+
+/* --- Ending ----------------------------------------------------------- */
+.mg-end {
+  background: var(--c-paper-sunken);
+  padding-block: clamp(3.5rem, 2.4rem + 4.4vw, 6rem);
+}
+.mg-end__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  align-items: center;
+}
+@media (min-width: 900px) { .mg-end__grid { grid-template-columns: 1.1fr 1fr auto; } }
+.mg-end__line {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.625rem, 1.2rem + 2vw, 2.75rem);
+  line-height: 1.45;
+  color: var(--mg-ink);
+}
+.mg-end__note { max-width: 22em; }
+@media (max-width: 599px) { .mg-end__grid .btn { width: 100%; } }
+
+/* --- Source note ------------------------------------------------------ */
+.mg-source { padding-block: clamp(2.5rem, 1.8rem + 2.6vw, 4rem); }
+.mg-source__text {
+  max-width: 40em;
+  font-size: var(--fs-meta);
+  line-height: 1.9;
+  color: var(--mg-mute);
+  padding-top: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+  border-top: 1px solid var(--mg-line-soft);
+}
+
+/* --- Phones ----------------------------------------------------------- */
+@media (max-width: 599px) {
+  /* crop instead of scaling, so the numbers stay readable — the same
+     treatment chapters 02–04 use */
+  .mg-cell__figure .media { aspect-ratio: 1 / 1; --media-pos: 8% center; }
+}
+
+/* --- Motion ----------------------------------------------------------- */
+.mg [data-reveal] .media > picture > img {
+  transform: scale(1.012);
+  transition: transform 1400ms var(--ease-editorial);
+}
+.mg [data-reveal].is-in .media > picture > img { transform: scale(1); }
+.no-js .mg [data-reveal] .media > picture > img { transform: none; transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mg [data-reveal] .media > picture > img,
+  .mg [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
+  [data-nav="v2"] .nav__reveal { transition: none; }
+}
