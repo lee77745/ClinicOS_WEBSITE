@@ -1,0 +1,225 @@
+/* =====================================================================
+   Chapter 08「同行」— page styles
+
+   Scoped entirely under .tg so it cannot reach any other page, and
+   loaded only by together.html. Every token, colour, radius and button
+   comes from the shared design system; nothing new is introduced.
+
+   The page is built as the last chapter of a book, not a help centre:
+   five movements of 4/2/3/2/4, separated by full-width rooms and one
+   held quote, closing on an invitation rather than an answer. It is the
+   last chapter, so it carries no .next-chapter block.
+   ===================================================================== */
+
+.tg {
+  --tg-ink: #1A3B32;
+  --tg-ink-soft: #3F534C;
+  --tg-body: #45514D;
+  --tg-mute: #7C8783;
+  --tg-line: rgba(26, 59, 50, 0.14);
+  --tg-line-soft: rgba(26, 59, 50, 0.09);
+
+  --grid-max: 1360px;
+  --grid-gutter: clamp(20px, 4.4vw, 80px);
+
+  /* the pause between one movement and the next */
+  --tg-gap: clamp(5rem, 3rem + 7vw, 10rem);
+
+  background: var(--c-paper);
+}
+
+/* --- Type ------------------------------------------------------------ */
+.tg .tg-h1 {
+  font-family: var(--ff-brand-heading);
+  font-weight: 400;
+  font-size: var(--fs-chapter-name);
+  line-height: 1.14;
+  letter-spacing: 0.16em;
+  color: var(--tg-ink);
+}
+.tg .tg-lead { font-size: var(--fs-lead); line-height: 1.9; color: var(--tg-ink-soft); text-wrap: pretty; }
+.tg .tg-body { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--tg-body); text-wrap: pretty; }
+.tg .eyebrow { color: var(--tg-mute); }
+
+/* ---------------------------------------------------------------------
+   01 · Hero — words left, the room right and deliberately larger.
+   Not full-bleed, and it ends on a long silence.
+   --------------------------------------------------------------------- */
+.tg-hero {
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 1.6rem + 4vw, 5rem));
+  padding-bottom: clamp(6rem, 3.6rem + 9vw, 13rem);   /* the long silence */
+}
+.tg-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2.5rem, 1.6rem + 4vw, 4rem);
+  align-items: center;
+}
+.tg-hero__title { margin-top: clamp(1rem, 0.8rem + 1vw, 1.75rem); }
+.tg-hero__en {
+  margin-top: clamp(0.75rem, 0.6rem + 0.7vw, 1.25rem);
+  font-family: var(--ff-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--tg-mute);
+}
+.tg-hero__claim {
+  margin-top: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
+  font-family: var(--ff-brand-slogan);
+  font-weight: 400;
+  font-size: clamp(1.625rem, 1.2rem + 2vw, 2.625rem);
+  line-height: 1.55;
+  color: var(--tg-ink);
+}
+.tg-hero__lead { margin-top: clamp(1.25rem, 1rem + 1.4vw, 2rem); max-width: 19em; }
+.tg-hero__figure .media { aspect-ratio: 4 / 3; }
+@media (min-width: 1000px) {
+  /* 5 / 7 — the photograph is the larger half, never a mirror of the copy */
+  .tg-hero__grid { grid-template-columns: 5fr 7fr; }
+  .tg-hero__figure { margin-right: calc(var(--grid-gutter) * -0.5); }
+  .tg-hero__figure .media { aspect-ratio: 5 / 4; }
+}
+
+/* ---------------------------------------------------------------------
+   02 · Movements — a section title on the left, three questions on the
+   right. No frames, no cards: hairlines and air do the work.
+   --------------------------------------------------------------------- */
+.tg-move { padding-block: clamp(1rem, 0.6rem + 1.6vw, 2rem); }
+.tg-move + .tg-move { margin-top: var(--tg-gap); }
+.tg-move__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+}
+@media (min-width: 900px) {
+  .tg-move__grid { grid-template-columns: 4fr 8fr; }
+}
+.tg-move__name {
+  font-family: var(--ff-brand-heading);
+  font-weight: 400;
+  font-size: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  letter-spacing: 0.18em;
+  line-height: 1.25;
+  color: var(--tg-ink);
+}
+.tg-move__en {
+  margin-top: 0.6rem;
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--tg-mute);
+}
+.tg-move__say { margin-top: clamp(1rem, 0.8rem + 0.9vw, 1.5rem); max-width: 17em; }
+
+/* A question is a hairline, a question, an answer and air. Nothing marks it
+   as a Q/A pair — no label, no number, no chevron, no panel to open. */
+.tg-q { border-top: 1px solid var(--tg-line-soft); padding-block: clamp(1.4rem, 1rem + 1.8vw, 2.4rem); }
+.tg-q:last-child { border-bottom: 1px solid var(--tg-line-soft); }
+.tg-q__ask {
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.125rem, 1rem + 0.7vw, 1.4375rem);
+  line-height: 1.6;
+  color: var(--tg-ink);
+  text-wrap: balance;
+}
+/* An answer may run to several paragraphs; the same margin gives them their
+   rhythm, so nothing new is needed to space them. */
+.tg-q__say { margin-top: clamp(0.6rem, 0.5rem + 0.5vw, 1rem); max-width: 34em; }
+
+/* ---------------------------------------------------------------------
+   03 · Rooms — a full-width photograph between movements. It carries no
+   caption and says nothing; it is there so the reading can breathe.
+   --------------------------------------------------------------------- */
+.tg-room { margin-block: var(--tg-gap); }
+.tg-room img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+}
+@media (max-width: 759px) { .tg-room img { aspect-ratio: 3 / 2; } }
+
+/* ---------------------------------------------------------------------
+   04 · The held quote — centred, large, no band behind it
+   --------------------------------------------------------------------- */
+.tg-quote { margin-block: var(--tg-gap); padding-block: clamp(5rem, 3rem + 6.5vw, 10rem); text-align: center; }
+.tg-quote__line {
+  margin-inline: auto;
+  max-width: 18em;
+  font-family: var(--ff-brand-slogan);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.25rem);
+  line-height: 1.7;
+  color: var(--tg-ink);
+}
+
+/* ---------------------------------------------------------------------
+   05 · 同行 — the fifth movement asks nothing. Four statements, each
+   closing in on the last: the hairlines fade out and the gaps shorten,
+   so the reading is already slowing down before the final words.
+   --------------------------------------------------------------------- */
+.tg-close__line {
+  border-top: 1px solid;
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.125rem, 1rem + 0.7vw, 1.4375rem);   /* same size as a question */
+  line-height: 1.7;
+  color: var(--tg-ink);
+  max-width: 30em;
+  text-wrap: pretty;
+}
+.tg-close__line:nth-child(1) { padding-block: clamp(1.4rem, 1rem + 1.8vw, 2.4rem);   border-color: rgba(26, 59, 50, 0.09); }
+.tg-close__line:nth-child(2) { padding-block: clamp(1.2rem, 0.9rem + 1.4vw, 2rem);   border-color: rgba(26, 59, 50, 0.07); }
+.tg-close__line:nth-child(3) { padding-block: clamp(1rem,   0.8rem + 1vw,   1.6rem); border-color: rgba(26, 59, 50, 0.05); }
+.tg-close__line:nth-child(4) { padding-block: clamp(0.85rem, 0.7rem + 0.7vw, 1.25rem) 0; border-color: rgba(26, 59, 50, 0.03); }
+
+/* ---------------------------------------------------------------------
+   06 · The last words — follows 同行 directly, then leaves the footer air
+   --------------------------------------------------------------------- */
+.tg-cta {
+  padding-top: clamp(3.5rem, 2.4rem + 4.5vw, 7rem);
+  padding-bottom: clamp(6rem, 3.6rem + 9vw, 12rem);
+  text-align: center;
+}
+.tg-cta__sub {
+  margin-top: clamp(1.5rem, 1.2rem + 1.6vw, 2.5rem);
+  font-size: var(--fs-lead);
+  line-height: 1.9;
+  color: var(--tg-ink-soft);
+}
+.tg-cta__line {
+  margin-inline: auto;
+  max-width: 14em;
+  font-family: var(--ff-brand-heading);
+  font-weight: 400;
+  font-size: clamp(2rem, 1.5rem + 2.4vw, 3.5rem);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  color: var(--tg-ink);
+}
+.tg-cta__actions {
+  margin-top: clamp(2.25rem, 1.6rem + 3vw, 3.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  justify-content: center;
+}
+@media (max-width: 599px) {
+  .tg-cta__actions { flex-direction: column; align-items: stretch; }
+  .tg-cta__actions .btn { width: 100%; }
+}
+
+/* --- Motion (matches the rest of the site) ---------------------------- */
+.tg [data-reveal] .media > picture > img { transform: scale(1.012); transition: transform 1400ms var(--ease-editorial); }
+.tg [data-reveal].is-in .media > picture > img { transform: scale(1); }
+.no-js .tg [data-reveal] .media > picture > img { transform: none; transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .tg [data-reveal] .media > picture > img,
+  .tg [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
+}
