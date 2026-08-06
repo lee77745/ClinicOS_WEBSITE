@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.clinicos.com.tw/sitemap.xml
+Sitemap: https://clinicos.com.tw/sitemap.xml
