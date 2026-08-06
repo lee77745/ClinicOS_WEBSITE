@@ -1,0 +1,411 @@
+/* =====================================================================
+   ClinicOS — Chapter 02「一天」
+
+   Page-scoped. Everything sits under .day, except the Website V2
+   navigation, which is scoped to [data-nav="v2"] so it can only ever
+   apply to a page that opts in. While chapters 03–07 are still being
+   written, this page is the only one that carries it.
+
+   The shape of this page is the opposite of why-clinicos: there,
+   photography carried every scene. Here photography only opens and
+   closes the day, and the six moments in between are carried by real
+   runtime frames — evidence for the story, not a product catalogue.
+   ===================================================================== */
+
+.day {
+  --day-ink: #16274C;
+  --day-ink-soft: #3D4A66;
+  --day-body: #4A5262;
+  --day-mute: #808898;
+  --day-line: rgba(22, 39, 76, 0.14);
+  --day-line-soft: rgba(22, 39, 76, 0.07);
+
+  --grid-max: 1360px;
+  --grid-gutter: clamp(20px, 4.4vw, 80px);
+
+  /* The pause between one moment of the day and the next */
+  --day-gap: clamp(6rem, 3.4rem + 9vw, 13.5rem);
+
+  background: var(--c-paper);
+}
+
+/* ---------------------------------------------------------------------
+   Type
+   --------------------------------------------------------------------- */
+.day .day-h1 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 1.55rem + 4.2vw, 5rem);
+  line-height: 1.24;
+  letter-spacing: 0.005em;
+  color: var(--day-ink);
+  text-wrap: balance;
+}
+.day .day-h2 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.35rem + 2.35vw, 3rem);
+  line-height: 1.38;
+  color: var(--day-ink);
+  text-wrap: balance;
+}
+.day .day-h3 {
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.375rem, 1.15rem + 1.05vw, 1.9375rem);
+  line-height: 1.44;
+  color: var(--day-ink);
+  text-wrap: balance;
+}
+.day .day-lead {
+  font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.25rem);
+  line-height: 1.85;
+  color: var(--day-ink-soft);
+  text-wrap: pretty;
+}
+.day .day-body {
+  font-size: clamp(1rem, 0.96rem + 0.24vw, 1.125rem);
+  line-height: 1.9;
+  color: var(--day-body);
+  text-wrap: pretty;
+}
+.day .eyebrow { color: var(--day-mute); }
+
+/* The clock. Tabular figures so 07:40 and 18:30 line up down the page. */
+.day .day-time {
+  font-family: var(--ff-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(0.9375rem, 0.88rem + 0.28vw, 1.125rem);
+  letter-spacing: 0.14em;
+  color: var(--day-mute);
+}
+
+/* Photography sits flat on the paper; a screen is a lit object and gets
+   a little air under it. That difference is the whole point of the page. */
+.day .media--photo { box-shadow: inset 0 0 0 1px var(--day-line-soft); }
+.day .media--screen {
+  border-radius: 6px;
+  background: var(--c-paper-raised);
+  box-shadow:
+    0 1px 1px rgba(22, 39, 76, 0.04),
+    0 8px 20px -12px rgba(22, 39, 76, 0.18),
+    0 24px 60px -28px rgba(22, 39, 76, 0.22),
+    inset 0 0 0 1px var(--day-line-soft);
+}
+
+/* ---------------------------------------------------------------------
+   Navigation — Website V2, seven chapters, two characters each.
+
+   At rest every chapter is two characters and nothing else — that is
+   the whole navigation rule. The English name and the one-line brand
+   statement (or, for a chapter that is not written yet, its status)
+   appear only on hover or keyboard focus, centred under the item.
+
+   The reveal is positioned against the link, which keeps its own
+   `::after` underline from components.css working. `width: max-content`
+   plus a centring translate lets a full sentence sit under a two-
+   character label without widening the row.
+   --------------------------------------------------------------------- */
+[data-nav="v2"] .nav__link { letter-spacing: 0.08em; }
+[data-nav="v2"] .nav__reveal {
+  position: absolute;
+  top: calc(100% + 1.15rem);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: max-content;
+  max-width: 24em;
+  opacity: 0;
+  transform: translate(-50%, -3px);
+  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
+  pointer-events: none;
+}
+[data-nav="v2"] .nav__link:hover .nav__reveal,
+[data-nav="v2"] .nav__link:focus-visible .nav__reveal {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+[data-nav="v2"] .nav__en {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--day-mute);
+  white-space: nowrap;
+}
+[data-nav="v2"] .nav__say {
+  font-family: var(--ff-display);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--day-ink-soft);
+  white-space: nowrap;
+}
+
+/* Chapters 03–07 are not written yet. They stay in the navigation so the
+   structure of the book is visible, but they are not links and they do
+   not point anywhere — a wrong destination is worse than no destination.
+   Their status lives in the same reveal slot as everyone else's, so the
+   row itself stays two characters across. */
+[data-nav="v2"] .nav__link--soon,
+[data-nav="v2"] .menu__link--soon {
+  color: var(--day-mute);
+  cursor: default;
+}
+[data-nav="v2"] .nav__link--soon:hover { color: var(--day-mute); }
+[data-nav="v2"] .nav__link--soon::after { display: none; }
+[data-nav="v2"] .nav__soon {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--day-mute);
+  white-space: nowrap;
+}
+[data-nav="v2"] .menu__soon {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--ff-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  color: var(--day-mute);
+}
+
+/* In the mobile menu there is no hover, so every chapter shows its whole
+   name at rest. */
+[data-nav="v2"] .menu__link { display: block; }
+[data-nav="v2"] .menu__en {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--ff-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-text-mute, #808898);
+}
+
+/* ---------------------------------------------------------------------
+   01 · Hero — the day before anyone opens the door
+   --------------------------------------------------------------------- */
+.day-hero {
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 1.4rem + 4vw, 5rem));
+  padding-bottom: clamp(4rem, 2.4rem + 5vw, 8rem);
+}
+.day-hero__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  align-items: center;
+}
+.day-hero__copy { grid-column: 1 / -1; }
+.day-hero__figure { grid-column: 1 / -1; }
+.day-hero__title { margin-top: clamp(1.5rem, 1rem + 1.6vw, 2.5rem); max-width: 8em; }
+.day-hero__lead { margin-top: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem); max-width: 17em; }
+.day-hero__figure .media { aspect-ratio: 4 / 3; --media-pos: center 50%; }
+@media (min-width: 1000px) {
+  .day-hero { min-height: 82vh; display: flex; align-items: center; }
+  .day-hero__grid { width: 100%; }
+  .day-hero__copy { grid-column: 1 / 7; }
+  .day-hero__figure { grid-column: 8 / 13; }
+  .day-hero__figure .media { aspect-ratio: 3 / 4; }
+}
+
+/* ---------------------------------------------------------------------
+   02 · 導言 — one thought, and a lot of paper around it
+   --------------------------------------------------------------------- */
+.day-open { padding-block: clamp(4.5rem, 2.8rem + 6vw, 9rem); }
+.day-open__line {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.125rem);
+  line-height: 1.5;
+  color: var(--day-ink);
+  max-width: 15em;
+}
+.day-open__note { margin-top: clamp(2rem, 1.4rem + 2.4vw, 3.25rem); max-width: 22em; }
+@media (min-width: 900px) {
+  .day-open__line { margin-left: 8.333%; }
+  .day-open__note { margin-left: 8.333%; }
+}
+
+/* ---------------------------------------------------------------------
+   03 · 六個時刻 — the spine of the page
+
+   The runtime frame takes roughly two thirds of the measure and the
+   words take the rest, alternating side to side. The frame is never
+   larger than the moment it belongs to: one screen, one sentence.
+   --------------------------------------------------------------------- */
+.day-moments { padding-bottom: clamp(4rem, 2.4rem + 5vw, 8rem); }
+
+.day-moment {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(1.5rem, 1rem + 2.4vw, 2.75rem);
+  align-items: center;
+}
+.day-moment + .day-moment { margin-top: var(--day-gap); }
+.day-moment__figure { grid-column: 1 / -1; }
+.day-moment__copy { grid-column: 1 / -1; }
+.day-moment__title { margin-top: clamp(0.75rem, 0.6rem + 0.6vw, 1.125rem); max-width: 11em; }
+.day-moment__line { margin-top: clamp(0.875rem, 0.7rem + 0.8vw, 1.375rem); max-width: 16em; }
+
+.day-moment__figure .media { aspect-ratio: 16 / 10; }
+/* The closing dialog is a different kind of artefact — a decision, not a
+   workspace — so it is cropped in and stands a little taller. */
+.day-moment--dialog .day-moment__figure .media { aspect-ratio: 5 / 4; }
+
+/* On a phone a whole desktop screen shrinks to the point where none of it
+   can be read, and evidence nobody can read is only decoration. So the
+   frame goes square and crops instead of scaling down: the same pixels,
+   about 1.6× larger, holding the left of the screen where the numbers and
+   the first rows of every list live. */
+@media (max-width: 599px) {
+  .day-moment__figure .media { aspect-ratio: 1 / 1; --media-pos: 8% center; }
+  .day-moment--dialog .day-moment__figure .media { aspect-ratio: 5 / 4; --media-pos: center; }
+}
+
+@media (min-width: 900px) {
+  .day-moment:nth-child(odd) .day-moment__figure { grid-column: 1 / 9; }
+  .day-moment:nth-child(odd) .day-moment__copy   { grid-column: 10 / 13; }
+
+  .day-moment:nth-child(even) .day-moment__figure { grid-column: 5 / 13; order: 2; }
+  .day-moment:nth-child(even) .day-moment__copy   { grid-column: 1 / 4;  order: 1; }
+
+  /* 18:30 — the day narrows to one dialog, so the frame narrows with it.
+     `order` has to be cleared as well as the columns: with the copy ordered
+     first, auto-placement has already passed column 8 by the time it reaches
+     the figure, and sparse packing would drop the frame onto a second row. */
+  .day-moment--dialog .day-moment__figure { grid-column: 1 / 8 !important; order: 0; grid-row: 1; }
+  .day-moment--dialog .day-moment__copy   { grid-column: 9 / 13 !important; order: 0; grid-row: 1; }
+}
+
+/* ---------------------------------------------------------------------
+   04 · 一條線 — the six moments close back into one
+   --------------------------------------------------------------------- */
+.day-thread {
+  padding-block: clamp(5rem, 3rem + 7vw, 10rem);
+  background: var(--c-paper-sunken);
+}
+.day-thread__line {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.25rem + 2.8vw, 3.5rem);
+  line-height: 1.44;
+  color: var(--day-ink);
+  max-width: 13em;
+}
+.day-thread__prose { margin-top: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem); max-width: 23em; }
+.day-thread__prose p + p { margin-top: clamp(1.25rem, 1rem + 1.2vw, 2rem); }
+@media (min-width: 900px) {
+  .day-thread__line { margin-left: 8.333%; }
+  .day-thread__prose { margin-left: 33.333%; }
+}
+
+/* ---------------------------------------------------------------------
+   05 · 20:00 — the lights go off and the day is still there
+   --------------------------------------------------------------------- */
+.day-close { padding-block: clamp(6rem, 3.4rem + 9vw, 13rem); }
+.day-close__line {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.25rem + 2.8vw, 3.5rem);
+  line-height: 1.42;
+  color: var(--day-ink);
+  max-width: 12em;
+}
+.day-close__time { display: block; margin-bottom: clamp(1rem, 0.8rem + 0.8vw, 1.5rem); }
+.day-close__figure { margin-top: clamp(4rem, 2.4rem + 6vw, 8.5rem); }
+.day-close__figure .media { --media-pos: center 52%; }
+.day-close__coda {
+  margin-top: clamp(4rem, 2.4rem + 6vw, 8.5rem);
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.625rem, 1.15rem + 2.1vw, 2.875rem);
+  line-height: 1.5;
+  color: var(--day-ink);
+}
+@media (min-width: 900px) {
+  .day-close__line { margin-left: 8.333%; }
+  .day-close__coda { margin-left: 8.333%; }
+}
+
+/* The demo-data disclosure. Quiet, but it is on the page, not in a
+   tooltip — the numbers above are a demo clinic and say so. */
+.day-source {
+  padding-bottom: clamp(3rem, 2rem + 3vw, 5rem);
+}
+.day-source__note {
+  max-width: 34em;
+  font-size: var(--fs-meta);
+  line-height: 1.9;
+  color: var(--day-mute);
+  padding-top: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+  border-top: 1px solid var(--day-line-soft);
+}
+@media (min-width: 900px) { .day-source__note { margin-left: 8.333%; } }
+
+/* ---------------------------------------------------------------------
+   06 · CTA — no photograph here; the day already ended on one
+   --------------------------------------------------------------------- */
+.day-cta {
+  background: var(--navy, #16274C);
+  padding-block: clamp(4.5rem, 2.8rem + 6vw, 9rem);
+}
+.day-cta__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+}
+.day-cta__copy { grid-column: 1 / -1; }
+.day-cta__side { grid-column: 1 / -1; }
+.day-cta .eyebrow { color: var(--c-text-invert-mute); }
+.day .day-cta__title {
+  margin-top: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+  color: var(--c-text-invert);
+  max-width: 13em;
+}
+.day .day-cta__lead {
+  margin-top: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  color: var(--c-text-invert-soft);
+  max-width: 20em;
+}
+.day-cta__actions {
+  margin-top: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+.day-cta__note {
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-invert-mute);
+}
+@media (max-width: 599px) {
+  .day-cta__actions { flex-direction: column; align-items: stretch; }
+  .day-cta__actions .btn { width: 100%; }
+}
+@media (min-width: 1000px) {
+  .day-cta__copy { grid-column: 1 / 7; }
+  .day-cta__side { grid-column: 9 / 13; align-self: end; }
+}
+
+/* ---------------------------------------------------------------------
+   Motion — the same restraint as the rest of the site: fade, and a hair
+   of settle on the frames. Nothing slides.
+   --------------------------------------------------------------------- */
+.day [data-reveal] .media > picture > img {
+  transform: scale(1.012);
+  transition: transform 1400ms var(--ease-editorial);
+}
+.day [data-reveal].is-in .media > picture > img { transform: scale(1); }
+.no-js .day [data-reveal] .media > picture > img { transform: none; transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .day [data-reveal] .media > picture > img,
+  .day [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
+  [data-nav="v2"] .nav__reveal { transition: none; }
+}

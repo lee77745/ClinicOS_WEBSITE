@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F7F5F2">
+
+<title>一天｜ClinicOS 珂立雲</title>
+<meta name="description" content="開診之前、第一位顧客、有人改約、療程之中、結帳、打烊之前——一間診所的一天，不是十件事，是一條線。這是 ClinicOS 串起這一天的方式。">
+<link rel="canonical" href="https://www.clinicos.com/day.html">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="ClinicOS">
+<meta property="og:title" content="一天｜ClinicOS 珂立雲">
+<meta property="og:description" content="一天結束的時候，這一天還在。">
+<meta property="og:url" content="https://www.clinicos.com/day.html">
+<meta property="og:image" content="https://www.clinicos.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Serif+TC:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/page.css">
+<link rel="stylesheet" href="assets/css/day.css">
+</head>
+
+<body>
+<a class="skip-link" href="#main">跳至主要內容</a>
+
+<!-- =================================================================
+     Header — Website V2 navigation. Seven chapters, two characters
+     each; the English name and the brand line appear on hover. The
+     chapters that are not written yet are shown but not linked.
+     ================================================================= -->
+<header class="header" data-header data-nav="v2">
+  <div class="header__inner">
+    <a class="brandmark" href="index.html" aria-label="ClinicOS 首頁">
+      <img class="brandmark__mark" src="assets/brand/clinicos-symbol-light.png" alt="" width="32" height="32" decoding="async">
+      <span>ClinicOS</span>
+      <span class="brandmark__sub">珂立雲</span>
+    </a>
+
+    <nav class="nav" aria-label="主要導覽">
+      <a class="nav__link" href="index.html">緣起<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Why ClinicOS</span><span class="nav__say">每一天，都值得被好好經營。</span></span></a>
+      <a class="nav__link" href="day.html" aria-current="page">一天<span class="nav__reveal" aria-hidden="true"><span class="nav__en">A Day in the Clinic</span><span class="nav__say">一天結束的時候，這一天還在。</span></span></a>
+      <span class="nav__link nav__link--soon" aria-disabled="true">日常<span class="nav__reveal"><span class="nav__en">Daily Operations</span><span class="nav__soon">即將推出</span></span></span>
+      <span class="nav__link nav__link--soon" aria-disabled="true">信任<span class="nav__reveal"><span class="nav__en">Customer Journey</span><span class="nav__soon">即將推出</span></span></span>
+      <span class="nav__link nav__link--soon" aria-disabled="true">經營<span class="nav__reveal"><span class="nav__en">Business</span><span class="nav__soon">即將推出</span></span></span>
+      <span class="nav__link nav__link--soon" aria-disabled="true">未來<span class="nav__reveal"><span class="nav__en">Future</span><span class="nav__soon">即將推出</span></span></span>
+      <a class="nav__link" href="contact.html">啟程<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Get Started</span><span class="nav__say">從您診所的一天開始聊。</span></span></a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn--ghost btn--sm header__cta" href="contact.html">預約產品導覽</a>
+      <button class="menu-toggle" type="button" aria-label="開啟選單" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="site-menu" aria-hidden="true" data-menu data-nav="v2">
+  <nav class="menu__list" aria-label="行動版導覽">
+    <a class="menu__link" href="index.html">緣起<span class="menu__en">Why ClinicOS</span></a>
+    <a class="menu__link" href="day.html" aria-current="page">一天<span class="menu__en">A Day in the Clinic</span></a>
+    <span class="menu__link menu__link--soon" aria-disabled="true">日常<span class="menu__soon">即將推出</span></span>
+    <span class="menu__link menu__link--soon" aria-disabled="true">信任<span class="menu__soon">即將推出</span></span>
+    <span class="menu__link menu__link--soon" aria-disabled="true">經營<span class="menu__soon">即將推出</span></span>
+    <span class="menu__link menu__link--soon" aria-disabled="true">未來<span class="menu__soon">即將推出</span></span>
+    <a class="menu__link" href="contact.html">啟程<span class="menu__en">Get Started</span></a>
+  </nav>
+  <div class="menu__foot">
+    <a class="btn btn--primary" href="contact.html">預約產品導覽</a>
+    <p class="menu__meta">Clinic Operating Platform</p>
+  </div>
+</div>
+
+<main id="main" class="day">
+
+<!-- =================================================================
+     01 · Hero — before anyone opens the door
+     ================================================================= -->
+<section class="day-hero" aria-labelledby="page-title">
+  <div class="shell day-hero__grid">
+    <div class="day-hero__copy">
+      <p class="eyebrow" data-reveal>Chapter 02 · 一天</p>
+      <h1 class="day-h1 day-hero__title" id="page-title" data-reveal data-reveal-step="1">一天，從還沒<br>開門的時候<br>開始。</h1>
+      <p class="day-lead day-hero__lead" data-reveal data-reveal-step="2">這一頁不介紹功能。我們只把一天走一遍——從開診之前，走到打烊之後。</p>
+    </div>
+
+    <figure class="day-hero__figure" data-reveal data-reveal-step="1">
+      <div class="media media--photo">
+        <picture>
+          <source media="(min-width: 1000px)" type="image/avif" sizes="(min-width: 1440px) 475px, 36vw"
+                  srcset="assets/img/day-hero-460.avif 460w, assets/img/day-hero-640.avif 640w, assets/img/day-hero-900.avif 900w, assets/img/day-hero-1240.avif 1240w">
+          <source media="(min-width: 1000px)" type="image/webp" sizes="(min-width: 1440px) 475px, 36vw"
+                  srcset="assets/img/day-hero-460.webp 460w, assets/img/day-hero-640.webp 640w, assets/img/day-hero-900.webp 900w, assets/img/day-hero-1240.webp 1240w">
+          <source media="(min-width: 1000px)" sizes="(min-width: 1440px) 475px, 36vw"
+                  srcset="assets/img/day-hero-460.jpg 460w, assets/img/day-hero-640.jpg 640w, assets/img/day-hero-900.jpg 900w, assets/img/day-hero-1240.jpg 1240w">
+          <source type="image/avif" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/day-hero-sm-460.avif 460w, assets/img/day-hero-sm-640.avif 640w, assets/img/day-hero-sm-900.avif 900w">
+          <source type="image/webp" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/day-hero-sm-460.webp 460w, assets/img/day-hero-sm-640.webp 640w, assets/img/day-hero-sm-900.webp 900w">
+          <img src="assets/img/day-hero-sm-640.jpg" sizes="calc(100vw - 40px)"
+               srcset="assets/img/day-hero-sm-460.jpg 460w, assets/img/day-hero-sm-640.jpg 640w, assets/img/day-hero-sm-900.jpg 900w"
+               width="900" height="675" alt="診所櫃檯前，接待人員正在招呼剛到的顧客。"
+               decoding="async" fetchpriority="high">
+        </picture>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- =================================================================
+     02 · 導言
+     ================================================================= -->
+<section class="day-open" aria-labelledby="open-title">
+  <div class="shell">
+    <h2 class="day-open__line" id="open-title" data-reveal>一天不是十件事。<br>是一條線。</h2>
+    <p class="day-body day-open__note" data-reveal data-reveal-step="1">
+      每一段工作都會交到下一個人手上。真正會出問題的，從來不是哪一段做得不好，
+      而是中間斷掉的地方——所以接下來的六個時刻，看的都是同一件事：這一段，接不接得下去。
+    </p>
+  </div>
+</section>
+
+<!-- =================================================================
+     03 · 六個時刻 — each one carried by a real runtime frame
+     ================================================================= -->
+<section class="day-moments" aria-label="診所的一天">
+  <div class="shell">
+
+    <!-- 07:40 -->
+    <article class="day-moment">
+      <figure class="day-moment__figure" data-reveal>
+        <div class="media media--screen">
+          <picture>
+            <source type="image/avif" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-workbench-800.avif 800w, assets/img/day-rt-workbench-1200.avif 1200w, assets/img/day-rt-workbench-1600.avif 1600w">
+            <source type="image/webp" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-workbench-800.webp 800w, assets/img/day-rt-workbench-1200.webp 1200w, assets/img/day-rt-workbench-1600.webp 1600w">
+            <img src="assets/img/day-rt-workbench-1200.jpg" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                 srcset="assets/img/day-rt-workbench-800.jpg 800w, assets/img/day-rt-workbench-1200.jpg 1200w, assets/img/day-rt-workbench-1600.jpg 1600w"
+                 width="1600" height="1000" alt="ClinicOS 每日工作台：當日預約十四人、當日銷售與耗療金額，以及依時段排列的預約名單。"
+                 loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </figure>
+      <div class="day-moment__copy">
+        <p class="day-time" data-reveal>07:40</p>
+        <h3 class="day-h3 day-moment__title" data-reveal data-reveal-step="1">還沒有人推門進來，<br>今天的樣子已經在那裡。</h3>
+        <p class="day-body day-moment__line" data-reveal data-reveal-step="2">誰會來、要做什麼、上一次留下了什麼。不必問，也不必翻。</p>
+      </div>
+    </article>
+
+    <!-- 09:30 -->
+    <article class="day-moment">
+      <figure class="day-moment__figure" data-reveal>
+        <div class="media media--screen">
+          <picture>
+            <source type="image/avif" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-customer-800.avif 800w, assets/img/day-rt-customer-1200.avif 1200w, assets/img/day-rt-customer-1600.avif 1600w">
+            <source type="image/webp" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-customer-800.webp 800w, assets/img/day-rt-customer-1200.webp 1200w, assets/img/day-rt-customer-1600.webp 1600w">
+            <img src="assets/img/day-rt-customer-1200.jpg" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                 srcset="assets/img/day-rt-customer-800.jpg 800w, assets/img/day-rt-customer-1200.jpg 1200w, assets/img/day-rt-customer-1600.jpg 1600w"
+                 width="1600" height="1000" alt="ClinicOS 客戶中心：一位顧客的累積消費、剩餘療程、最近消費紀錄與下一次預約。"
+                 loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </figure>
+      <div class="day-moment__copy">
+        <p class="day-time" data-reveal>09:30</p>
+        <h3 class="day-h3 day-moment__title" data-reveal data-reveal-step="1">她坐下來的時候，<br>上一次的事還記得。</h3>
+        <p class="day-body day-moment__line" data-reveal data-reveal-step="2">做過什麼、還剩幾堂、上次說了什麼。接待的人，不必再問一次。</p>
+      </div>
+    </article>
+
+    <!-- 11:20 -->
+    <article class="day-moment">
+      <figure class="day-moment__figure" data-reveal>
+        <div class="media media--screen">
+          <picture>
+            <source type="image/avif" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-appointments-800.avif 800w, assets/img/day-rt-appointments-1200.avif 1200w, assets/img/day-rt-appointments-1600.avif 1600w">
+            <source type="image/webp" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-appointments-800.webp 800w, assets/img/day-rt-appointments-1200.webp 1200w, assets/img/day-rt-appointments-1600.webp 1600w">
+            <img src="assets/img/day-rt-appointments-1200.jpg" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                 srcset="assets/img/day-rt-appointments-800.jpg 800w, assets/img/day-rt-appointments-1200.jpg 1200w, assets/img/day-rt-appointments-1600.jpg 1600w"
+                 width="1600" height="1000" alt="ClinicOS 今日預約總表：依時段排列的當日預約，分為需要醫師與不需要醫師兩欄。"
+                 loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </figure>
+      <div class="day-moment__copy">
+        <p class="day-time" data-reveal>11:20</p>
+        <h3 class="day-h3 day-moment__title" data-reveal data-reveal-step="1">一通電話，<br>整個下午重排一次。</h3>
+        <p class="day-body day-moment__line" data-reveal data-reveal-step="2">誰改了、誰空出來、誰接得上。順序會跟著動，不必重新記一遍。</p>
+      </div>
+    </article>
+
+    <!-- 14:00 -->
+    <article class="day-moment">
+      <figure class="day-moment__figure" data-reveal>
+        <div class="media media--screen">
+          <picture>
+            <source type="image/avif" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-usage-800.avif 800w, assets/img/day-rt-usage-1200.avif 1200w, assets/img/day-rt-usage-1600.avif 1600w">
+            <source type="image/webp" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-usage-800.webp 800w, assets/img/day-rt-usage-1200.webp 1200w, assets/img/day-rt-usage-1600.webp 1600w">
+            <img src="assets/img/day-rt-usage-1200.jpg" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                 srcset="assets/img/day-rt-usage-800.jpg 800w, assets/img/day-rt-usage-1200.jpg 1200w, assets/img/day-rt-usage-1600.jpg 1600w"
+                 width="1600" height="1000" alt="ClinicOS 耗療單總覽：當日十四張耗療單，含客戶、服務人員與金額。"
+                 loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </figure>
+      <div class="day-moment__copy">
+        <p class="day-time" data-reveal>14:00</p>
+        <h3 class="day-h3 day-moment__title" data-reveal data-reveal-step="1">療程結束，留下的<br>不只是「已完成」。</h3>
+        <p class="day-body day-moment__line" data-reveal data-reveal-step="2">誰做的、用了什麼、扣在哪一堂。當下就記在該記的位置。</p>
+      </div>
+    </article>
+
+    <!-- 16:10 -->
+    <article class="day-moment">
+      <figure class="day-moment__figure" data-reveal>
+        <div class="media media--screen">
+          <picture>
+            <source type="image/avif" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-sales-800.avif 800w, assets/img/day-rt-sales-1200.avif 1200w, assets/img/day-rt-sales-1600.avif 1600w">
+            <source type="image/webp" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-sales-800.webp 800w, assets/img/day-rt-sales-1200.webp 1200w, assets/img/day-rt-sales-1600.webp 1600w">
+            <img src="assets/img/day-rt-sales-1200.jpg" sizes="(min-width: 1440px) 880px, (min-width: 900px) 62vw, calc(100vw - 40px)"
+                 srcset="assets/img/day-rt-sales-800.jpg 800w, assets/img/day-rt-sales-1200.jpg 1200w, assets/img/day-rt-sales-1600.jpg 1600w"
+                 width="1600" height="1000" alt="ClinicOS 銷售單總覽：當日十一張銷售單、收款方式與收款總金額。"
+                 loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </figure>
+      <div class="day-moment__copy">
+        <p class="day-time" data-reveal>16:10</p>
+        <h3 class="day-h3 day-moment__title" data-reveal data-reveal-step="1">走到櫃檯前，<br>金額不必再算一次。</h3>
+        <p class="day-body day-moment__line" data-reveal data-reveal-step="2">買了什麼、付了多少、還差多少。都在同一張單上，收完就結。</p>
+      </div>
+    </article>
+
+    <!-- 18:30 -->
+    <article class="day-moment day-moment--dialog">
+      <figure class="day-moment__figure" data-reveal>
+        <div class="media media--screen">
+          <picture>
+            <source type="image/avif" sizes="(min-width: 1440px) 760px, (min-width: 900px) 54vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-closing-700.avif 700w, assets/img/day-rt-closing-1000.avif 1000w, assets/img/day-rt-closing-1400.avif 1400w">
+            <source type="image/webp" sizes="(min-width: 1440px) 760px, (min-width: 900px) 54vw, calc(100vw - 40px)"
+                    srcset="assets/img/day-rt-closing-700.webp 700w, assets/img/day-rt-closing-1000.webp 1000w, assets/img/day-rt-closing-1400.webp 1400w">
+            <img src="assets/img/day-rt-closing-1000.jpg" sizes="(min-width: 1440px) 760px, (min-width: 900px) 54vw, calc(100vw - 40px)"
+                 srcset="assets/img/day-rt-closing-700.jpg 700w, assets/img/day-rt-closing-1000.jpg 1000w, assets/img/day-rt-closing-1400.jpg 1400w"
+                 width="1400" height="1120" alt="ClinicOS 今日關帳確認：營業日、當日預約與來客、當日銷售與耗療金額，以及關帳後將鎖定的提示。"
+                 loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </figure>
+      <div class="day-moment__copy">
+        <p class="day-time" data-reveal>18:30</p>
+        <h3 class="day-h3 day-moment__title" data-reveal data-reveal-step="1">今天到此為止，<br>而不是帶回家再看。</h3>
+        <p class="day-body day-moment__line" data-reveal data-reveal-step="2">收了多少、做了幾張、還有什麼沒結。一次對完，然後關上。</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =================================================================
+     04 · 一條線
+     ================================================================= -->
+<section class="day-thread" aria-labelledby="thread-title">
+  <div class="shell">
+    <h2 class="day-thread__line" id="thread-title" data-reveal>所以，一天不是六件事。<br>是同一件事，走完了一整天。</h2>
+    <div class="day-thread__prose" data-reveal data-reveal-step="1">
+      <p class="day-body">六個時刻裡，沒有一個是被單獨處理的。早上看到的名單，是昨天留下來的；中午扣掉的那一堂，晚上會出現在關帳的數字裡。</p>
+      <p class="day-body">診所真正需要的，從來不是更多欄位，而是讓每一段工作，落在下一段接得住的位置。</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================================
+     05 · 20:00
+     ================================================================= -->
+<section class="day-close" aria-labelledby="close-title">
+  <div class="shell">
+    <h2 class="day-close__line" id="close-title" data-reveal>
+      <span class="day-time day-close__time">20:00</span>
+      燈關了，<br>這一天還在。
+    </h2>
+
+    <figure class="day-close__figure" data-reveal data-reveal-step="1">
+      <div class="media media--photo media--21-9">
+        <picture>
+          <source media="(min-width: 760px)" type="image/avif" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/day-close-900.avif 900w, assets/img/day-close-1240.avif 1240w, assets/img/day-close-1600.avif 1600w">
+          <source media="(min-width: 760px)" type="image/webp" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/day-close-900.webp 900w, assets/img/day-close-1240.webp 1240w, assets/img/day-close-1600.webp 1600w">
+          <source media="(min-width: 760px)" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/day-close-900.jpg 900w, assets/img/day-close-1240.jpg 1240w, assets/img/day-close-1600.jpg 1600w">
+          <source type="image/avif" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/day-close-sm-375.avif 375w, assets/img/day-close-sm-560.avif 560w, assets/img/day-close-sm-768.avif 768w">
+          <source type="image/webp" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/day-close-sm-375.webp 375w, assets/img/day-close-sm-560.webp 560w, assets/img/day-close-sm-768.webp 768w">
+          <img src="assets/img/day-close-sm-560.jpg" sizes="calc(100vw - 40px)"
+               srcset="assets/img/day-close-sm-375.jpg 375w, assets/img/day-close-sm-560.jpg 560w, assets/img/day-close-sm-768.jpg 768w"
+               width="768" height="576" alt="打烊之後的診所大廳：沙發、植栽與空著的櫃檯，燈光仍暖，沒有人。"
+               loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </figure>
+
+    <p class="day-close__coda" data-reveal data-reveal-step="1">所以第二天，<br>不是重新開始。</p>
+  </div>
+</section>
+
+<!-- =================================================================
+     產品畫面來源
+     ================================================================= -->
+<section class="day-source" aria-label="產品畫面來源說明">
+  <div class="shell">
+    <p class="day-source__note">
+      本頁六張產品畫面擷取自 ClinicOS 展示環境，工作日期為 2026 年 7 月 16 日。
+      畫面中的姓名、電話與金額皆為示範資料，不對應任何真實顧客或診所。
+    </p>
+  </div>
+</section>
+
+<!-- =================================================================
+     06 · CTA
+     ================================================================= -->
+<section class="day-cta" aria-labelledby="cta-title">
+  <div class="shell day-cta__grid">
+    <div class="day-cta__copy">
+      <p class="eyebrow" data-reveal>啟程</p>
+      <h2 class="day-h2 day-cta__title" id="cta-title" data-reveal data-reveal-step="1">我們想先聽您說，<br>您診所的一天<br>長什麼樣子。</h2>
+      <p class="day-lead day-cta__lead" data-reveal data-reveal-step="2">約四十五分鐘，我們一起把您診所的一天走一遍，看看哪一段常常斷掉，哪一段值得先接起來。</p>
+      <div class="day-cta__actions" data-reveal data-reveal-step="3">
+        <a class="btn btn--on-ink" href="contact.html">預約產品導覽</a>
+        <a class="btn btn--ghost-on-ink" href="contact.html">聯絡我們</a>
+      </div>
+    </div>
+    <div class="day-cta__side">
+      <p class="day-cta__note" data-reveal data-reveal-step="3">Chapter 02 · A Day in the Clinic</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- =================================================================
+     Footer
+     ================================================================= -->
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <a class="footer__logo" href="index.html" aria-label="ClinicOS 珂立雲首頁">
+          <img src="assets/brand/clinicos-logo-light.png" alt="ClinicOS 珂立雲醫療雲端管理系統" width="766" height="326" decoding="async">
+        </a>
+        <p class="footer__brand-name">珂立雲醫療雲端管理系統</p>
+        <p class="footer__blurb">讓診所管理，<br>更專注在重要的事。</p>
+      </div>
+
+      <div>
+        <p class="footer__col-title">章節</p>
+        <ul class="footer__list">
+          <li><a href="index.html">緣起</a></li>
+          <li><a href="day.html">一天</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__col-title">支援</p>
+        <ul class="footer__list">
+          <li><a href="faq.html">常見問題</a></li>
+          <li><a href="contact.html">預約產品導覽</a></li>
+          <li><a href="contact.html">聯絡顧問</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span data-year>2026</span> ClinicOS 珂立雲醫療雲端管理系統</span>
+      <span>Clinic Operating Platform</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
