@@ -103,15 +103,13 @@ const JOBS = [
     name: 'day-hero', ratio: 3 / 4, focus: 0.50, xfocus: 0.16, widths: [1240, 900, 640, 460] },
   { src: 'public/images/space/space-lobby-04.png',
     name: 'day-hero-sm', ratio: 4 / 3, focus: 0.50, xfocus: 0.28, widths: [900, 640, 460] },
-  /* 20:00 — the room with nobody in it. The chapter opens on a counter
-     with someone at it and closes on the same kind of counter with no one,
-     which is the whole point of the last line; cropping the empty end out
-     of one of the occupied frames was tried first and gave a marble slab,
-     not a clinic. Wide band on desktop, calmer 4:3 on phones. */
-  { src: 'public/images/people/people-reception-06.png',
-    name: 'day-close', ratio: 21 / 9, focus: 0.50, widths: [1600, 1240, 900] },
-  { src: 'public/images/people/people-reception-06.png',
-    name: 'day-close-sm', ratio: 4 / 3, focus: 0.52, xfocus: 0.62, widths: [768, 560, 375] },
+  /* 20:00 — the same room after the lights go down. The wide band keeps
+     the counter light strip, the corridor and the window together; the
+     phone crop opens out so the frame never collapses to a dark wall. */
+  { src: 'public/images/space/space-night-lobby-01.png',
+    name: 'day-close', ratio: 21 / 9, focus: 0.58, widths: [1600, 1240, 900] },
+  { src: 'public/images/space/space-night-lobby-01.png',
+    name: 'day-close-sm', ratio: 4 / 3, focus: 0.50, xfocus: 0.60, widths: [768, 560, 375] },
 
   /* The six runtime frames. Captured from the RC1 build (ClinicOS_V4 @ 8f93650)
      against the demo tenant on working date 2026-07-16, at 1600x1200 CSS px /
