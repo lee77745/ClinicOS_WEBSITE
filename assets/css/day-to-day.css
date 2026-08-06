@@ -90,64 +90,6 @@
 /* ---------------------------------------------------------------------
    Navigation — Website V2 (duplicate of day.css; see note at the top)
    --------------------------------------------------------------------- */
-[data-nav="v2"] .nav__link { letter-spacing: 0.08em; }
-[data-nav="v2"] .nav__reveal {
-  position: absolute;
-  top: calc(100% + 1.15rem);
-  left: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  width: max-content;
-  max-width: 24em;
-  opacity: 0;
-  transform: translate(-50%, -3px);
-  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
-  pointer-events: none;
-}
-[data-nav="v2"] .nav__link:hover .nav__reveal,
-[data-nav="v2"] .nav__link:focus-visible .nav__reveal {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-[data-nav="v2"] .nav__en {
-  font-family: var(--ff-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--dtd-mute);
-  white-space: nowrap;
-}
-[data-nav="v2"] .nav__say {
-  font-family: var(--ff-display);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--dtd-ink-soft);
-  white-space: nowrap;
-}
-[data-nav="v2"] .nav__link--soon,
-[data-nav="v2"] .menu__link--soon { color: var(--dtd-mute); cursor: default; }
-[data-nav="v2"] .nav__link--soon:hover { color: var(--dtd-mute); }
-[data-nav="v2"] .nav__link--soon::after { display: none; }
-[data-nav="v2"] .nav__soon {
-  font-family: var(--ff-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  color: var(--dtd-mute);
-  white-space: nowrap;
-}
-[data-nav="v2"] .menu__link { display: block; }
-[data-nav="v2"] .menu__en,
-[data-nav="v2"] .menu__soon {
-  display: block;
-  margin-top: 0.3rem;
-  font-family: var(--ff-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--dtd-mute);
-}
 
 /* ---------------------------------------------------------------------
    01 · Hero
@@ -350,5 +292,8 @@
 @media (prefers-reduced-motion: reduce) {
   .dtd [data-reveal] .media > picture > img,
   .dtd [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
-  [data-nav="v2"] .nav__reveal { transition: none; }
 }
+
+/* The shared navigation defaults to the pine scale; these two put this
+   navy chapter back exactly where it was. See chapter-navigation.css. */
+[data-nav="v2"] { --nav-mute: #808898; --nav-say: #3D4A66; }

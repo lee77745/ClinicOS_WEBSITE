@@ -2,32 +2,6 @@
    ClinicOS — Chapter 06「未來」
 
    Page-scoped under .fu, plus the Website V2 navigation scoped to
-   [data-nav="v2"] (fourth copy; all four merge when the navigation goes
-   site-wide — see the note in day-to-day.css).
-
-   One thing about this chapter is different from 02–05: what it
-   describes does not exist yet. AI, HR and 財會 are roadmap, so there
-   are no runtime frames to photograph. The three card previews below
-   are drawn in HTML and CSS in this page's own type and colour —
-   deliberately schematic, with no window chrome, no sidebar and no
-   screenshot framing, so they read as illustrations of intent rather
-   than pictures of a product. The page says so in plain words too.
-   ===================================================================== */
-
-.fu {
-  --fu-ink: #1A3B32;
-  --fu-ink-soft: #3F534C;
-  --fu-body: #45514D;
-  --fu-mute: #7C8783;
-  --fu-line: rgba(26, 59, 50, 0.14);
-  --fu-line-soft: rgba(26, 59, 50, 0.08);
-  --fu-gold: #B98D4E;
-
-  --grid-max: 1360px;
-  --grid-gutter: clamp(20px, 4.4vw, 80px);
-
-  background: var(--c-paper);
-}
 
 /* ---------------------------------------------------------------------
    Type
@@ -65,61 +39,6 @@
 /* ---------------------------------------------------------------------
    Navigation — Website V2 (fourth copy; see file header)
    --------------------------------------------------------------------- */
-[data-nav="v2"] .nav__link { letter-spacing: 0.08em; }
-[data-nav="v2"] .nav__reveal {
-  position: absolute;
-  top: calc(100% + 1.15rem);
-  left: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  width: max-content;
-  max-width: 24em;
-  opacity: 0;
-  transform: translate(-50%, -3px);
-  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
-  pointer-events: none;
-}
-[data-nav="v2"] .nav__link:hover .nav__reveal,
-[data-nav="v2"] .nav__link:focus-visible .nav__reveal { opacity: 1; transform: translate(-50%, 0); }
-[data-nav="v2"] .nav__en {
-  font-family: var(--ff-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--fu-mute);
-  white-space: nowrap;
-}
-[data-nav="v2"] .nav__say {
-  font-family: var(--ff-display);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--fu-ink-soft);
-  white-space: nowrap;
-}
-[data-nav="v2"] .nav__link--soon,
-[data-nav="v2"] .menu__link--soon { color: var(--fu-mute); cursor: default; }
-[data-nav="v2"] .nav__link--soon:hover { color: var(--fu-mute); }
-[data-nav="v2"] .nav__link--soon::after { display: none; }
-[data-nav="v2"] .nav__soon {
-  font-family: var(--ff-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.2em;
-  color: var(--fu-mute);
-  white-space: nowrap;
-}
-[data-nav="v2"] .menu__link { display: block; }
-[data-nav="v2"] .menu__en,
-[data-nav="v2"] .menu__soon {
-  display: block;
-  margin-top: 0.3rem;
-  font-family: var(--ff-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--fu-mute);
-}
 
 /* ---------------------------------------------------------------------
    Hero — words left, the devices filling the right of the screen
@@ -401,5 +320,4 @@
 @media (prefers-reduced-motion: reduce) {
   .fu [data-reveal] .media > picture > img,
   .fu [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
-  [data-nav="v2"] .nav__reveal { transition: none; }
 }

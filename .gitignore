@@ -3,3 +3,10 @@ screenshots/
 .env.local
 .env.production
 node_modules/
+
+# Supplied commercial / legacy fonts. Kept on disk for reference only:
+# two are 1990s TrueType the browser font sanitiser rejects, and the third
+# is a .ttc, which CSS has no format for. Never shipped, never committed.
+assets/fonts/超研澤細行楷.ttf
+assets/fonts/超研澤中鋼筆行楷.ttf
+assets/fonts/徽宗宮體W5.TTC

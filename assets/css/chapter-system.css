@@ -1,0 +1,386 @@
+/* =====================================================================
+   Brand font — Iansui (芫荽)
+
+   Source : https://github.com/ButTaiwan/iansui  release v1.020
+   Licence: SIL Open Font License 1.1 — full text in
+            assets/fonts/Iansui-OFL.txt
+   Build  : the 9.4MB upstream TTF subset to only the characters the
+            brand type actually renders (chapter names, chapter-ending
+            lines, hero core sentences), then encoded as WOFF2.
+            One weight, font-display: swap.
+
+   The three fonts under assets/fonts/ that were supplied earlier
+   (超研澤 x2, 徽宗宮體) are NOT used: two are 1990s TrueType the browser
+   font sanitiser rejects, and the third is a .ttc, which CSS has no
+   format for. They stay on disk but out of the site and out of git.
+   ===================================================================== */
+@font-face {
+  font-family: "Iansui";
+  src: url("../fonts/iansui-subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =====================================================================
+   ClinicOS — Website V2 chapter system
+
+   One shared file for everything the seven chapters have in common:
+   typography scale, background levels, the header and its navigation,
+   the current-chapter state, and the next-chapter block. It replaces
+   assets/css/chapter-navigation.css (folded in below, unchanged in
+   behaviour) so there is still only one definition site-wide.
+
+   Loaded after components.css and before the page stylesheet on every
+   chapter page.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1 · Tokens
+   --------------------------------------------------------------------- */
+:root {
+  /* --- Chapter face -------------------------------------------------
+     A written, literary Chinese face for chapter names only. Nothing is
+     downloaded or bundled: this is a stack of faces that ship with the
+     reader's own system, falling back to the Noto Serif TC the site
+     already loads from Google Fonts. Candidates are listed in the
+     handover notes; if a licensed webfont is added later, put it at the
+     front of this stack and nothing else has to change. */
+  /* --- Brand font tokens ---------------------------------------------
+     --ff-ui             everything functional: nav, body, buttons,
+                         captions, feature lists, runtime notes
+     --ff-brand-heading  chapter names and chapter-ending headings
+     --ff-brand-slogan   the hero core sentence and closing brand lines
+     --ff-brand-quote    reserved; not referenced anywhere yet */
+  --ff-ui: var(--ff-sans);
+  --ff-brand-heading: "Iansui", "Noto Serif TC", serif;
+  --ff-brand-slogan: "Iansui", "Noto Serif TC", serif;
+  --ff-brand-quote: "Iansui", "Noto Serif TC", serif;
+  --fw-chapter: 400;
+
+  /* --- Typography scale ---------------------------------------------
+     One scale for the whole site. Chapters must not re-declare these. */
+  --fs-chapter-label: clamp(0.8125rem, 0.78rem + 0.16vw, 0.875rem);   /* 13–14px */
+  --fs-chapter-name:  clamp(3.25rem, 1.6rem + 5.6vw, 7rem);           /* 52 → 112px */
+  --fs-chapter-claim: clamp(1.375rem, 1.15rem + 1.05vw, 1.875rem);    /* 22 → 30px */
+  --fs-h2:            clamp(1.875rem, 1.35rem + 2.35vw, 3rem);        /* 30 → 48px */
+  --fs-lead:          clamp(1.1875rem, 1.1rem + 0.4vw, 1.5rem);       /* 19 → 24px */
+  --fs-body:          clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem);    /* 17 → 18px */
+  --fs-list:          clamp(1rem, 0.96rem + 0.2vw, 1.125rem);         /* 16 → 18px */
+  --fs-caption:       clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);   /* 14 → 15px */
+  --fs-button:        clamp(1rem, 0.96rem + 0.2vw, 1.125rem);         /* 16 → 18px */
+  --lh-body: 1.85;
+
+  /* --- Background levels ---------------------------------------------
+     Four steps, all from the existing palette. Nothing new, nothing
+     saturated. */
+  --bg-1: var(--c-paper);          /* Warm White  — main reading ground */
+  --bg-2: var(--c-paper-sunken);   /* Light Beige — secondary sections  */
+  --bg-3: #E7EDE9;                 /* Soft Sage   — story / product     */
+  --bg-4: var(--c-accent-deep);    /* Deep Green  — close, next, CTA    */
+}
+
+/* Chapter names, and only chapter names, are set in the written face. */
+html .chapter-name,
+html .day .day-hero__title,
+html .dtd .dtd-hero__title,
+html .tr .tr-hero__title,
+html .mg .mg-hero__title,
+html .fu .fu-hero__title,
+html .next-chapter__name {
+  font-family: var(--ff-brand-heading);
+  font-weight: var(--fw-chapter);
+}
+
+/* Section background helpers. Neighbouring sections must not share one. */
+.bg-warm  { background: var(--bg-1); }
+.bg-beige { background: var(--bg-2); }
+.bg-sage  { background: var(--bg-3); }
+.bg-deep  { background: var(--bg-4); color: var(--c-text-invert); }
+
+/* Body copy floor. Chapters inherit rather than shrink below this. */
+html .day .day-body, html .dtd .dtd-body, html .tr .tr-body, html .mg .mg-body, html .fu .fu-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+html .day .day-lead, html .dtd .dtd-lead, html .tr .tr-lead, html .mg .mg-lead, html .fu .fu-lead {
+  font-size: var(--fs-lead);
+}
+html .dtd .dtd-points li, html .fu .fu-card__list li, html .mg .mg-cell__line {
+  font-size: var(--fs-list);
+}
+html .day-source__note, html .dtd-source__note, html .tr-source__note,
+html .mg-source__text, html .fu-note__text {
+  font-size: var(--fs-caption);
+}
+.btn { font-size: var(--fs-button); }
+.btn--sm { font-size: var(--fs-caption); }
+
+/* Hero chapter name and the line under it */
+html .day-hero__title, html .dtd-hero__title,
+html .tr-hero__title, html .mg-hero__title, html .fu-hero__title { line-height: 1.14; }
+html .tr .tr-h1, html .mg .mg-h1, html .fu .fu-h1 { font-size: var(--fs-chapter-name); }
+html .tr-hero__claim, html .mg-hero__claim, html .fu-hero__claim { font-size: var(--fs-chapter-claim); }
+.eyebrow { font-size: var(--fs-chapter-label); }
+
+/* ---------------------------------------------------------------------
+   2 · Header — its own layer, always separable from the page
+   --------------------------------------------------------------------- */
+[data-nav="v2"].header {
+  background: rgba(247, 245, 242, 0.92);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+          backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid rgba(26, 59, 50, 0.10);
+  box-shadow: 0 1px 0 rgba(26, 59, 50, 0.03), 0 10px 30px -26px rgba(26, 59, 50, 0.35);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  [data-nav="v2"].header { background: #F7F5F2; }
+}
+
+/* ---------------------------------------------------------------------
+   3 · Navigation (folded in from chapter-navigation.css)
+   --------------------------------------------------------------------- */
+[data-nav="v2"] {
+  --nav-mute: #7C8783;
+  --nav-say: #3F534C;
+}
+
+[data-nav="v2"] .nav { gap: clamp(0.5rem, 1.2vw, 1.1rem); }
+[data-nav="v2"] .nav__link {
+  letter-spacing: 0.08em;
+  padding: 0.44rem 0.85rem;
+  border-radius: 999px;
+  transition: background-color 200ms var(--ease-editorial), color 200ms var(--ease-editorial);
+}
+/* the hairline underline is replaced by the pill below */
+[data-nav="v2"] .nav__link::after { display: none; }
+
+/* Current chapter: a filled pill, readable at a glance rather than a
+   one-pixel rule. */
+[data-nav="v2"] .nav__link[aria-current="page"] {
+  background: var(--c-accent-deep);
+  color: var(--c-text-invert);
+}
+[data-nav="v2"] .nav__link:hover:not([aria-current="page"]) {
+  background: rgba(26, 59, 50, 0.07);
+}
+
+/* The reveal is positioned against the link, so a full sentence can sit
+   under a two-character label without widening the row. It sits above
+   the header's own layer and never moves the page. */
+[data-nav="v2"] .nav__reveal {
+  position: absolute;
+  top: calc(100% + 0.9rem);
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: max-content;
+  max-width: 24em;
+  padding: 0.6rem 1rem 0.7rem;
+  border-radius: 10px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 0 rgba(26, 59, 50, 0.06), 0 18px 40px -28px rgba(26, 59, 50, 0.45);
+  opacity: 0;
+  transform: translate(-50%, -3px);
+  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
+  pointer-events: none;
+}
+[data-nav="v2"] .nav__link:hover .nav__reveal,
+[data-nav="v2"] .nav__link:focus-visible .nav__reveal {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+[data-nav="v2"] .nav__en {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--nav-mute);
+  white-space: nowrap;
+}
+[data-nav="v2"] .nav__say {
+  font-family: var(--ff-display);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--nav-say);
+  white-space: nowrap;
+}
+
+/* Mobile menu: its own surface, current chapter equally obvious. */
+[data-nav="v2"].menu { background: #FFFFFF; }
+[data-nav="v2"] .menu__link {
+  display: block;
+  border-radius: 12px;
+  padding: 0.6rem 0.9rem;
+}
+[data-nav="v2"] .menu__link[aria-current="page"] {
+  background: var(--c-accent-deep);
+  color: var(--c-text-invert);
+}
+[data-nav="v2"] .menu__link[aria-current="page"] .menu__en { color: rgba(247, 245, 242, 0.72); }
+[data-nav="v2"] .menu__en {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--ff-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--nav-mute);
+}
+
+/* ---------------------------------------------------------------------
+   4 · Next chapter — the way out of every chapter but the last
+   --------------------------------------------------------------------- */
+.next-chapter {
+  background: var(--bg-4);
+  color: var(--c-text-invert);
+  padding-block: clamp(3.5rem, 2.4rem + 4.4vw, 6rem);
+}
+.next-chapter__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 1.3rem + 2vw, 3rem);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .next-chapter__grid { grid-template-columns: 1fr auto; }
+}
+.next-chapter__label {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-chapter-label);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 242, 0.62);
+}
+.next-chapter__name {
+  margin-top: clamp(0.75rem, 0.6rem + 0.8vw, 1.25rem);
+  font-size: clamp(2.75rem, 1.8rem + 3.6vw, 4.5rem);
+  line-height: 1.15;
+  letter-spacing: 0.12em;
+  color: var(--c-text-invert);
+}
+.next-chapter__en {
+  margin-top: 0.5rem;
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 242, 0.62);
+}
+.next-chapter__say {
+  margin-top: clamp(1rem, 0.8rem + 0.9vw, 1.5rem);
+  font-family: var(--ff-display);
+  font-size: clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem);
+  line-height: 1.75;
+  color: rgba(247, 245, 242, 0.86);
+  max-width: 20em;
+}
+.next-chapter__action .btn { white-space: nowrap; }
+@media (max-width: 599px) {
+  .next-chapter__action .btn { width: 100%; }
+}
+
+/* ---------------------------------------------------------------------
+   5 · Motion
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-nav="v2"] .nav__reveal,
+  [data-nav="v2"] .nav__link { transition: none; }
+}
+
+/* ---------------------------------------------------------------------
+   6 · Brand lockup in the header
+
+   The header carries the official horizontal logo, never the bare
+   symbol, on every breakpoint. Height is the only thing that changes;
+   `width: auto` keeps the artwork at its native ratio, and the files
+   themselves are untouched.
+
+   NOTE on the filenames: assets/brand/clinicos-logo-dark.png is the
+   white lockup meant for dark grounds, and clinicos-logo-light.png is
+   the dark lockup for light grounds — the names read the other way
+   round. The header sits on Warm White, so it shows the *-light file;
+   the *-dark file swaps in wherever the header is put on ink.
+   --------------------------------------------------------------------- */
+.brandmark--lockup {
+  gap: 0;
+  flex: none;
+}
+/* Box heights, not visual heights: clinicos-logo-light.png carries
+   transparent safe area, so its artwork is 214 of 326 box pixels (65.6%).
+   A 55px box therefore reads as ~36px of logo, inside the 34-42px brief.
+   The white variant has a different safe area (187 of 250, 74.8%), so it
+   gets its own heights to land on the same visual size. Nothing is
+   cropped, recoloured or stretched — width stays auto throughout. */
+.brandmark__logo {
+  display: block;
+  width: auto;
+  height: 55px;
+  max-width: 100%;
+}
+.brandmark__logo--on-dark { display: none; height: 48px; }
+
+/* Sticky keeps the whole lockup and only loses height. */
+.header.is-stuck .brandmark__logo { height: 46px; }
+.header.is-stuck .brandmark__logo--on-dark { height: 40px; }
+
+@media (max-width: 640px) {
+  .brandmark__logo { height: 46px; }
+  .brandmark__logo--on-dark { height: 40px; }
+  .header.is-stuck .brandmark__logo { height: 42px; }
+  .header.is-stuck .brandmark__logo--on-dark { height: 36px; }
+}
+@media (max-width: 380px) {
+  .brandmark__logo { height: 40px; }
+  .brandmark__logo--on-dark { height: 35px; }
+}
+
+/* On an ink header the white lockup takes over. */
+[data-header-theme="dark"] .brandmark__logo--on-light { display: none; }
+[data-header-theme="dark"] .brandmark__logo--on-dark { display: block; }
+
+/* Height-only transition, so sticky never shifts the row. */
+.brandmark__logo { transition: height 200ms var(--ease-editorial); }
+@media (prefers-reduced-motion: reduce) { .brandmark__logo { transition: none; } }
+
+/* ---------------------------------------------------------------------
+   7 · Where the brand faces are allowed
+
+   Heading face: chapter names (hero, next-chapter) and the large Chinese
+   headings that close a chapter. Slogan face: the hero core sentence and
+   the closing brand lines. Everything functional stays on --ff-ui.
+   Specificity carries `html` so these win over the page stylesheets,
+   which load after this file.
+   --------------------------------------------------------------------- */
+html .day-close__line, html .day-close__coda,
+html .dtd-close__line,
+html .tr-close__line,
+html .mg-end__line,
+html .fu-more__title {
+  font-family: var(--ff-brand-heading);
+}
+
+html .tr-hero__claim,
+html .mg-hero__claim,
+html .fu-hero__claim,
+html .day-open__line,
+html .dtd-open__line,
+html .fu-more__quote,
+html .tr-close__coda,
+html .hero__title {
+  font-family: var(--ff-brand-slogan);
+}
+
+/* Functional type is never brand type. */
+html [data-nav="v2"] .nav__link,
+html [data-nav="v2"] .menu__link,
+html .btn,
+html .day-body, html .dtd-body, html .tr-body, html .mg-body, html .fu-body,
+html .dtd-points li, html .fu-card__list li, html .mg-cell__line,
+html .day-source__note, html .dtd-source__note, html .tr-source__note,
+html .mg-source__text, html .fu-note__text {
+  font-family: var(--ff-ui);
+}

@@ -2,29 +2,6 @@
    ClinicOS — Chapter 05「經營」
 
    Page-scoped under .mg, plus the Website V2 navigation scoped to
-   [data-nav="v2"] (fifth copy; all five merge when the navigation goes
-   site-wide — see the note in day-to-day.css).
-
-   Shape: hero, then a 2 × 3 editorial grid of six decisions, then the
-   closing band and the CTA. Each cell is a heading, one line, and one
-   runtime frame at exactly the same size as the other five — the point
-   of the page is comparison, so nothing may be bigger than its
-   neighbour. No feature grid, no icon grid, no horizontal flow.
-   ===================================================================== */
-
-.mg {
-  --mg-ink: #1A3B32;
-  --mg-ink-soft: #3F534C;
-  --mg-body: #45514D;
-  --mg-mute: #7C8783;
-  --mg-line: rgba(26, 59, 50, 0.14);
-  --mg-line-soft: rgba(26, 59, 50, 0.08);
-
-  --grid-max: 1360px;
-  --grid-gutter: clamp(20px, 4.4vw, 80px);
-
-  background: var(--c-paper);
-}
 
 /* --- Type ------------------------------------------------------------ */
 .mg .mg-h1 {
@@ -67,46 +44,6 @@
 }
 
 /* --- Navigation (fifth copy; see file header) ------------------------- */
-[data-nav="v2"] .nav__link { letter-spacing: 0.08em; }
-[data-nav="v2"] .nav__reveal {
-  position: absolute;
-  top: calc(100% + 1.15rem);
-  left: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-  width: max-content;
-  max-width: 24em;
-  opacity: 0;
-  transform: translate(-50%, -3px);
-  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
-  pointer-events: none;
-}
-[data-nav="v2"] .nav__link:hover .nav__reveal,
-[data-nav="v2"] .nav__link:focus-visible .nav__reveal { opacity: 1; transform: translate(-50%, 0); }
-[data-nav="v2"] .nav__en {
-  font-family: var(--ff-mono); font-size: 0.6875rem; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--mg-mute); white-space: nowrap;
-}
-[data-nav="v2"] .nav__say {
-  font-family: var(--ff-display); font-size: 0.875rem; line-height: 1.5;
-  color: var(--mg-ink-soft); white-space: nowrap;
-}
-[data-nav="v2"] .nav__link--soon,
-[data-nav="v2"] .menu__link--soon { color: var(--mg-mute); cursor: default; }
-[data-nav="v2"] .nav__link--soon:hover { color: var(--mg-mute); }
-[data-nav="v2"] .nav__link--soon::after { display: none; }
-[data-nav="v2"] .nav__soon {
-  font-family: var(--ff-mono); font-size: 0.6875rem; letter-spacing: 0.2em;
-  color: var(--mg-mute); white-space: nowrap;
-}
-[data-nav="v2"] .menu__link { display: block; }
-[data-nav="v2"] .menu__en,
-[data-nav="v2"] .menu__soon {
-  display: block; margin-top: 0.3rem; font-family: var(--ff-mono);
-  font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mg-mute);
-}
 
 /* --- Hero ------------------------------------------------------------- */
 .mg-hero {
@@ -209,5 +146,4 @@
 @media (prefers-reduced-motion: reduce) {
   .mg [data-reveal] .media > picture > img,
   .mg [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
-  [data-nav="v2"] .nav__reveal { transition: none; }
 }

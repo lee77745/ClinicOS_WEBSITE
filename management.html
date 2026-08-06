@@ -24,10 +24,11 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Serif+TC:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Serif+TC:wght@200;300;400;500&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/chapter-system.css">
 <link rel="stylesheet" href="assets/css/page.css">
 <link rel="stylesheet" href="assets/css/management.css">
 </head>
@@ -37,20 +38,19 @@
 
 <header class="header" data-header data-nav="v2">
   <div class="header__inner">
-    <a class="brandmark" href="index.html" aria-label="ClinicOS 首頁">
-      <img class="brandmark__mark" src="assets/brand/clinicos-symbol-light.png" alt="" width="32" height="32" decoding="async">
-      <span>ClinicOS</span>
-      <span class="brandmark__sub">珂立雲</span>
+    <a class="brandmark brandmark--lockup" href="index.html" aria-label="ClinicOS 珂立雲首頁">
+      <img class="brandmark__logo brandmark__logo--on-light" src="assets/brand/clinicos-logo-light.png" alt="ClinicOS 珂立雲醫療雲端管理系統" width="766" height="326" decoding="async">
+      <img class="brandmark__logo brandmark__logo--on-dark" src="assets/brand/clinicos-logo-dark.png" alt="" width="727" height="250" decoding="async" aria-hidden="true">
     </a>
 
     <nav class="nav" aria-label="主要導覽">
-      <a class="nav__link" href="index.html">緣起<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Why ClinicOS</span><span class="nav__say">每一天，都值得被好好經營。</span></span></a>
-      <a class="nav__link" href="day.html">一天<span class="nav__reveal" aria-hidden="true"><span class="nav__en">A Day in the Clinic</span><span class="nav__say">一天結束的時候，這一天還在。</span></span></a>
-      <a class="nav__link" href="day-to-day.html">日常<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Daily Operations</span><span class="nav__say">讓工作接得下去，而不是重新開始。</span></span></a>
-      <a class="nav__link" href="trust.html">信任<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Customer Journey</span><span class="nav__say">每一次回來，都不是偶然。</span></span></a>
-      <a class="nav__link" href="management.html" aria-current="page">經營<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Management</span><span class="nav__say">每一個決策，都來自看得見的經營。</span></span></a>
-      <a class="nav__link" href="future.html">未來<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Future</span><span class="nav__say">陪伴診所持續成長。</span></span></a>
-      <a class="nav__link" href="contact.html">啟程<span class="nav__reveal" aria-hidden="true"><span class="nav__en">Get Started</span><span class="nav__say">從您診所的一天開始聊。</span></span></a>
+      <a class="nav__link" href="index.html">緣起<span class="nav__reveal" aria-hidden="true"><span class="nav__en">ORIGIN</span><span class="nav__say">讓每一天都算數。</span></span></a>
+      <a class="nav__link" href="day.html">一天<span class="nav__reveal" aria-hidden="true"><span class="nav__en">A DAY IN THE CLINIC</span><span class="nav__say">一天結束的時候，這一天還在。</span></span></a>
+      <a class="nav__link" href="day-to-day.html">日常<span class="nav__reveal" aria-hidden="true"><span class="nav__en">DAILY OPERATIONS</span><span class="nav__say">讓工作接得下去，而不是重新開始。</span></span></a>
+      <a class="nav__link" href="trust.html">信任<span class="nav__reveal" aria-hidden="true"><span class="nav__en">TRUST</span><span class="nav__say">每一次回來，都不是偶然。</span></span></a>
+      <a class="nav__link" href="management.html" aria-current="page">經營<span class="nav__reveal" aria-hidden="true"><span class="nav__en">MANAGEMENT</span><span class="nav__say">每一個決策，都來自看得見的經營。</span></span></a>
+      <a class="nav__link" href="future.html">未來<span class="nav__reveal" aria-hidden="true"><span class="nav__en">FUTURE</span><span class="nav__say">陪伴診所持續成長。</span></span></a>
+      <a class="nav__link" href="contact.html">啟程<span class="nav__reveal" aria-hidden="true"><span class="nav__en">START</span><span class="nav__say">每一段改變，都始於一個決定。</span></span></a>
     </nav>
 
     <div class="header__actions">
@@ -64,13 +64,13 @@
 
 <div class="menu" id="site-menu" aria-hidden="true" data-menu data-nav="v2">
   <nav class="menu__list" aria-label="行動版導覽">
-    <a class="menu__link" href="index.html">緣起<span class="menu__en">Why ClinicOS</span></a>
-    <a class="menu__link" href="day.html">一天<span class="menu__en">A Day in the Clinic</span></a>
-    <a class="menu__link" href="day-to-day.html">日常<span class="menu__en">Daily Operations</span></a>
-    <a class="menu__link" href="trust.html">信任<span class="menu__en">Customer Journey</span></a>
-    <a class="menu__link" href="management.html" aria-current="page">經營<span class="menu__en">Management</span></a>
-    <a class="menu__link" href="future.html">未來<span class="menu__en">Future</span></a>
-    <a class="menu__link" href="contact.html">啟程<span class="menu__en">Get Started</span></a>
+    <a class="menu__link" href="index.html">緣起<span class="menu__en">ORIGIN</span></a>
+    <a class="menu__link" href="day.html">一天<span class="menu__en">A DAY IN THE CLINIC</span></a>
+    <a class="menu__link" href="day-to-day.html">日常<span class="menu__en">DAILY OPERATIONS</span></a>
+    <a class="menu__link" href="trust.html">信任<span class="menu__en">TRUST</span></a>
+    <a class="menu__link" href="management.html" aria-current="page">經營<span class="menu__en">MANAGEMENT</span></a>
+    <a class="menu__link" href="future.html">未來<span class="menu__en">FUTURE</span></a>
+    <a class="menu__link" href="contact.html">啟程<span class="menu__en">START</span></a>
   </nav>
   <div class="menu__foot">
     <a class="btn btn--primary" href="contact.html">預約產品導覽</a>
@@ -292,12 +292,29 @@
 <!-- =================================================================
      產品畫面來源
      ================================================================= -->
-<section class="mg-source" aria-label="產品畫面來源說明">
+<section class="mg-source bg-sage" aria-label="產品畫面來源說明">
   <div class="shell">
     <p class="mg-source__text">
       本頁六張畫面皆為 ClinicOS 展示環境的實際操作畫面，資料期間分別為 2026 年 7 月與 8 月。
       畫面中的姓名、品項與金額皆為示範資料，不對應任何真實顧客或診所。
     </p>
+  </div>
+</section>
+
+<!-- =================================================================
+     Next chapter
+     ================================================================= -->
+<section class="next-chapter" aria-label="下一章">
+  <div class="shell next-chapter__grid">
+    <div>
+      <p class="next-chapter__label">Next Chapter</p>
+      <p class="next-chapter__name">未來</p>
+      <p class="next-chapter__en">FUTURE</p>
+      <p class="next-chapter__say">陪伴診所持續成長。</p>
+    </div>
+    <div class="next-chapter__action">
+      <a class="btn btn--on-ink" href="future.html">閱讀下一章 →</a>
+    </div>
   </div>
 </section>
 
