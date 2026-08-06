@@ -120,19 +120,17 @@
 <!-- =================================================================
      六個經營面向 — 2 × 3
      ================================================================= -->
-<section class="mg-grid" aria-label="六個經營面向">
-  <div class="shell mg-grid__inner">
-
-    <!-- 01 -->
-    <article class="mg-cell">
-      <div class="mg-cell__head" data-reveal>
-        <span class="mg-cell__num">01</span>
-        <h2 class="mg-h3">銷售概況</h2>
-      </div>
-      <p class="mg-body mg-cell__line" data-reveal data-reveal-step="1">
-        收入只是結果。真正重要的是知道收入從哪裡來，以及今天是否達成預期。
-      </p>
-      <figure class="mg-cell__figure" data-reveal>
+<!-- =================================================================
+     01 · 銷售概況 — the opening spread. One screen the width of the
+     page, and the sentence set large enough to be read as a statement.
+     ================================================================= -->
+<section class="mg-open" aria-label="銷售概況">
+  <div class="shell">
+    <div class="mg-open__head">
+      <p class="mg-item__num" data-reveal>01</p>
+      <h2 class="mg-h2 mg-open__title" data-reveal data-reveal-step="1">銷售概況</h2>
+    </div>
+    <figure class="mg-open__figure" data-reveal>
         <div class="media media--screen">
           <picture>
             <source type="image/avif" sizes="(min-width: 1440px) 640px, (min-width: 900px) 46vw, calc(100vw - 40px)"
@@ -146,18 +144,20 @@
           </picture>
         </div>
       </figure>
-    </article>
+    <p class="mg-open__say" data-reveal data-reveal-step="1">收入只是結果。真正重要的是知道收入從哪裡來，以及今天是否達成預期。</p>
+  </div>
+</section>
 
-    <!-- 02 -->
-    <article class="mg-cell">
-      <div class="mg-cell__head" data-reveal>
-        <span class="mg-cell__num">02</span>
-        <h2 class="mg-h3">客戶概況</h2>
-      </div>
-      <p class="mg-body mg-cell__line" data-reveal data-reveal-step="1">
-        客戶手上還留著多少沒做完的療程，就是診所還欠著多少服務——那是責任，也是下一次見面的理由。
-      </p>
-      <figure class="mg-cell__figure" data-reveal>
+<!-- =================================================================
+     02 + 03 · 客戶概況 / 療程分析 — a quieter two-column spread
+     ================================================================= -->
+<section class="mg-pair mg-pair--beige" aria-label="客戶概況與療程分析">
+  <div class="shell mg-pair__grid">
+    <article class="mg-item" data-reveal>
+        <p class="mg-item__num">02</p>
+        <h2 class="mg-h3 mg-item__title">客戶概況</h2>
+        <p class="mg-body mg-item__line">客戶手上還留著多少沒做完的療程，就是診所還欠著多少服務——那是責任，也是下一次見面的理由。</p>
+      <figure class="mg-item__figure" data-reveal>
         <div class="media media--screen">
           <picture>
             <source type="image/avif" sizes="(min-width: 1440px) 640px, (min-width: 900px) 46vw, calc(100vw - 40px)"
@@ -172,17 +172,11 @@
         </div>
       </figure>
     </article>
-
-    <!-- 03 -->
-    <article class="mg-cell">
-      <div class="mg-cell__head" data-reveal>
-        <span class="mg-cell__num">03</span>
-        <h2 class="mg-h3">療程分析</h2>
-      </div>
-      <p class="mg-body mg-cell__line" data-reveal data-reveal-step="1">
-        看懂哪些療程真的被做掉、做了多少、平均一次多少錢，才知道資源該放在哪裡。
-      </p>
-      <figure class="mg-cell__figure" data-reveal>
+    <article class="mg-item" data-reveal data-reveal-step="1">
+        <p class="mg-item__num">03</p>
+        <h2 class="mg-h3 mg-item__title">療程分析</h2>
+        <p class="mg-body mg-item__line">看懂哪些療程真的被做掉、做了多少、平均一次多少錢，才知道資源該放在哪裡。</p>
+      <figure class="mg-item__figure" data-reveal>
         <div class="media media--screen">
           <picture>
             <source type="image/avif" sizes="(min-width: 1440px) 640px, (min-width: 900px) 46vw, calc(100vw - 40px)"
@@ -197,17 +191,19 @@
         </div>
       </figure>
     </article>
+  </div>
+</section>
 
-    <!-- 04 -->
-    <article class="mg-cell">
-      <div class="mg-cell__head" data-reveal>
-        <span class="mg-cell__num">04</span>
-        <h2 class="mg-h3">庫存概況</h2>
-      </div>
-      <p class="mg-body mg-cell__line" data-reveal data-reveal-step="1">
-        真正好的管理，不是缺貨才補貨。安全庫存與補貨點就擺在品項旁邊，該叫貨的時候自己會說話。
-      </p>
-      <figure class="mg-cell__figure" data-reveal>
+<!-- =================================================================
+     04 · 庫存概況 — the full-bleed plate. The widest thing on the page.
+     ================================================================= -->
+<section class="mg-plate" aria-label="庫存概況">
+  <div class="shell mg-plate__head">
+    <p class="mg-item__num" data-reveal>04</p>
+    <h2 class="mg-h2 mg-plate__title" data-reveal data-reveal-step="1">庫存概況</h2>
+    <p class="mg-body mg-plate__line" data-reveal data-reveal-step="2">真正好的管理，不是缺貨才補貨。安全庫存與補貨點就擺在品項旁邊，該叫貨的時候自己會說話。</p>
+  </div>
+  <figure class="mg-plate__figure" data-reveal>
         <div class="media media--screen">
           <picture>
             <source type="image/avif" sizes="(min-width: 1440px) 640px, (min-width: 900px) 46vw, calc(100vw - 40px)"
@@ -221,18 +217,18 @@
           </picture>
         </div>
       </figure>
-    </article>
+</section>
 
-    <!-- 05 -->
-    <article class="mg-cell">
-      <div class="mg-cell__head" data-reveal>
-        <span class="mg-cell__num">05</span>
-        <h2 class="mg-h3">財務收款</h2>
-      </div>
-      <p class="mg-body mg-cell__line" data-reveal data-reveal-step="1">
-        每一筆收入都應該清楚、有依據、能被核對——收了多少、用什麼方式收的，一天結束前就對得完。
-      </p>
-      <figure class="mg-cell__figure" data-reveal>
+<!-- =================================================================
+     05 + 06 · 財務收款 / 經營分析 — back to two columns, on paper
+     ================================================================= -->
+<section class="mg-pair" aria-label="財務收款與經營分析">
+  <div class="shell mg-pair__grid">
+    <article class="mg-item" data-reveal>
+        <p class="mg-item__num">05</p>
+        <h2 class="mg-h3 mg-item__title">財務收款</h2>
+        <p class="mg-body mg-item__line">每一筆收入都應該清楚、有依據、能被核對——收了多少、用什麼方式收的，一天結束前就對得完。</p>
+      <figure class="mg-item__figure" data-reveal>
         <div class="media media--screen">
           <picture>
             <source type="image/avif" sizes="(min-width: 1440px) 640px, (min-width: 900px) 46vw, calc(100vw - 40px)"
@@ -247,17 +243,11 @@
         </div>
       </figure>
     </article>
-
-    <!-- 06 -->
-    <article class="mg-cell">
-      <div class="mg-cell__head" data-reveal>
-        <span class="mg-cell__num">06</span>
-        <h2 class="mg-h3">經營分析</h2>
-      </div>
-      <p class="mg-body mg-cell__line" data-reveal data-reveal-step="1">
-        數據不是用來記錄昨天，而是用來判斷明天。指定一個月份，筆數、金額、平均客單與付款結構就一次攤開。
-      </p>
-      <figure class="mg-cell__figure" data-reveal>
+    <article class="mg-item" data-reveal data-reveal-step="1">
+        <p class="mg-item__num">06</p>
+        <h2 class="mg-h3 mg-item__title">經營分析</h2>
+        <p class="mg-body mg-item__line">數據不是用來記錄昨天，而是用來判斷明天。指定一個月份，筆數、金額、平均客單與付款結構就一次攤開。</p>
+      <figure class="mg-item__figure" data-reveal>
         <div class="media media--screen">
           <picture>
             <source type="image/avif" sizes="(min-width: 1440px) 640px, (min-width: 900px) 46vw, calc(100vw - 40px)"
@@ -272,14 +262,13 @@
         </div>
       </figure>
     </article>
-
   </div>
 </section>
 
 <!-- =================================================================
      Ending
      ================================================================= -->
-<section class="mg-end" aria-labelledby="end-title">
+<section class="mg-end mg-end--beige" aria-labelledby="end-title">
   <div class="shell mg-end__grid">
     <h2 class="mg-end__line" id="end-title" data-reveal>數據不是為了記錄過去，<br>而是讓未來更值得期待。</h2>
     <p class="mg-body mg-end__note" data-reveal data-reveal-step="1">

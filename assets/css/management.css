@@ -74,32 +74,100 @@
   .mg-hero__figure { grid-column: 6 / 13; margin-right: calc(var(--grid-gutter) * -1); }
 }
 
-/* --- 2 × 3 editorial grid -------------------------------------------- */
-.mg-grid { padding-bottom: clamp(4rem, 2.6rem + 5vw, 7rem); }
-.mg-grid__inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem) clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
-}
-@media (min-width: 900px) { .mg-grid__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* ---------------------------------------------------------------------
+   The run of six — a magazine rhythm, not a grid of six equal tiles.
 
-.mg-cell__head { display: flex; align-items: baseline; gap: 0.75rem; }
-.mg-cell__num {
+     01  full-width plate + the sentence set large
+     02  two columns, on beige
+     03
+     04  full-bleed plate, the widest thing on the page
+     05  two columns, back on paper
+     06
+     收束
+
+   Big, small, big, small, close. The runtime is the subject throughout;
+   what changes is how much room it is given and how loud the words next
+   to it are.
+   --------------------------------------------------------------------- */
+
+/* Shared item furniture ------------------------------------------------ */
+.mg-item__num {
   font-family: var(--ff-mono);
   font-size: 0.8125rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.24em;
   color: var(--mg-mute);
 }
-.mg-cell__line { margin-top: 0.6rem; max-width: 26em; }
-.mg-cell__figure { margin-top: clamp(1.25rem, 1rem + 1.2vw, 1.875rem); }
-/* every frame the same box, so six screens can actually be compared */
-.mg-cell__figure .media { aspect-ratio: 16 / 10; }
+.mg-item__title { margin-top: clamp(0.6rem, 0.5rem + 0.5vw, 1rem); }
+.mg-item__line { margin-top: clamp(0.7rem, 0.6rem + 0.6vw, 1.1rem); max-width: 26em; }
+
+/* 01 — the opening spread --------------------------------------------- */
+.mg-open { padding-block: clamp(2rem, 1.4rem + 2.4vw, 3.5rem) clamp(4.5rem, 3rem + 6vw, 9rem); }
+.mg-open__head { max-width: 28em; }
+.mg-open__title {
+  margin-top: clamp(0.6rem, 0.5rem + 0.5vw, 1rem);
+  font-size: clamp(2.25rem, 1.6rem + 2.8vw, 3.75rem);
+  line-height: 1.28;
+}
+.mg-open__figure { margin-top: clamp(2rem, 1.5rem + 2.4vw, 3.5rem); }
+.mg-open__figure .media { aspect-ratio: 16 / 10; }
+/* the sentence is the pull-quote of the chapter, not a caption */
+.mg-open__say {
+  margin-top: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem);
+  font-family: var(--ff-brand-slogan);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.75rem);
+  line-height: 1.6;
+  color: var(--mg-ink);
+  max-width: 20em;
+}
+@media (min-width: 1000px) { .mg-open__say { margin-left: 16.666%; } }
+
+/* 02+03 and 05+06 — the two-column spreads ---------------------------- */
+.mg-pair { padding-block: clamp(4rem, 2.6rem + 5vw, 7.5rem); }
+.mg-pair--beige { background: var(--c-paper-sunken); }
+.mg-pair__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(3rem, 2rem + 4vw, 5rem) clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+}
+@media (min-width: 900px) { .mg-pair__grid { grid-template-columns: 1fr 1fr; } }
+.mg-item__figure { margin-top: clamp(1.25rem, 1rem + 1.2vw, 2rem); }
+.mg-item__figure .media { aspect-ratio: 16 / 10; }
+/* the second column drops a little, so the spread reads as a spread
+   rather than as two tiles stamped side by side */
+@media (min-width: 900px) {
+  .mg-pair__grid > .mg-item:nth-child(2) { margin-top: clamp(2rem, 1.4rem + 2.6vw, 3.5rem); }
+}
+
+/* 04 — the full-bleed plate ------------------------------------------- */
+.mg-plate {
+  background: #E7EDE9;
+  padding-block: clamp(4rem, 2.6rem + 5vw, 7.5rem);
+  overflow: hidden;
+}
+.mg-plate__head { max-width: 30em; }
+.mg-plate__title {
+  margin-top: clamp(0.6rem, 0.5rem + 0.5vw, 1rem);
+  font-size: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  line-height: 1.3;
+}
+.mg-plate__line { margin-top: clamp(0.8rem, 0.7rem + 0.7vw, 1.25rem); max-width: 30em; }
+/* wider than the text column: the plate runs past the page gutter */
+.mg-plate__figure {
+  margin-top: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem);
+  padding-inline: clamp(12px, 2.4vw, 40px);
+}
+.mg-plate__figure .media { aspect-ratio: 16 / 10; }
+@media (min-width: 1200px) {
+  .mg-plate__figure { padding-inline: clamp(40px, 6vw, 110px); }
+}
 
 /* --- Ending ----------------------------------------------------------- */
 .mg-end {
   background: var(--c-paper-sunken);
   padding-block: clamp(3.5rem, 2.4rem + 4.4vw, 6rem);
 }
+.mg-end--beige { background: var(--c-paper-sunken); }
 .mg-end__grid {
   display: grid;
   grid-template-columns: 1fr;

@@ -106,7 +106,7 @@ html .day .day-body, html .dtd .dtd-body, html .tr .tr-body, html .mg .mg-body, 
 html .day .day-lead, html .dtd .dtd-lead, html .tr .tr-lead, html .mg .mg-lead, html .fu .fu-lead {
   font-size: var(--fs-lead);
 }
-html .dtd .dtd-points li, html .fu .fu-card__list li, html .mg .mg-cell__line {
+html .dtd .dtd-points li, html .fu .fu-card__list li, html .mg .mg-item__line {
   font-size: var(--fs-list);
 }
 html .day-source__note, html .dtd-source__note, html .tr-source__note,
