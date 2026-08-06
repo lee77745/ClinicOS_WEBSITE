@@ -702,8 +702,8 @@ main { --gap-section: clamp(4rem, 2.2rem + 4.6vw, 6rem); }
    of air, and the room arrives underneath as a full-bleed band. The home
    page shows no product, no device and no runtime.
    ===================================================================== */
-.home-hero { padding-top: calc(var(--header-h) + clamp(3rem, 2rem + 5vw, 7rem)); }
-.home-hero__copy { max-width: 46em; padding-bottom: clamp(3rem, 2rem + 4.4vw, 6rem); }
+.home-hero { padding-top: calc(var(--header-h) + clamp(2rem, 1.4rem + 3.4vw, 4rem)); }
+.home-hero__copy { max-width: 46em; padding-bottom: clamp(2rem, 1.4rem + 3vw, 3rem); }
 .home-hero__kicker {
   font-size: var(--fs-caption);
   line-height: 1.9;
