@@ -30,6 +30,7 @@
 <link rel="stylesheet" href="assets/css/components.css">
 <link rel="stylesheet" href="assets/css/chapter-system.css">
 <link rel="stylesheet" href="assets/css/page.css">
+<link rel="stylesheet" href="assets/css/start.css">
 </head>
 
 <body>
@@ -75,74 +76,151 @@
   </div>
 </div>
 
-<main id="main">
+<main id="main" class="st">
 
-<!-- 01 · 每一間診所，都有自己的故事 -->
-<section class="page-hero" aria-labelledby="page-title">
+<!-- =================================================================
+     01 · Hero — the room before anyone arrives
+     ================================================================= -->
+<section class="st-hero" aria-labelledby="page-title">
+  <div class="shell st-hero__grid">
+    <div class="st-hero__copy">
+      <p class="eyebrow" data-reveal>Chapter 07</p>
+      <h1 class="st-h1 st-hero__title" id="page-title" data-reveal data-reveal-step="1">啟 程</h1>
+      <p class="st-hero__claim" data-reveal data-reveal-step="2">今天，<br>只是開始。</p>
+      <p class="st-lead st-hero__lead" data-reveal data-reveal-step="3">
+        您已經看完這間診所的一天、日常、信任與經營。<br>剩下的，是您診所自己的版本。
+      </p>
+    </div>
+
+    <figure class="st-hero__figure" data-reveal data-reveal-step="1">
+      <div class="media media--photo">
+        <picture>
+          <source media="(min-width: 1000px)" type="image/avif" sizes="(min-width: 1440px) 475px, 36vw"
+                  srcset="assets/img/start-hero-460.avif 460w, assets/img/start-hero-640.avif 640w, assets/img/start-hero-900.avif 900w, assets/img/start-hero-1240.avif 1240w">
+          <source media="(min-width: 1000px)" type="image/webp" sizes="(min-width: 1440px) 475px, 36vw"
+                  srcset="assets/img/start-hero-460.webp 460w, assets/img/start-hero-640.webp 640w, assets/img/start-hero-900.webp 900w, assets/img/start-hero-1240.webp 1240w">
+          <source media="(min-width: 1000px)" sizes="(min-width: 1440px) 475px, 36vw"
+                  srcset="assets/img/start-hero-460.jpg 460w, assets/img/start-hero-640.jpg 640w, assets/img/start-hero-900.jpg 900w, assets/img/start-hero-1240.jpg 1240w">
+          <source type="image/avif" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/start-hero-sm-460.avif 460w, assets/img/start-hero-sm-640.avif 640w, assets/img/start-hero-sm-900.avif 900w">
+          <source type="image/webp" sizes="calc(100vw - 40px)"
+                  srcset="assets/img/start-hero-sm-460.webp 460w, assets/img/start-hero-sm-640.webp 640w, assets/img/start-hero-sm-900.webp 900w">
+          <img src="assets/img/start-hero-sm-640.jpg" sizes="calc(100vw - 40px)"
+               srcset="assets/img/start-hero-sm-460.jpg 460w, assets/img/start-hero-sm-640.jpg 640w, assets/img/start-hero-sm-900.jpg 900w"
+               width="900" height="675" alt="開診之前的診所大廳，光線落在沙發與空著的櫃檯上。"
+               decoding="async" fetchpriority="high">
+        </picture>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- =================================================================
+     02 · 回望 — the six chapters, one line each
+     ================================================================= -->
+<section class="st-look" aria-labelledby="look-title">
   <div class="shell">
-    <p class="eyebrow" data-reveal>開始聊聊</p>
-    <h1 class="display page-hero__title" id="page-title" data-reveal data-reveal-step="1">每一間診所，<br>都有自己的故事。</h1>
-    <p class="lead page-hero__lead" data-reveal data-reveal-step="2">我們不會先介紹系統。我們會先了解：您的診所，現在正面對什麼。</p>
+    <p class="eyebrow" data-reveal>回望</p>
+    <p class="st-lead st-look__lead" id="look-title" data-reveal data-reveal-step="1">
+      這一路走過來，其實只講了一件事的六個面向。
+    </p>
+
+    <div class="st-look__list">
+      <div class="st-look__item" data-reveal>
+        <p class="st-look__name">緣起</p>
+        <p class="st-look__say">我們在櫃檯後面站了很久，看見一天裡有很多事沒有被留下來。</p>
+      </div>
+      <div class="st-look__item" data-reveal>
+        <p class="st-look__name">一天</p>
+        <p class="st-look__say">從開診之前到打烊之後，一天不是十件事，是一條線。</p>
+      </div>
+      <div class="st-look__item" data-reveal>
+        <p class="st-look__name">日常</p>
+        <p class="st-look__say">七件每天都會發生的工作，差別只在做完之後接不接得下去。</p>
+      </div>
+      <div class="st-look__item" data-reveal>
+        <p class="st-look__name">信任</p>
+        <p class="st-look__say">從第一次預約到帶朋友一起來，每一次回來都不是偶然。</p>
+      </div>
+      <div class="st-look__item" data-reveal>
+        <p class="st-look__name">經營</p>
+        <p class="st-look__say">六個看得見的面向，讓每一個決策都有依據。</p>
+      </div>
+      <div class="st-look__item" data-reveal>
+        <p class="st-look__name">未來</p>
+        <p class="st-look__say">今天需要的只是開始，明天需要的，我們也會準備好。</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- 02 · 我們想先了解 -->
-<section class="section section--tight" aria-labelledby="ask-title">
+<!-- =================================================================
+     03 · 留下來的
+     ================================================================= -->
+<section class="st-keep" aria-labelledby="keep-title">
   <div class="shell">
-    <p class="eyebrow" data-reveal>我們想先了解</p>
-    <h2 class="h2" id="ask-title" data-reveal data-reveal-step="1" style="margin-top: var(--sp-5); max-width: 24ch;">您最希望改善的是什麼？</h2>
-    <p class="body" data-reveal data-reveal-step="2" style="margin-top: var(--sp-5); max-width: 40ch;">不必填很多資料。一句話就夠。</p>
+    <h2 class="st-keep__line" id="keep-title" data-reveal>
+      一間診所，每天都在改變。<br>真正留下來的，不是系統，<br>而是每一天。
+    </h2>
+    <p class="st-body st-keep__coda" data-reveal data-reveal-step="1">
+      所以我們不急著問您要不要用。先看看您診所現在的一天長什麼樣子，
+      再一起判斷哪一段值得先整理起來。
+    </p>
+  </div>
+</section>
 
-    <div class="rows">
-      <article class="row row--plain" data-reveal>
-        <h3 class="h3 row__term">重複</h3>
-        <div class="row__body"><p class="body">每天重複很多工作。</p></div>
-      </article>
-      <article class="row row--plain" data-reveal>
-        <h3 class="h3 row__term">資料</h3>
-        <div class="row__body"><p class="body">資料很難整理。</p></div>
-      </article>
-      <article class="row row--plain" data-reveal>
-        <h3 class="h3 row__term">交接</h3>
-        <div class="row__body"><p class="body">團隊交接困難。</p></div>
-      </article>
-      <article class="row row--plain" data-reveal>
-        <h3 class="h3 row__term">多院所</h3>
-        <div class="row__body"><p class="body">多院所管理。</p></div>
-      </article>
-      <article class="row row--plain" data-reveal>
-        <h3 class="h3 row__term">起點</h3>
-        <div class="row__body"><p class="body">不知道從哪裡開始。</p></div>
-      </article>
+<!-- =================================================================
+     04 · 兩種開始 — the first time the page asks for anything
+     ================================================================= -->
+<section class="st-ways" aria-labelledby="ways-title">
+  <div class="shell">
+    <p class="eyebrow" data-reveal>開始的方式</p>
+    <h2 class="st-way__title st-ways__head" id="ways-title" data-reveal data-reveal-step="1">
+      開始一段新的日常。
+    </h2>
+
+    <div class="st-ways__grid">
+      <div class="st-way" data-reveal>
+        <h3 class="st-way__title">先聊聊就好</h3>
+        <p class="st-body st-way__text">
+          還沒到要決定的階段也沒關係。加入官方 LINE，我們會先了解您的狀況，再一起討論是否適合。
+        </p>
+        <p class="st-way__action">
+          <a class="btn btn--primary" href="https://lin.ee/sp5MbgH" target="_blank" rel="noopener noreferrer">加入官方 LINE</a>
+        </p>
+        <div class="st-way__qr" data-reveal>
+          <img src="assets/brand/line-qrcode.png" alt="ClinicOS 官方 LINE QR Code" width="540" height="540" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="st-way" data-reveal data-reveal-step="1">
+        <h3 class="st-way__title">走一遍您診所的一天</h3>
+        <p class="st-body st-way__text">
+          約四十五分鐘，不是簡報，是一段對話。留下診所的基本資訊，我們會與您約時間。
+        </p>
+        <p class="st-way__action">
+          <a class="btn btn--ghost" href="#start-form">留下診所資訊 →</a>
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 03 · 我們怎麼開始 -->
-<section class="section section--sunken" aria-labelledby="how-title">
-  <div class="shell duo">
-    <div class="duo__head">
-      <p class="eyebrow" data-reveal>我們怎麼開始</p>
-      <h2 class="h2 duo__title" id="how-title" data-reveal data-reveal-step="1">不是簡報，<br>是一段對話。</h2>
-    </div>
-    <div class="duo__body prose" data-reveal data-reveal-step="2">
-      <p class="lead">先了解。</p>
-      <p class="lead">一起整理。</p>
-      <p class="lead">再決定是否適合。</p>
-    </div>
-  </div>
-</section>
-
-<!-- 04 · Contact（表單與聯絡方式原樣保留） -->
-<section class="section section--sunken" aria-labelledby="form-title">
-  <div class="shell duo">
-    <div class="duo__head">
-      <p class="eyebrow" data-reveal>聯絡</p>
-      <h2 class="h2 duo__title" id="form-title" data-reveal data-reveal-step="1">先讓我們認識<br>您的診所。</h2>
-      <p class="body" data-reveal data-reveal-step="2" style="margin-top: var(--sp-5); max-width: 32ch;">標示 * 為必填。這些資訊只用來安排這次見面，不會另作他用。</p>
+<!-- =================================================================
+     05 · 表單 — the last step. Fields, names, ids and the submit flow
+     are exactly as they were; only the frame around them changed.
+     ================================================================= -->
+<section class="st-form" id="start-form" aria-labelledby="form-title">
+  <div class="shell">
+    <div class="st-form__head">
+      <p class="eyebrow" data-reveal>最後一步</p>
+      <h2 class="st-form__title" id="form-title" data-reveal data-reveal-step="1">先讓我們認識您的診所。</h2>
+      <p class="st-body st-form__note" data-reveal data-reveal-step="2">
+        標示 * 為必填。這些資訊只用來安排這次見面，不會另作他用。
+      </p>
     </div>
 
-    <div class="duo__body">
+    <div class="st-form__body">
       <!-- 表單送出由 site.js 接手，POST /api/contact，後端轉為官方 LINE 通知 -->
       <form class="form" data-form novalidate aria-describedby="form-hint">
         <div class="form__grid">
@@ -208,32 +286,18 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="line-title">
-  <div class="shell line">
-    <div class="line__qr" data-reveal>
-      <img src="assets/brand/line-qrcode.png" alt="ClinicOS 官方 LINE QR Code" width="540" height="540" loading="lazy" decoding="async">
-    </div>
-    <div class="line__copy">
-      <p class="eyebrow" data-reveal>官方 LINE</p>
-      <h2 class="h2" id="line-title" data-reveal data-reveal-step="1">加入 ClinicOS 官方 LINE</h2>
-      <p class="lead" data-reveal data-reveal-step="2" style="margin-top: var(--sp-5); max-width: 34ch;">如果您想先聊聊診所目前的狀況，歡迎加入官方 LINE。我們會先了解您的需求，再一起討論是否適合。</p>
-      <p class="line__action" data-reveal data-reveal-step="3">
-        <a class="btn btn--primary" href="https://lin.ee/sp5MbgH" target="_blank" rel="noopener noreferrer">加入官方 LINE</a>
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- 05 · 收尾 -->
-<section class="section section--vast section--ink" aria-labelledby="quote-title">
+<!-- =================================================================
+     06 · 闔上
+     ================================================================= -->
+<section class="st-close" aria-labelledby="close-title">
   <div class="shell">
-    <h2 class="display quote quote--wide" id="quote-title" data-reveal>重要的不是今天看了什麼，<br>是明天開始，會不會容易一點。</h2>
-  </div>
-</section>
-
-<section class="section section--tight" aria-labelledby="close-title">
-  <div class="shell">
-    <p class="statement say" id="close-title" data-reveal>真正重要的，不是今天決定使用 ClinicOS，<br>而是今天開始，重新整理您的診所。</p>
+    <h2 class="st-close__line" id="close-title" data-reveal>
+      重要的不是今天看了什麼，<br>是明天開始，會不會容易一點。
+    </h2>
+    <p class="st-close__coda" data-reveal data-reveal-step="1">
+      真正重要的，也不是今天決定使用 ClinicOS，而是今天開始，重新整理您的診所。
+    </p>
+    <p class="st-close__mark" data-reveal data-reveal-step="2">Chapter 07 · Start — 全書完</p>
   </div>
 </section>
 

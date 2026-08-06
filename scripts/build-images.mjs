@@ -103,6 +103,14 @@ const JOBS = [
     name: 'day-hero', ratio: 3 / 4, focus: 0.50, xfocus: 0.16, widths: [1240, 900, 640, 460] },
   { src: 'public/images/space/space-lobby-04.png',
     name: 'day-hero-sm', ratio: 4 / 3, focus: 0.50, xfocus: 0.28, widths: [900, 640, 460] },
+  /* contact.html — Chapter 07「啟程」. The room before anyone arrives:
+     an empty lobby in daylight, which is what a beginning looks like.
+     Freed up when chapter 02's close moved to the night lobby. */
+  { src: 'public/images/people/people-reception-06.png',
+    name: 'start-hero', ratio: 3 / 4, focus: 0.50, xfocus: 0.58, widths: [1240, 900, 640, 460] },
+  { src: 'public/images/people/people-reception-06.png',
+    name: 'start-hero-sm', ratio: 4 / 3, focus: 0.52, xfocus: 0.55, widths: [900, 640, 460] },
+
   /* 20:00 — the same room after the lights go down. The wide band keeps
      the counter light strip, the corridor and the window together; the
      phone crop opens out so the frame never collapses to a dark wall. */
@@ -135,8 +143,11 @@ const JOBS = [
      demo tenant, 1600x1200 CSS px / DPR 2, `box` trimming the tenant and
      system-date chrome off the top. Every frame is the same 16:10 so the
      page keeps one rhythm all the way down. */
-  { src: 'public/images/product/runtime-booking.png', name: 'dtd-rt-booking',
-    widths: [1600, 1200, 800], box: { left: 0, top: 360, width: 3200, height: 2000 } },
+  /* 01 預約安排 — the day's appointment board rather than a dashboard:
+     who is coming, at what time, with which member of staff. Captured
+     already scrolled to the board, so the frame starts at its own title. */
+  { src: 'public/images/product/runtime-appointment-board.png', name: 'dtd-rt-booking',
+    widths: [1600, 1200, 800], box: { left: 0, top: 0, width: 3200, height: 2000 } },
   { src: 'public/images/product/runtime-crm.png', name: 'dtd-rt-crm',
     widths: [1600, 1200, 800], box: { left: 0, top: 360, width: 3200, height: 2000 } },
   { src: 'public/images/product/runtime-courses.png', name: 'dtd-rt-courses',
