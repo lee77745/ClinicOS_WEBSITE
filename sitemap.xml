@@ -6,11 +6,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.clinicos.com.tw/why-clinicos.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://www.clinicos.com.tw/day.html</loc>
     <lastmod>2026-08-06</lastmod>
     <priority>0.9</priority>
@@ -36,26 +31,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.clinicos.com.tw/platform.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.clinicos.com.tw/method.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.clinicos.com.tw/solutions.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.clinicos.com.tw/products.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://www.clinicos.com.tw/contact.html</loc>
     <lastmod>2026-08-06</lastmod>
     <priority>0.7</priority>
@@ -64,10 +39,5 @@
     <loc>https://www.clinicos.com.tw/together.html</loc>
     <lastmod>2026-08-06</lastmod>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.clinicos.com.tw/faq.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <priority>0.6</priority>
   </url>
 </urlset>
