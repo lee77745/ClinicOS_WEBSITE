@@ -215,3 +215,31 @@
   .mg [data-reveal] .media > picture > img,
   .mg [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
 }
+
+/* =====================================================================
+   PACK 2-D — hero
+
+   Words on the left of a narrow column, then a single real runtime that
+   runs off the right edge of the page. No device mockup: the evidence is
+   the screen itself, cropped by the window rather than framed by a
+   laptop. Deliberately not the home page's band, and not a 50/50 split.
+   ===================================================================== */
+.mg-hero { overflow-x: clip; padding-block: calc(var(--header-h) + clamp(2rem, 1.2rem + 3.2vw, 4rem)) 0; min-height: 0; display: block; }
+.mg-hero__grid { display: block; }
+.mg-hero__copy { max-width: 32em; }
+.mg-hero__proof {
+  margin: clamp(2.5rem, 1.8rem + 3.4vw, 4.5rem) 0 0 auto;
+  width: min(96%, 1180px);
+  padding-left: var(--grid-gutter);
+}
+.mg-hero__proof .media { aspect-ratio: 16 / 10; border-radius: 6px 0 0 6px; }
+@media (min-width: 1000px) {
+  .mg-hero__copy { padding-left: 0; }
+  /* the frame leaves the page on the right, so it reads as a window on
+     something larger rather than as a picture placed on a slide */
+  .mg-hero__proof { width: min(78%, 1180px); margin-right: calc(var(--grid-gutter) * -1); }
+}
+@media (max-width: 599px) {
+  .mg-hero__proof { width: 100%; padding-left: 0; }
+  .mg-hero__proof .media { aspect-ratio: 1 / 1; --media-pos: 8% center; border-radius: 6px; }
+}

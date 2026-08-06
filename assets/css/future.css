@@ -321,3 +321,91 @@
   .fu [data-reveal] .media > picture > img,
   .fu [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
 }
+
+/* =====================================================================
+   PACK 2-D — hero
+
+   No photograph and no runtime. Ink, one chapter name, and the three
+   directions set as editorial marks rather than cards. The quietest and
+   darkest of the three heroes, so it can never be mistaken for the home
+   page or for chapter 05.
+   ===================================================================== */
+.fu-hero {
+  background: #1A3B32;
+  color: var(--c-text-invert);
+  padding-block: calc(var(--header-h) + clamp(4rem, 2.6rem + 6vw, 8.5rem)) clamp(4.5rem, 3rem + 6vw, 9rem);
+  min-height: 0;
+  display: block;
+}
+.fu-hero__inner { max-width: 62em; }
+.fu-hero__label {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-chapter-label);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 242, 0.55);
+}
+.fu .fu-hero__title {
+  margin-top: clamp(1.25rem, 1rem + 1.6vw, 2.25rem);
+  color: var(--c-text-invert);
+}
+.fu-hero__claim {
+  margin-top: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+  font-family: var(--ff-brand-slogan);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2.25rem);
+  line-height: 1.6;
+  color: var(--c-text-invert);
+}
+.fu-hero__rule {
+  width: clamp(96px, 12vw, 180px);
+  height: 1px;
+  background: rgba(247, 245, 242, 0.28);
+  margin: clamp(2rem, 1.5rem + 2.4vw, 3.5rem) 0;
+}
+.fu-hero__lead {
+  font-size: var(--fs-lead);
+  line-height: 1.95;
+  color: rgba(247, 245, 242, 0.82);
+  max-width: 26em;
+}
+/* three marks, read down on a phone and across on a desk. Not cards. */
+.fu-hero__marks {
+  margin-top: clamp(3rem, 2rem + 4vw, 5.5rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.fu-hero__marks li {
+  display: grid;
+  grid-template-columns: 3.5em 1fr;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+  padding-block: clamp(1rem, 0.8rem + 0.9vw, 1.6rem);
+  border-top: 1px solid rgba(247, 245, 242, 0.16);
+}
+.fu-hero__marks li:last-child { border-bottom: 1px solid rgba(247, 245, 242, 0.16); }
+.fu-hero__idx {
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: rgba(247, 245, 242, 0.45);
+}
+.fu-hero__mark {
+  font-family: var(--ff-brand-heading);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  color: var(--fu-gold);
+}
+.fu-hero__role {
+  grid-column: 2;
+  font-size: var(--fs-body);
+  line-height: 1.8;
+  color: rgba(247, 245, 242, 0.72);
+}
+@media (min-width: 860px) {
+  .fu-hero__marks { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(1.5rem, 1.1rem + 2vw, 3rem); }
+  .fu-hero__marks li:last-child { border-bottom: 0; }
+}

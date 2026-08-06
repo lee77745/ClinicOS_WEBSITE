@@ -101,46 +101,35 @@
 <!-- =================================================================
      Hero — split. Proposition and product on the first screen.
      ================================================================= -->
-<section class="hero" aria-labelledby="hero-title">
-  <div class="shell hero__grid">
-    <div class="hero__copy">
-      <p class="hero__kicker" data-reveal>ClinicOS 不是從功能開始，<br>而是從一間診所的一天開始。</p>
-      <h1 class="hero__title" id="hero-title" data-reveal data-reveal-step="1">讓診所營運，<br>更專注在<span class="hero__accent">重要的事</span>。</h1>
-      <p class="hero__desc" data-reveal data-reveal-step="2">每一天，診所都在照顧重要的人。我們希望，每一天累積的資料、流程與經驗，都能成為下一天的開始，而不是重新開始。</p>
-      <div class="hero__actions" data-reveal data-reveal-step="3">
-        <a class="btn btn--primary" href="contact.html">預約產品導覽</a>
-        <a class="btn btn--ghost" href="products.html">看看能做什麼</a>
-      </div>
-
-      <dl class="trust" data-reveal data-reveal-step="4">
-        <div class="trust__item">
-          <dt class="trust__key">單院所到多院所</dt>
-          <dd class="trust__label">支援不同規模的營運方式</dd>
-        </div>
-        <div class="trust__item">
-          <dt class="trust__key">約 45 分鐘</dt>
-          <dd class="trust__label">一起走過診所實際的一天</dd>
-        </div>
-        <div class="trust__item">
-          <dt class="trust__key">資料屬於診所</dt>
-          <dd class="trust__label">權責與匯出方式明確約定</dd>
-        </div>
-      </dl>
-    </div>
-
-    <div class="hero__visual" data-reveal data-reveal-step="2">
-      <picture>
-        <source type="image/avif" sizes="(min-width: 1000px) 52vw, calc(100vw - 44px)"
-                srcset="assets/img/hero-device-480.avif 480w, assets/img/hero-device-700.avif 700w, assets/img/hero-device-1000.avif 1000w, assets/img/hero-device-1400.avif 1400w">
-        <source type="image/webp" sizes="(min-width: 1000px) 52vw, calc(100vw - 44px)"
-                srcset="assets/img/hero-device-480.webp 480w, assets/img/hero-device-700.webp 700w, assets/img/hero-device-1000.webp 1000w, assets/img/hero-device-1400.webp 1400w">
-        <img src="assets/img/hero-device-1000.jpg" sizes="(min-width: 1000px) 52vw, calc(100vw - 44px)"
-             srcset="assets/img/hero-device-480.jpg 480w, assets/img/hero-device-700.jpg 700w, assets/img/hero-device-1000.jpg 1000w, assets/img/hero-device-1400.jpg 1400w"
-             width="1400" height="933" alt="ClinicOS 在桌機、筆電、平板與手機上的操作畫面。"
-             loading="eager" decoding="async" fetchpriority="high">
-      </picture>
+<section class="home-hero" aria-labelledby="hero-title">
+  <div class="shell home-hero__copy">
+    <p class="home-hero__kicker" data-reveal>ClinicOS 不是從功能開始，<br>而是從一間診所的一天開始。</p>
+    <h1 class="home-hero__title" id="hero-title" data-reveal data-reveal-step="1">讓診所營運，<br>更專注在<span class="home-hero__accent">重要的事</span>。</h1>
+    <p class="home-hero__desc" data-reveal data-reveal-step="2">每一天，診所都在照顧重要的人。我們希望，每一天累積的資料、流程與經驗，都能成為下一天的開始，而不是重新開始。</p>
+    <div class="home-hero__actions" data-reveal data-reveal-step="3">
+      <a class="btn btn--primary" href="contact.html">預約產品導覽</a>
+      <a class="btn btn--ghost" href="day.html">從一天開始讀</a>
     </div>
   </div>
+
+  <figure class="home-hero__band" data-reveal data-reveal-step="2">
+    <picture>
+      <source media="(min-width: 760px)" type="image/avif" sizes="100vw"
+              srcset="assets/img/home-band-900.avif 900w, assets/img/home-band-1240.avif 1240w, assets/img/home-band-1536.avif 1536w, assets/img/home-band-1920.avif 1920w">
+      <source media="(min-width: 760px)" type="image/webp" sizes="100vw"
+              srcset="assets/img/home-band-900.webp 900w, assets/img/home-band-1240.webp 1240w, assets/img/home-band-1536.webp 1536w, assets/img/home-band-1920.webp 1920w">
+      <source media="(min-width: 760px)" sizes="100vw"
+              srcset="assets/img/home-band-900.jpg 900w, assets/img/home-band-1240.jpg 1240w, assets/img/home-band-1536.jpg 1536w, assets/img/home-band-1920.jpg 1920w">
+      <source type="image/avif" sizes="100vw"
+              srcset="assets/img/home-band-sm-460.avif 460w, assets/img/home-band-sm-640.avif 640w, assets/img/home-band-sm-900.avif 900w">
+      <source type="image/webp" sizes="100vw"
+              srcset="assets/img/home-band-sm-460.webp 460w, assets/img/home-band-sm-640.webp 640w, assets/img/home-band-sm-900.webp 900w">
+      <img src="assets/img/home-band-sm-640.jpg" sizes="100vw"
+           srcset="assets/img/home-band-sm-460.jpg 460w, assets/img/home-band-sm-640.jpg 640w, assets/img/home-band-sm-900.jpg 900w"
+           width="2560" height="1097" alt="開診之前的診所大廳：木質牆面、大理石櫃檯與落地窗外的綠意。"
+           decoding="async" fetchpriority="high">
+    </picture>
+  </figure>
 </section>
 
 <!-- =================================================================

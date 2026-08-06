@@ -60,6 +60,14 @@ const JOBS = [
   { src: 'P10', name: 'oc-product',ratio: 1 / 1, focus: 0.50, widths: [560, 380],
     box: { left: 430, top: 120, width: 800, height: 800 } },
 
+  /* index.html — the brand hero band. An empty lobby in daylight: no
+     people, no devices, no runtime. Full bleed under the copy, so the
+     home page never reads as a product split-screen. */
+  { src: 'public/images/space/space-lobby-03.png',
+    name: 'home-band', ratio: 21 / 9, focus: 0.56, widths: [1920, 1536, 1240, 900] },
+  { src: 'public/images/space/space-lobby-03.png',
+    name: 'home-band-sm', ratio: 4 / 3, focus: 0.56, xfocus: 0.62, widths: [900, 640, 460] },
+
   /* why-clinicos.html — the editorial pass. Sources live in the approved
      library under public/images/, so `src` here is a repo-relative path
      rather than a _source stem. Slot names, never photo numbers. */

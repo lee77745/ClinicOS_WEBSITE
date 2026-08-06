@@ -694,3 +694,60 @@ main { --gap-section: clamp(4rem, 2.2rem + 4.6vw, 6rem); }
 
 .cap { padding-block: clamp(3.25rem, 2rem + 3.6vw, 5rem); }
 .flow { padding-block: clamp(3.25rem, 2rem + 3.6vw, 5rem); }
+
+/* =====================================================================
+   PACK 2-D — brand hero
+
+   Not a split screen: the words stand alone in the upper half with a lot
+   of air, and the room arrives underneath as a full-bleed band. The home
+   page shows no product, no device and no runtime.
+   ===================================================================== */
+.home-hero { padding-top: calc(var(--header-h) + clamp(3rem, 2rem + 5vw, 7rem)); }
+.home-hero__copy { max-width: 46em; padding-bottom: clamp(3rem, 2rem + 4.4vw, 6rem); }
+.home-hero__kicker {
+  font-size: var(--fs-caption);
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  color: var(--c-text-mute, #808898);
+}
+.home-hero__title {
+  margin-top: clamp(1.25rem, 1rem + 1.6vw, 2.25rem);
+  font-family: var(--ff-brand-heading);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 1.8rem + 4.2vw, 5.5rem);
+  line-height: 1.22;
+  letter-spacing: 0.02em;
+  color: var(--c-text);
+  text-wrap: balance;
+}
+.home-hero__accent { color: var(--c-accent-deep); }
+.home-hero__desc {
+  margin-top: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+  max-width: 30em;
+  font-size: var(--fs-lead);
+  line-height: 1.9;
+  color: var(--c-text-soft);
+}
+.home-hero__actions {
+  margin-top: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+@media (max-width: 599px) {
+  .home-hero__actions { flex-direction: column; align-items: stretch; }
+  .home-hero__actions .btn { width: 100%; }
+}
+/* the band runs the full width of the window, square edges, no card */
+.home-hero__band { margin: 0; }
+.home-hero__band picture { display: block; }
+.home-hero__band img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+}
+@media (max-width: 759px) {
+  .home-hero__band img { aspect-ratio: 4 / 3; }
+}
