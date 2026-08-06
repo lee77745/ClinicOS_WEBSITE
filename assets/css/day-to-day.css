@@ -1,0 +1,354 @@
+/* =====================================================================
+   ClinicOS — Chapter 03「日常」
+
+   Page-scoped. Everything sits under .dtd, plus the Website V2 navigation
+   scoped to [data-nav="v2"].
+
+   NOTE: the [data-nav="v2"] block below is identical to the one in
+   day.css. It is duplicated rather than shared because chapter 02 is
+   finished and must not be edited; when chapters 03–07 are all written
+   and the navigation goes live across the site, both copies should be
+   lifted into one shared stylesheet.
+
+   Shape of the page: seven kinds of work, read straight down, one runtime
+   frame each. The frame is the subject and always the same size, so the
+   page keeps one rhythm from 01 to 07 — no horizontal flow, no arrows, no
+   seven-column grid, no card matrix.
+   ===================================================================== */
+
+.dtd {
+  --dtd-ink: #16274C;
+  --dtd-ink-soft: #3D4A66;
+  --dtd-body: #4A5262;
+  --dtd-mute: #808898;
+  --dtd-line: rgba(22, 39, 76, 0.14);
+  --dtd-line-soft: rgba(22, 39, 76, 0.07);
+
+  --grid-max: 1360px;
+  --grid-gutter: clamp(20px, 4.4vw, 80px);
+
+  /* The pause between one kind of work and the next */
+  --dtd-gap: clamp(6.5rem, 3.6rem + 9.5vw, 14rem);
+
+  background: var(--c-paper);
+}
+
+/* ---------------------------------------------------------------------
+   Type
+   --------------------------------------------------------------------- */
+.dtd .dtd-h1 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 1.55rem + 4.2vw, 5rem);
+  line-height: 1.24;
+  letter-spacing: 0.005em;
+  color: var(--dtd-ink);
+  text-wrap: balance;
+}
+.dtd .dtd-h2 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.35rem + 2.35vw, 3rem);
+  line-height: 1.38;
+  color: var(--dtd-ink);
+  text-wrap: balance;
+}
+.dtd .dtd-h3 {
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.4375rem, 1.18rem + 1.15vw, 2.125rem);
+  line-height: 1.42;
+  color: var(--dtd-ink);
+  text-wrap: balance;
+}
+.dtd .dtd-lead {
+  font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.25rem);
+  line-height: 1.85;
+  color: var(--dtd-ink-soft);
+  text-wrap: pretty;
+}
+.dtd .dtd-body {
+  font-size: clamp(1rem, 0.96rem + 0.24vw, 1.125rem);
+  line-height: 1.9;
+  color: var(--dtd-body);
+  text-wrap: pretty;
+}
+.dtd .eyebrow { color: var(--dtd-mute); }
+
+/* Photography sits flat on the paper; a screen is a lit object. */
+.dtd .media--photo { box-shadow: inset 0 0 0 1px var(--dtd-line-soft); }
+.dtd .media--screen {
+  border-radius: 6px;
+  background: var(--c-paper-raised);
+  box-shadow:
+    0 1px 1px rgba(22, 39, 76, 0.04),
+    0 8px 20px -12px rgba(22, 39, 76, 0.18),
+    0 24px 60px -28px rgba(22, 39, 76, 0.22),
+    inset 0 0 0 1px var(--dtd-line-soft);
+}
+
+/* ---------------------------------------------------------------------
+   Navigation — Website V2 (duplicate of day.css; see note at the top)
+   --------------------------------------------------------------------- */
+[data-nav="v2"] .nav__link { letter-spacing: 0.08em; }
+[data-nav="v2"] .nav__reveal {
+  position: absolute;
+  top: calc(100% + 1.15rem);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: max-content;
+  max-width: 24em;
+  opacity: 0;
+  transform: translate(-50%, -3px);
+  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
+  pointer-events: none;
+}
+[data-nav="v2"] .nav__link:hover .nav__reveal,
+[data-nav="v2"] .nav__link:focus-visible .nav__reveal {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+[data-nav="v2"] .nav__en {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dtd-mute);
+  white-space: nowrap;
+}
+[data-nav="v2"] .nav__say {
+  font-family: var(--ff-display);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--dtd-ink-soft);
+  white-space: nowrap;
+}
+[data-nav="v2"] .nav__link--soon,
+[data-nav="v2"] .menu__link--soon { color: var(--dtd-mute); cursor: default; }
+[data-nav="v2"] .nav__link--soon:hover { color: var(--dtd-mute); }
+[data-nav="v2"] .nav__link--soon::after { display: none; }
+[data-nav="v2"] .nav__soon {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--dtd-mute);
+  white-space: nowrap;
+}
+[data-nav="v2"] .menu__link { display: block; }
+[data-nav="v2"] .menu__en,
+[data-nav="v2"] .menu__soon {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--ff-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dtd-mute);
+}
+
+/* ---------------------------------------------------------------------
+   01 · Hero
+   --------------------------------------------------------------------- */
+.dtd-hero {
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 1.4rem + 4vw, 5rem));
+  padding-bottom: clamp(4rem, 2.4rem + 5vw, 8rem);
+}
+.dtd-hero__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  align-items: center;
+}
+.dtd-hero__copy { grid-column: 1 / -1; }
+.dtd-hero__figure { grid-column: 1 / -1; }
+.dtd-hero__title { margin-top: clamp(1.5rem, 1rem + 1.6vw, 2.5rem); max-width: 9em; }
+.dtd-hero__lead { margin-top: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem); max-width: 17em; }
+.dtd-hero__figure .media { aspect-ratio: 4 / 3; --media-pos: center 50%; }
+@media (min-width: 1000px) {
+  .dtd-hero { min-height: 82vh; display: flex; align-items: center; }
+  .dtd-hero__grid { width: 100%; }
+  .dtd-hero__copy { grid-column: 1 / 7; }
+  .dtd-hero__figure { grid-column: 8 / 13; }
+  .dtd-hero__figure .media { aspect-ratio: 3 / 4; }
+}
+
+/* ---------------------------------------------------------------------
+   02 · 導言
+   --------------------------------------------------------------------- */
+.dtd-open { padding-block: clamp(4rem, 2.6rem + 5.5vw, 8.5rem); }
+.dtd-open__line {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3.125rem);
+  line-height: 1.5;
+  color: var(--dtd-ink);
+  max-width: 15em;
+}
+.dtd-open__note { margin-top: clamp(2rem, 1.4rem + 2.4vw, 3.25rem); max-width: 22em; }
+@media (min-width: 900px) {
+  .dtd-open__line,
+  .dtd-open__note { margin-left: 8.333%; }
+}
+
+/* ---------------------------------------------------------------------
+   03 · The seven kinds of work
+
+   Odd: words left, screen right. Even: screen left, words right. The
+   screen keeps seven of twelve columns either way, so it never shrinks
+   from one section to the next and the eye can compare them.
+   --------------------------------------------------------------------- */
+.dtd-works { padding-bottom: clamp(4rem, 2.4rem + 5vw, 8rem); }
+
+.dtd-sec {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(1.75rem, 1.2rem + 2.6vw, 3rem);
+  align-items: center;
+}
+.dtd-sec + .dtd-sec { margin-top: var(--dtd-gap); }
+.dtd-sec__figure { grid-column: 1 / -1; }
+.dtd-sec__copy { grid-column: 1 / -1; }
+.dtd-sec__figure .media { aspect-ratio: 16 / 10; }
+
+.dtd-sec__index {
+  font-family: var(--ff-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.24em;
+  color: var(--dtd-mute);
+}
+.dtd-sec__title { margin-top: clamp(0.875rem, 0.7rem + 0.8vw, 1.375rem); max-width: 11em; }
+.dtd-sec__value { margin-top: clamp(1rem, 0.8rem + 0.9vw, 1.5rem); max-width: 17em; }
+
+/* The three or four things this work actually does. A read-down list on
+   hairlines — deliberately not cards, not icons, not a grid. */
+.dtd-points {
+  margin-top: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+  border-top: 1px solid var(--dtd-line-soft);
+}
+.dtd-points li {
+  padding-block: clamp(0.7rem, 0.6rem + 0.4vw, 0.95rem);
+  border-bottom: 1px solid var(--dtd-line-soft);
+  font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  line-height: 1.75;
+  color: var(--dtd-body);
+  text-wrap: pretty;
+}
+
+@media (min-width: 900px) {
+  .dtd-sec:nth-child(odd) .dtd-sec__copy   { grid-column: 1 / 5; }
+  .dtd-sec:nth-child(odd) .dtd-sec__figure { grid-column: 6 / 13; }
+
+  .dtd-sec:nth-child(even) .dtd-sec__figure { grid-column: 1 / 8; order: 1; }
+  .dtd-sec:nth-child(even) .dtd-sec__copy   { grid-column: 9 / 13; order: 2; }
+}
+
+/* ---------------------------------------------------------------------
+   04 · 收束
+   --------------------------------------------------------------------- */
+.dtd-close {
+  padding-block: clamp(5rem, 3rem + 7vw, 10rem);
+  background: var(--c-paper-sunken);
+}
+.dtd-close__line {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.25rem + 2.8vw, 3.5rem);
+  line-height: 1.44;
+  color: var(--dtd-ink);
+  max-width: 13em;
+}
+.dtd-close__prose { margin-top: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem); max-width: 23em; }
+.dtd-close__prose p + p { margin-top: clamp(1.25rem, 1rem + 1.2vw, 2rem); }
+@media (min-width: 900px) {
+  .dtd-close__line { margin-left: 8.333%; }
+  .dtd-close__prose { margin-left: 33.333%; }
+}
+
+/* Demo-data disclosure, same as chapter 02 */
+.dtd-source { padding-block: clamp(3rem, 2rem + 3vw, 5rem); }
+.dtd-source__note {
+  max-width: 34em;
+  font-size: var(--fs-meta);
+  line-height: 1.9;
+  color: var(--dtd-mute);
+  padding-top: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+  border-top: 1px solid var(--dtd-line-soft);
+}
+@media (min-width: 900px) { .dtd-source__note { margin-left: 8.333%; } }
+
+/* ---------------------------------------------------------------------
+   05 · Chapter CTA
+   --------------------------------------------------------------------- */
+.dtd-cta {
+  background: var(--navy, #16274C);
+  padding-block: clamp(4.5rem, 2.8rem + 6vw, 9rem);
+}
+.dtd-cta__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+}
+.dtd-cta__copy { grid-column: 1 / -1; }
+.dtd-cta__side { grid-column: 1 / -1; }
+.dtd-cta .eyebrow { color: var(--c-text-invert-mute); }
+.dtd .dtd-cta__title {
+  margin-top: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+  color: var(--c-text-invert);
+  max-width: 13em;
+}
+.dtd .dtd-cta__lead {
+  margin-top: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  color: var(--c-text-invert-soft);
+  max-width: 20em;
+}
+.dtd-cta__actions {
+  margin-top: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+.dtd-cta__note {
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-invert-mute);
+}
+@media (max-width: 599px) {
+  .dtd-cta__actions { flex-direction: column; align-items: stretch; }
+  .dtd-cta__actions .btn { width: 100%; }
+}
+@media (min-width: 1000px) {
+  .dtd-cta__copy { grid-column: 1 / 7; }
+  .dtd-cta__side { grid-column: 9 / 13; align-self: end; }
+}
+
+/* ---------------------------------------------------------------------
+   Phones — a whole desktop screen shrunk to 390px cannot be read, so the
+   frame goes square and crops instead of scaling down. Same treatment as
+   chapter 02, so the two chapters behave identically on a phone.
+   --------------------------------------------------------------------- */
+@media (max-width: 599px) {
+  .dtd-sec__figure .media { aspect-ratio: 1 / 1; --media-pos: 8% center; }
+}
+
+/* ---------------------------------------------------------------------
+   Motion
+   --------------------------------------------------------------------- */
+.dtd [data-reveal] .media > picture > img {
+  transform: scale(1.012);
+  transition: transform 1400ms var(--ease-editorial);
+}
+.dtd [data-reveal].is-in .media > picture > img { transform: scale(1); }
+.no-js .dtd [data-reveal] .media > picture > img { transform: none; transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dtd [data-reveal] .media > picture > img,
+  .dtd [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
+  [data-nav="v2"] .nav__reveal { transition: none; }
+}
