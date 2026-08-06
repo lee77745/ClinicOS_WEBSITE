@@ -1,0 +1,398 @@
+/* =====================================================================
+   ClinicOS — Chapter 04「信任」
+
+   Page-scoped under .tr, plus the Website V2 navigation scoped to
+   [data-nav="v2"] (a third copy of the same block; see the note in
+   day-to-day.css — all three merge when the navigation goes site-wide).
+
+   Layout follows the approved chapter mock: a single vertical timeline
+   pinned to the left of the content column, seven steps hanging off it,
+   the product frame and the words alternating side to side, and three
+   photographs — the first visit, the person being looked after, and the
+   friend she brings. No horizontal flow, no arrows, no cards.
+
+   Colour is the site's deep pine rather than the navy the earlier
+   chapters run on: warm white paper, deep green ink, light beige bands,
+   all three already in tokens.css. Nothing new is introduced.
+   ===================================================================== */
+
+.tr {
+  --tr-ink: #1A3B32;
+  --tr-ink-soft: #3F534C;
+  --tr-body: #45514D;
+  --tr-mute: #7C8783;
+  --tr-line: rgba(26, 59, 50, 0.14);
+  --tr-line-soft: rgba(26, 59, 50, 0.08);
+  --tr-band: var(--c-paper-sunken);
+
+  --grid-max: 1360px;
+  --grid-gutter: clamp(20px, 4.4vw, 80px);
+
+  /* Width of the timeline gutter and the size of its markers */
+  --tr-rail: clamp(52px, 5.4vw, 84px);
+  --tr-dot: clamp(38px, 3.4vw, 52px);
+
+  background: var(--c-paper);
+}
+
+/* ---------------------------------------------------------------------
+   Type
+   --------------------------------------------------------------------- */
+.tr .tr-h1 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 1.8rem + 5.4vw, 6.5rem);
+  line-height: 1.16;
+  letter-spacing: 0.16em;
+  color: var(--tr-ink);
+}
+.tr .tr-h2 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.35rem + 2.35vw, 3rem);
+  line-height: 1.4;
+  color: var(--tr-ink);
+  text-wrap: balance;
+}
+.tr .tr-h3 {
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.375rem, 1.15rem + 1.05vw, 1.9375rem);
+  line-height: 1.44;
+  color: var(--tr-ink);
+  text-wrap: balance;
+}
+.tr .tr-lead {
+  font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.25rem);
+  line-height: 1.9;
+  color: var(--tr-ink-soft);
+  text-wrap: pretty;
+}
+.tr .tr-body {
+  font-size: clamp(1rem, 0.96rem + 0.24vw, 1.0625rem);
+  line-height: 1.9;
+  color: var(--tr-body);
+  text-wrap: pretty;
+}
+.tr .eyebrow { color: var(--tr-mute); }
+
+.tr .media--photo { box-shadow: inset 0 0 0 1px var(--tr-line-soft); }
+.tr .media--screen {
+  border-radius: 6px;
+  background: var(--c-paper-raised);
+  box-shadow:
+    0 1px 1px rgba(26, 59, 50, 0.04),
+    0 8px 20px -12px rgba(26, 59, 50, 0.16),
+    0 24px 60px -28px rgba(26, 59, 50, 0.20),
+    inset 0 0 0 1px var(--tr-line-soft);
+}
+
+/* ---------------------------------------------------------------------
+   Navigation — Website V2 (third copy; see file header)
+   --------------------------------------------------------------------- */
+[data-nav="v2"] .nav__link { letter-spacing: 0.08em; }
+[data-nav="v2"] .nav__reveal {
+  position: absolute;
+  top: calc(100% + 1.15rem);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: max-content;
+  max-width: 24em;
+  opacity: 0;
+  transform: translate(-50%, -3px);
+  transition: opacity 260ms var(--ease-editorial), transform 260ms var(--ease-editorial);
+  pointer-events: none;
+}
+[data-nav="v2"] .nav__link:hover .nav__reveal,
+[data-nav="v2"] .nav__link:focus-visible .nav__reveal {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+[data-nav="v2"] .nav__en {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tr-mute);
+  white-space: nowrap;
+}
+[data-nav="v2"] .nav__say {
+  font-family: var(--ff-display);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--tr-ink-soft);
+  white-space: nowrap;
+}
+[data-nav="v2"] .nav__link--soon,
+[data-nav="v2"] .menu__link--soon { color: var(--tr-mute); cursor: default; }
+[data-nav="v2"] .nav__link--soon:hover { color: var(--tr-mute); }
+[data-nav="v2"] .nav__link--soon::after { display: none; }
+[data-nav="v2"] .nav__soon {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--tr-mute);
+  white-space: nowrap;
+}
+[data-nav="v2"] .menu__link { display: block; }
+[data-nav="v2"] .menu__en,
+[data-nav="v2"] .menu__soon {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--ff-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tr-mute);
+}
+
+/* ---------------------------------------------------------------------
+   Hero — words left, the first visit filling the right of the screen
+   --------------------------------------------------------------------- */
+.tr-hero {
+  position: relative;
+  padding-top: calc(var(--header-h) + clamp(2rem, 1.2rem + 3.2vw, 4rem));
+  padding-bottom: clamp(3rem, 2rem + 4vw, 6rem);
+}
+.tr-hero__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+  align-items: center;
+}
+.tr-hero__copy { grid-column: 1 / -1; }
+.tr-hero__figure { grid-column: 1 / -1; }
+.tr-hero__title { margin-top: clamp(1rem, 0.8rem + 1vw, 1.75rem); }
+.tr-hero__claim {
+  margin-top: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2.25rem);
+  line-height: 1.5;
+  color: var(--tr-ink);
+}
+.tr-hero__lead { margin-top: clamp(1.25rem, 1rem + 1.2vw, 2rem); max-width: 19em; }
+.tr-hero__figure .media { aspect-ratio: 4 / 3; }
+@media (min-width: 1000px) {
+  .tr-hero__copy { grid-column: 1 / 6; }
+  .tr-hero__figure { grid-column: 6 / 13; }
+  /* the photograph runs off the right edge of the page, as in the mock */
+  .tr-hero__figure { margin-right: calc(var(--grid-gutter) * -1); }
+  .tr-hero__figure .media { aspect-ratio: 4 / 3; border-radius: var(--r-md) 0 0 var(--r-md); }
+}
+
+/* ---------------------------------------------------------------------
+   The timeline — one line, seven stops, top to bottom, never sideways
+
+   Each step is a grid whose first column is the rail. The line is drawn
+   on the rail column itself (a 1px background stripe), so it is
+   continuous across steps without any absolutely-positioned spine to
+   keep in sync.
+   --------------------------------------------------------------------- */
+.tr-steps { padding-bottom: clamp(2rem, 1.4rem + 2.4vw, 4rem); }
+
+.tr-step {
+  position: relative;
+  padding-block: clamp(2.5rem, 1.8rem + 3.4vw, 5rem);
+}
+/* Every other step sits on a light beige band, exactly as in the mock */
+.tr-step--band { background: var(--tr-band); }
+
+.tr-step__grid {
+  display: grid;
+  grid-template-columns: var(--tr-rail) repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
+  align-items: center;
+}
+
+/* The rail: a hairline down the middle of the first column, with the
+   numbered marker sitting on it. */
+.tr-step__rail {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: stretch;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.75rem, 0.6rem + 0.6vw, 1.25rem);
+  padding-top: 0.25rem;
+}
+.tr-step__rail::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--tr-dot) * -1);
+  bottom: calc(var(--tr-dot) * -1);
+  left: 50%;
+  width: 1px;
+  background: var(--tr-line);
+}
+.tr-step:first-child .tr-step__rail::before { top: 0; }
+.tr-step:last-child .tr-step__rail::before { bottom: 50%; }
+
+.tr-step__num {
+  position: relative;
+  width: var(--tr-dot);
+  height: var(--tr-dot);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--tr-ink);
+  color: var(--c-text-invert, #F7F5F2);
+  font-family: var(--ff-mono);
+  font-size: clamp(0.75rem, 0.7rem + 0.24vw, 0.875rem);
+  letter-spacing: 0.06em;
+}
+.tr-step__icon {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  color: var(--tr-mute);
+}
+.tr-step__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tr-step__copy { grid-column: 2 / -1; }
+.tr-step__figure { grid-column: 2 / -1; }
+.tr-step__kicker {
+  font-size: var(--fs-small, 0.9375rem);
+  letter-spacing: 0.02em;
+  color: var(--tr-mute);
+  margin-top: 0.5rem;
+}
+.tr-step__line { margin-top: clamp(0.875rem, 0.7rem + 0.8vw, 1.25rem); max-width: 15em; }
+.tr-step__figure .media { aspect-ratio: 16 / 10; }
+
+/* The two steps that carry a photograph as well as a screen. The photo is
+   never bigger than the screen — the record is still the subject. */
+.tr-step__photo { grid-column: 2 / -1; }
+.tr-step__photo .media { aspect-ratio: 4 / 3; }
+
+@media (min-width: 900px) {
+  /* odd steps: words left, screen right — even steps: the other way round */
+  .tr-step:nth-of-type(odd) .tr-step__copy   { grid-column: 2 / 6; }
+  .tr-step:nth-of-type(odd) .tr-step__figure { grid-column: 7 / 14; }
+
+  .tr-step:nth-of-type(even) .tr-step__figure { grid-column: 2 / 9; order: 1; }
+  .tr-step:nth-of-type(even) .tr-step__copy   { grid-column: 10 / 14; order: 2; }
+
+  /* Steps 05 and 07 add a photograph beside the screen. These need the
+     doubled class to out-rank the nth-of-type rules above, which are one
+     specificity step higher than a single class would be; `grid-row: 1`
+     keeps all three on the same line whatever order they are given. */
+  .tr-step.tr-step--withphoto .tr-step__photo  { grid-column: 2 / 6;  grid-row: 1; order: 1; }
+  .tr-step.tr-step--withphoto .tr-step__figure { grid-column: 6 / 11; grid-row: 1; order: 2; }
+  .tr-step.tr-step--withphoto .tr-step__copy   { grid-column: 11 / 14; grid-row: 1; order: 3; }
+  .tr-step.tr-step--withphoto .tr-step__figure .media { aspect-ratio: 4 / 3; }
+}
+
+/* ---------------------------------------------------------------------
+   Closing — the chapter line, then the room it happens in
+   --------------------------------------------------------------------- */
+.tr-close { padding-block: clamp(4.5rem, 2.8rem + 6vw, 9rem); }
+.tr-close__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  row-gap: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
+  align-items: end;
+}
+.tr-close__line {
+  grid-column: 1 / -1;
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.25rem + 2.8vw, 3.25rem);
+  line-height: 1.45;
+  color: var(--tr-ink);
+}
+.tr-close__coda { grid-column: 1 / -1; max-width: 18em; }
+@media (min-width: 900px) {
+  .tr-close__line { grid-column: 1 / 7; }
+  .tr-close__coda { grid-column: 8 / 13; padding-bottom: 0.5rem; }
+}
+.tr-close__figure { margin-top: clamp(3rem, 2rem + 4vw, 6rem); }
+
+.tr-source { padding-bottom: clamp(3rem, 2rem + 3vw, 5rem); }
+.tr-source__note {
+  max-width: 34em;
+  font-size: var(--fs-meta);
+  line-height: 1.9;
+  color: var(--tr-mute);
+  padding-top: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+  border-top: 1px solid var(--tr-line-soft);
+}
+
+/* ---------------------------------------------------------------------
+   CTA — the deep green bar that closes the chapter
+   --------------------------------------------------------------------- */
+.tr-cta { background: var(--tr-ink); padding-block: clamp(2.5rem, 1.8rem + 3vw, 4rem); }
+.tr-cta__grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
+}
+.tr-cta__word {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.875rem, 0.7rem + 0.8vw, 1.25rem);
+}
+.tr-cta__mark { width: 34px; height: 34px; flex: none; }
+.tr-cta__text {
+  font-family: var(--ff-display);
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+  line-height: 1.75;
+  color: var(--c-text-invert);
+}
+@media (max-width: 599px) {
+  .tr-cta__grid { flex-direction: column; align-items: stretch; }
+  .tr-cta__grid .btn { width: 100%; }
+}
+
+/* ---------------------------------------------------------------------
+   Mobile — the timeline stays vertical and the screens go full width.
+   Never a slider.
+   --------------------------------------------------------------------- */
+@media (max-width: 899px) {
+  .tr-step__grid { grid-template-columns: var(--tr-rail) minmax(0, 1fr); }
+  .tr-step__copy,
+  .tr-step__figure,
+  .tr-step__photo { grid-column: 2; }
+  .tr-step__rail { justify-content: flex-start; }
+}
+@media (max-width: 599px) {
+  /* a whole desktop screen is unreadable at this width, so crop instead
+     of scaling — the same treatment as chapters 02 and 03 */
+  .tr-step__figure .media { aspect-ratio: 1 / 1; --media-pos: 8% center; }
+  .tr-step--withphoto .tr-step__figure .media { aspect-ratio: 1 / 1; }
+}
+
+/* ---------------------------------------------------------------------
+   Motion — scroll reveal on the steps, a hair of settle on the frames.
+   No parallax.
+   --------------------------------------------------------------------- */
+.tr [data-reveal] .media > picture > img {
+  transform: scale(1.012);
+  transition: transform 1400ms var(--ease-editorial);
+}
+.tr [data-reveal].is-in .media > picture > img { transform: scale(1); }
+.no-js .tr [data-reveal] .media > picture > img { transform: none; transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tr [data-reveal] .media > picture > img,
+  .tr [data-reveal].is-in .media > picture > img { transform: none; transition: none; }
+  [data-nav="v2"] .nav__reveal { transition: none; }
+}
