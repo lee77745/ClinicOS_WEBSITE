@@ -229,16 +229,30 @@
 .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3px) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] span:last-child { width: 22px; transform: translateY(-3px) rotate(-45deg); }
 
-/* Mobile menu */
+/* Mobile menu — the panel is the scroll container. The body stays locked
+   while it is open, so exactly one surface ever moves. Its own top padding
+   is what keeps the chapters clear of the fixed header; the bottom padding
+   clears the browser toolbar and the system navigation bar. */
 .menu {
   position: fixed;
   inset: 0;
   z-index: var(--z-menu);
+  height: 100vh;              /* fallback for browsers without dvh */
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   background: var(--c-paper);
-  padding: calc(var(--header-h) + var(--sp-8)) var(--grid-gutter) var(--sp-8);
+  padding: calc(var(--header-h) + var(--sp-8)) var(--grid-gutter)
+           calc(2rem + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: var(--sp-5);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-8px);
@@ -249,13 +263,15 @@
 .menu.is-open { opacity: 1; visibility: visible; transform: none; }
 @media (min-width: 900px) { .menu { display: none; } }
 
-.menu__list { display: flex; flex-direction: column; gap: var(--sp-5); }
+/* neither block may be squeezed by the flex column — they must overflow so
+   the panel can scroll them */
+.menu__list { display: flex; flex-direction: column; gap: var(--sp-5); flex-shrink: 0; }
 .menu__link {
   font-family: var(--ff-display);
   font-size: clamp(1.75rem, 8vw, 2.5rem);
   line-height: 1.3;
 }
-.menu__foot { display: flex; flex-direction: column; gap: var(--sp-4); }
+.menu__foot { display: flex; flex-direction: column; gap: var(--sp-4); flex-shrink: 0; }
 .menu__meta { font-size: var(--fs-meta); letter-spacing: var(--ls-meta); text-transform: uppercase; color: var(--c-text-mute); }
 
 /* ---------------------------------------------------------------------
