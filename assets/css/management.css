@@ -60,14 +60,8 @@
 .mg-hero__copy { grid-column: 1 / -1; }
 .mg-hero__figure { grid-column: 1 / -1; }
 .mg-hero__title { margin-top: clamp(1rem, 0.8rem + 1vw, 1.75rem); }
-.mg-hero__claim {
-  margin-top: clamp(1.25rem, 1rem + 1.4vw, 2rem);
-  font-family: var(--ff-display);
-  font-weight: 500;
-  font-size: clamp(1.375rem, 1.1rem + 1.4vw, 2rem);
-  line-height: 1.5;
-  color: var(--mg-ink);
-}
+/* type comes from the shared hero token block; only the ink is local */
+.mg-hero__claim { color: var(--mg-ink); }
 .mg-hero__lead { margin-top: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem); max-width: 18em; }
 @media (min-width: 1000px) {
   .mg-hero__copy { grid-column: 1 / 6; }

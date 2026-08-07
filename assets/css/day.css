@@ -32,15 +32,8 @@
 /* ---------------------------------------------------------------------
    Type
    --------------------------------------------------------------------- */
-.day .day-h1 {
-  font-family: var(--ff-display);
-  font-weight: 400;
-  font-size: clamp(2.5rem, 1.55rem + 4.2vw, 5rem);
-  line-height: 1.24;
-  letter-spacing: 0.005em;
-  color: var(--day-ink);
-  text-wrap: balance;
-}
+/* type comes from the shared hero token block; only the ink is local */
+.day .day-h1 { color: var(--day-ink); }
 .day .day-h2 {
   font-family: var(--ff-display);
   font-weight: 400;
@@ -132,7 +125,6 @@
 }
 .day-hero__copy { grid-column: 1 / -1; }
 .day-hero__figure { grid-column: 1 / -1; }
-.day-hero__title { margin-top: clamp(1.5rem, 1rem + 1.6vw, 2.5rem); max-width: 8em; }
 .day-hero__lead { margin-top: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem); max-width: 17em; }
 .day-hero__figure .media { aspect-ratio: 4 / 3; --media-pos: center 50%; }
 @media (min-width: 1000px) {

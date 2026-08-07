@@ -712,16 +712,8 @@ main { --gap-section: clamp(4rem, 2.2rem + 4.6vw, 6rem); }
   letter-spacing: 0.02em;
   color: var(--c-text-mute, #808898);
 }
-.home-hero__title {
-  margin-top: clamp(1.25rem, 1rem + 1.6vw, 2.25rem);
-  font-family: var(--ff-brand-heading);
-  font-weight: 400;
-  font-size: clamp(2.75rem, 1.8rem + 4.2vw, 5.5rem);
-  line-height: 1.22;
-  letter-spacing: 0.02em;
-  color: var(--c-text);
-  text-wrap: balance;
-}
+/* type comes from the shared hero token block; only the ink is local */
+.home-hero__title { color: var(--c-text); }
 .home-hero__accent { color: var(--c-accent-deep); }
 .home-hero__desc {
   margin-top: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);

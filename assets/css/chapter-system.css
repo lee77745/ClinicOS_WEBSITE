@@ -75,6 +75,17 @@
   --fs-chapter-label: clamp(0.8125rem, 0.78rem + 0.16vw, 0.875rem);   /* 13–14px */
   --fs-chapter-name:  clamp(3.25rem, 1.6rem + 5.6vw, 7rem);           /* 52 → 112px */
   --fs-chapter-claim: clamp(1.375rem, 1.15rem + 1.05vw, 1.875rem);    /* 22 → 30px */
+
+  /* --- The hero sentence ---------------------------------------------
+     The eight chapters open on the same H1, so it is one token set and
+     one rule — never eight. Pages may differ only in the words, in the
+     authored <br>, in the ink they inherit, and in where their own
+     column makes a line fall. Nothing else. */
+  --fs-hero: clamp(2.5rem, 1.55rem + 4.2vw, 5rem);                    /* 40 → 80px */
+  --fw-hero: 400;
+  --lh-hero: 1.24;
+  --ls-hero: 0.005em;
+  --mt-hero: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);                   /* 24 → 40px */
   --fs-h2:            clamp(1.875rem, 1.35rem + 2.35vw, 3rem);        /* 30 → 48px */
   --fs-lead:          clamp(1.1875rem, 1.1rem + 0.4vw, 1.5rem);       /* 19 → 24px */
   --fs-body:          clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem);    /* 17 → 18px */
@@ -128,11 +139,7 @@ html .mg-source__text, html .fu-note__text {
 .btn { font-size: var(--fs-button); }
 .btn--sm { font-size: var(--fs-caption); }
 
-/* Hero chapter name and the line under it */
-html .day-hero__title, html .dtd-hero__title,
-html .tr-hero__title, html .mg-hero__title, html .fu-hero__title { line-height: 1.14; }
-html .tr .tr-h1, html .mg .mg-h1, html .fu .fu-h1 { font-size: var(--fs-chapter-name); }
-html .tr-hero__claim, html .mg-hero__claim, html .fu-hero__claim { font-size: var(--fs-chapter-claim); }
+/* The hero sentence is sized by the hero token block below, not here. */
 .eyebrow { font-size: var(--fs-chapter-label); }
 
 /* ---------------------------------------------------------------------
@@ -382,9 +389,6 @@ html .fu-more__title {
   font-family: var(--ff-brand-heading);
 }
 
-html .tr-hero__claim,
-html .mg-hero__claim,
-html .fu-hero__claim,
 html .day-open__line,
 html .dtd-open__line,
 html .fu-more__quote,
@@ -393,28 +397,41 @@ html .hero__title {
   font-family: var(--ff-brand-slogan);
 }
 
-/* The one H1 that opens each of the eight pages is set in Source Han
-   Serif TC. One rule for all eight — the pages must not each declare it.
+/* THE HERO SENTENCE — one rule, all eight chapters.
 
-   It has to sit here rather than in the page stylesheets because the
-   chapter names are already claimed for the written face by the block at
-   the top of this file (`html .day .day-hero__title` and friends); this
-   comes later at equal specificity, and outranks the page rules for the
-   three heroes not covered there (.home-hero__title, .st-h1, .tg-h1).
+   These eight H1s are the same thing on eight pages, so they are set
+   once, here, from the token block at the top of this file. The page
+   stylesheets must not re-declare any of it: before this rule existed
+   the eight ran at five different sizes in two different faces at three
+   different weights, because each page had grown its own hero type.
 
-   Only the face changes. Size, line-height, letter-spacing, colour and
-   weight all stay exactly where the page stylesheets put them, which is
-   why the deep-green emphasis inside the home H1 needs no rule of its
-   own — .home-hero__accent carries the colour and inherits the face. */
+   Colour is deliberately NOT set here. Each chapter inherits its own
+   ink — 未來 in particular opens on a dark ground and must stay
+   inverted — and the home H1's deep-green emphasis is carried by
+   .home-hero__accent, which needs no rule of its own.
+
+   `max-width: none` is a token value like any other: the measure is
+   governed by each hero's own column, not by an em box that would mean
+   a different thing at every column width.
+
+   Specificity is (0,2,1) so it outranks both the page rules and the
+   older shared ones, wherever they sit in the cascade. */
 html .home-hero__title,
 html .day .day-hero__title,
 html .dtd .dtd-hero__title,
-html .tr .tr-hero__title,
-html .mg .mg-hero__title,
-html .fu .fu-hero__title,
-html .st .st-hero__title,
-html .tg .tg-hero__title {
+html .tr .tr-hero__claim,
+html .mg .mg-hero__claim,
+html .fu .fu-hero__claim,
+html .st .st-hero__claim,
+html .tg .tg-hero__claim {
   font-family: var(--ff-hero-title);
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-hero);
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-hero);
+  margin-top: var(--mt-hero);
+  max-width: none;
+  text-wrap: balance;
 }
 
 /* Functional type is never brand type. */

@@ -77,14 +77,8 @@
 .tr-hero__copy { grid-column: 1 / -1; }
 .tr-hero__figure { grid-column: 1 / -1; }
 .tr-hero__title { margin-top: clamp(1rem, 0.8rem + 1vw, 1.75rem); }
-.tr-hero__claim {
-  margin-top: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
-  font-family: var(--ff-display);
-  font-weight: 500;
-  font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2.25rem);
-  line-height: 1.5;
-  color: var(--tr-ink);
-}
+/* type comes from the shared hero token block; only the ink is local */
+.tr-hero__claim { color: var(--tr-ink); }
 .tr-hero__lead { margin-top: clamp(1.25rem, 1rem + 1.2vw, 2rem); max-width: 19em; }
 .tr-hero__figure .media { aspect-ratio: 4 / 3; }
 @media (min-width: 1000px) {

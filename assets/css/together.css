@@ -65,14 +65,8 @@
   text-transform: uppercase;
   color: var(--tg-mute);
 }
-.tg-hero__claim {
-  margin-top: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
-  font-family: var(--ff-brand-slogan);
-  font-weight: 400;
-  font-size: clamp(1.625rem, 1.2rem + 2vw, 2.625rem);
-  line-height: 1.55;
-  color: var(--tg-ink);
-}
+/* type comes from the shared hero token block; only the ink is local */
+.tg-hero__claim { color: var(--tg-ink); }
 .tg-hero__lead { margin-top: clamp(1.25rem, 1rem + 1.4vw, 2rem); max-width: 19em; }
 .tg-hero__figure .media { aspect-ratio: 4 / 3; }
 @media (min-width: 1000px) {
