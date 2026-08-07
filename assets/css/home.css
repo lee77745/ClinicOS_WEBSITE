@@ -705,6 +705,8 @@ main { --gap-section: clamp(4rem, 2.2rem + 4.6vw, 6rem); }
 .home-hero { padding-top: calc(var(--header-h) + clamp(2rem, 1.4rem + 3.4vw, 4rem)); }
 .home-hero__copy { max-width: 46em; padding-bottom: clamp(2rem, 1.4rem + 3vw, 3rem); }
 .home-hero__kicker {
+  /* the chapter header now opens this hero, as it does the other seven */
+  margin-top: clamp(1.25rem, 1rem + 1.2vw, 2.25rem);
   font-size: var(--fs-caption);
   line-height: 1.9;
   letter-spacing: 0.02em;
