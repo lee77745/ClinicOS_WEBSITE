@@ -325,6 +325,25 @@ app.use((req, res, next) => {
   next();
 });
 
+/* 已淘汰的頁面，永久轉往接手它的章節。必須排在 express.static 之前，
+   否則檔案仍在磁碟上、會先被靜態伺服器送出。 */
+const RETIRED_PAGES = new Map([
+  ['/faq', '/together.html'],
+  ['/platform', '/day-to-day.html'],
+  ['/method', '/together.html'],
+  ['/why-clinicos', '/'],
+  ['/products', '/day-to-day.html'],
+]);
+
+app.use((req, res, next) => {
+  // static 設了 extensions:['html']，所以 /faq 與 /faq.html 都會命中同一個檔案
+  const key = req.path.toLowerCase().replace(/\/+$/, '').replace(/\.html$/, '');
+  const target = RETIRED_PAGES.get(key);
+  if (!target) return next();
+  const q = req.originalUrl.indexOf('?');
+  return res.redirect(301, q === -1 ? target : target + req.originalUrl.slice(q));
+});
+
 app.use(express.static(ROOT, {
   dotfiles: 'ignore',   // 避免 .env 等檔案被靜態伺服器讀出
   index: 'index.html',  // 首頁回傳 index.html

@@ -38,15 +38,60 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "ClinicOS 珂立雲",
-  "alternateName": "ClinicOS",
-  "url": "https://clinicos.com.tw/",
-  "slogan": "讓每一天都算數",
-  "description": "ClinicOS 是診所的營運平台，讓診所每天發生的事被完整地留下來，成為經營的依據。",
-  "areaServed": "TW"
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://clinicos.com.tw/#organization",
+      "name": "ClinicOS 珂立雲",
+      "alternateName": "ClinicOS",
+      "url": "https://clinicos.com.tw/",
+      "slogan": "讓每一天都算數",
+      "description": "ClinicOS 是診所的營運平台，讓診所每天發生的事被完整地留下來，成為經營的依據。",
+      "areaServed": "TW",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://clinicos.com.tw/assets/brand/clinicos-logo-light.png",
+        "width": 766,
+        "height": 326
+      },
+      "sameAs": [
+        "https://lin.ee/sp5MbgH"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://lin.ee/sp5MbgH",
+        "availableLanguage": [
+          "zh-Hant"
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://clinicos.com.tw/#website",
+      "url": "https://clinicos.com.tw/",
+      "name": "ClinicOS 珂立雲",
+      "alternateName": "ClinicOS",
+      "inLanguage": "zh-Hant",
+      "publisher": {
+        "@id": "https://clinicos.com.tw/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://clinicos.com.tw/#webpage",
+      "url": "https://clinicos.com.tw/",
+      "name": "ClinicOS 珂立雲｜讓每一天都算數",
+      "description": "診所打烊了，經營者的一天還沒結束。ClinicOS 是診所的營運平台，不是再多一套診所軟體——它讓每天發生的事有地方可放、有人接得下去，讓每一天都算數。",
+      "inLanguage": "zh-Hant",
+      "isPartOf": {
+        "@id": "https://clinicos.com.tw/#website"
+      }
+    }
+  ]
 }
 </script>
+
 </head>
 
 <body>
@@ -218,7 +263,7 @@
         </li>
       </ol>
 
-      <p class="flow__more" data-reveal data-reveal-step="3"><a class="link-quiet" href="products.html">了解更多功能 <span class="arrow" aria-hidden="true">→</span></a></p>
+      <p class="flow__more" data-reveal data-reveal-step="3"><a class="link-quiet" href="day-to-day.html">了解更多功能 <span class="arrow" aria-hidden="true">→</span></a></p>
     </div>
 
     <div class="flow__visual" data-reveal data-reveal-step="1">
@@ -242,7 +287,7 @@
         <p class="mth__kicker" data-reveal>我們相信</p>
         <h2 class="mth__title" id="mth-title" data-reveal data-reveal-step="1">系統，不應該只是診所日常的工具。</h2>
         <p class="mth__body" data-reveal data-reveal-step="2">它應該留下經驗、傳遞流程、保存判斷，並且陪著診所一起成長。</p>
-        <p class="mth__link" data-reveal data-reveal-step="3"><a class="btn btn--ghost-on-ink btn--sm" href="why-clinicos.html">關於我們 →</a></p>
+        <p class="mth__link" data-reveal data-reveal-step="3"><a class="btn btn--ghost-on-ink btn--sm" href="future.html">關於我們 →</a></p>
       </div>
     </div>
 
@@ -373,7 +418,7 @@
   <div class="shell">
     <div class="footer__top">
       <div>
-        <a class="footer__logo" href="#top" aria-label="ClinicOS 珂立雲首頁">
+        <a class="footer__logo" href="index.html" aria-label="ClinicOS 珂立雲首頁">
           <img src="assets/brand/clinicos-logo-light.png" alt="ClinicOS 珂立雲醫療雲端管理系統" width="766" height="326" decoding="async">
         </a>
         <p class="footer__brand-name">珂立雲醫療雲端管理系統</p>
@@ -381,21 +426,24 @@
       </div>
 
       <div>
-        <p class="footer__col-title">探索</p>
+        <p class="footer__col-title">章節</p>
         <ul class="footer__list">
-          <li><a href="why-clinicos.html">為何是 ClinicOS</a></li>
-          <li><a href="platform.html">平台</a></li>
-          <li><a href="method.html">方法</a></li>
-          <li><a href="solutions.html">情境</a></li>
-          <li><a href="products.html">產品</a></li>
+          <li><a href="index.html">緣起</a></li>
+          <li><a href="day.html">一天</a></li>
+          <li><a href="day-to-day.html">日常</a></li>
+          <li><a href="trust.html">信任</a></li>
+          <li><a href="management.html">經營</a></li>
+          <li><a href="future.html">未來</a></li>
+          <li><a href="contact.html">啟程</a></li>
+          <li><a href="together.html">同行</a></li>
         </ul>
       </div>
 
       <div>
         <p class="footer__col-title">支援</p>
         <ul class="footer__list">
-          <li><a href="faq.html">常見問題</a></li>
-          <li><a href="contact.html">預約產品展示</a></li>
+          <li><a href="together.html">常見問題</a></li>
+          <li><a href="contact.html">預約產品導覽</a></li>
           <li><a href="contact.html">聯絡顧問</a></li>
         </ul>
       </div>
