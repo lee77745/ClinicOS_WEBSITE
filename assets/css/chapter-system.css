@@ -49,10 +49,22 @@
   /* --- Brand font tokens ---------------------------------------------
      --ff-ui             everything functional: nav, body, buttons,
                          captions, feature lists, runtime notes
+     --ff-hero-title     the one big H1 that opens each of the eight pages
      --ff-brand-heading  chapter names and chapter-ending headings
      --ff-brand-slogan   the hero core sentence and closing brand lines
-     --ff-brand-quote    reserved; not referenced anywhere yet */
+     --ff-brand-quote    reserved; not referenced anywhere yet
+
+     On --ff-hero-title: Source Han Serif and Noto Serif CJK are one
+     typeface under two names — the same glyph data from the same joint
+     Adobe/Google project, packaged by each company under its own name.
+     So the webfont this site already loads from Google Fonts as
+     "Noto Serif TC" *is* Source Han Serif Traditional Chinese. Naming
+     Adobe's family first lets a reader who has it installed use their
+     local copy; everyone else gets the identical face over the wire at
+     no extra cost, because Noto Serif TC 400 is already in the site's
+     existing font request. Nothing new is fetched for this. */
   --ff-ui: var(--ff-sans);
+  --ff-hero-title: "Source Han Serif TC", "Noto Serif TC", "Songti TC", serif;
   --ff-brand-heading: "Iansui", "Noto Serif TC", serif;
   --ff-brand-slogan: "Iansui", "Noto Serif TC", serif;
   --ff-brand-quote: "Iansui", "Noto Serif TC", serif;
@@ -379,6 +391,30 @@ html .fu-more__quote,
 html .tr-close__coda,
 html .hero__title {
   font-family: var(--ff-brand-slogan);
+}
+
+/* The one H1 that opens each of the eight pages is set in Source Han
+   Serif TC. One rule for all eight — the pages must not each declare it.
+
+   It has to sit here rather than in the page stylesheets because the
+   chapter names are already claimed for the written face by the block at
+   the top of this file (`html .day .day-hero__title` and friends); this
+   comes later at equal specificity, and outranks the page rules for the
+   three heroes not covered there (.home-hero__title, .st-h1, .tg-h1).
+
+   Only the face changes. Size, line-height, letter-spacing, colour and
+   weight all stay exactly where the page stylesheets put them, which is
+   why the deep-green emphasis inside the home H1 needs no rule of its
+   own — .home-hero__accent carries the colour and inherits the face. */
+html .home-hero__title,
+html .day .day-hero__title,
+html .dtd .dtd-hero__title,
+html .tr .tr-hero__title,
+html .mg .mg-hero__title,
+html .fu .fu-hero__title,
+html .st .st-hero__title,
+html .tg .tg-hero__title {
+  font-family: var(--ff-hero-title);
 }
 
 /* Functional type is never brand type. */
