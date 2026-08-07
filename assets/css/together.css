@@ -131,6 +131,107 @@
    rhythm, so nothing new is needed to space them. */
 .tg-q__say { margin-top: clamp(0.6rem, 0.5rem + 0.5vw, 1rem); max-width: 34em; }
 
+/* A movement whose title is a sentence rather than a single word cannot
+   carry the chapter-mark tracking — it would break mid-phrase in the
+   narrow column. Same face, same colour, metrics for a line of prose. */
+.tg-move__name--sentence {
+  font-size: clamp(1.625rem, 1.25rem + 1.7vw, 2.375rem);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------------
+   02b · Notes — the four things a clinic wants settled before it starts.
+
+   Deliberately the same grammar as a question: a hairline, a name, the
+   answer, and air. An index numeral carries the order. There is no
+   panel, no fill, no border-box and no figure — the things that would
+   turn an editorial entry into a product card.
+   --------------------------------------------------------------------- */
+.tg-note {
+  border-top: 1px solid var(--tg-line-soft);
+  padding-block: clamp(1.4rem, 1rem + 1.8vw, 2.4rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: clamp(0.75rem, 0.6rem + 0.6vw, 1.25rem);
+}
+.tg-note:last-child { border-bottom: 1px solid var(--tg-line-soft); }
+@media (min-width: 700px) {
+  .tg-note {
+    grid-template-columns: minmax(9rem, 14rem) 1fr;
+    column-gap: clamp(1.5rem, 1rem + 2.4vw, 3.5rem);
+  }
+}
+.tg-note__idx {
+  display: block;
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  line-height: 1;
+  color: var(--tg-mute);
+}
+.tg-note__name {
+  margin-top: 0.7rem;
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.125rem, 1rem + 0.7vw, 1.4375rem);
+  line-height: 1.5;
+  color: var(--tg-ink);
+}
+.tg-note__en {
+  margin-top: 0.35rem;
+  font-family: var(--ff-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tg-mute);
+}
+.tg-note__say { max-width: 34em; }
+.tg-note__say + .tg-note__say { margin-top: 0.5rem; }
+
+/* --- The two list shapes, shared by a note and by an answer -----------
+   Unordered: a hairline dash, never a dot. Ordered: a mono numeral, so a
+   sequence reads as a sequence without arrows or chevrons between. */
+.tg-note__points, .tg-note__steps,
+.tg-q__points, .tg-q__steps {
+  margin-top: clamp(0.6rem, 0.5rem + 0.5vw, 0.9rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.45rem, 0.4rem + 0.3vw, 0.7rem);
+  max-width: 34em;
+}
+.tg-note__points li, .tg-note__steps li,
+.tg-q__points li, .tg-q__steps li {
+  position: relative;
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--tg-body);
+}
+.tg-note__points li, .tg-q__points li { padding-left: 1.75rem; }
+.tg-note__points li::before, .tg-q__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.85em;
+  width: 14px;
+  height: 1px;
+  background: var(--tg-line);
+}
+.tg-note__steps, .tg-q__steps { counter-reset: tg-step; }
+.tg-note__steps li, .tg-q__steps li { padding-left: 2.5rem; }
+.tg-note__steps li::before, .tg-q__steps li::before {
+  counter-increment: tg-step;
+  content: counter(tg-step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.28em;
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  color: var(--tg-mute);
+}
+
 /* ---------------------------------------------------------------------
    03 · Rooms — a full-width photograph between movements. It carries no
    caption and says nothing; it is there so the reading can breathe.
@@ -145,42 +246,31 @@
 }
 @media (max-width: 759px) { .tg-room img { aspect-ratio: 3 / 2; } }
 
+
 /* ---------------------------------------------------------------------
-   04 · The held quote — centred, large, no band behind it
+   03b · The brand moment — the page's one held breath, placed so the
+   reader arrives at the questions having just been told why any of this
+   matters. Centred, large, no band behind it, nothing to click.
    --------------------------------------------------------------------- */
-.tg-quote { margin-block: var(--tg-gap); padding-block: clamp(5rem, 3rem + 6.5vw, 10rem); text-align: center; }
-.tg-quote__line {
+.tg-brand {
+  margin-block: var(--tg-gap);
+  padding-block: clamp(3.5rem, 2.2rem + 4.4vw, 7rem);
+  text-align: center;
+}
+.tg-brand__line {
   margin-inline: auto;
-  max-width: 18em;
+  max-width: 22em;
   font-family: var(--ff-brand-slogan);
   font-weight: 400;
-  font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.25rem);
-  line-height: 1.7;
+  font-size: clamp(1.5rem, 1.1rem + 1.9vw, 2.5rem);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
   color: var(--tg-ink);
-}
-
-/* ---------------------------------------------------------------------
-   05 · 同行 — the fifth movement asks nothing. Four statements, each
-   closing in on the last: the hairlines fade out and the gaps shorten,
-   so the reading is already slowing down before the final words.
-   --------------------------------------------------------------------- */
-.tg-close__line {
-  border-top: 1px solid;
-  font-family: var(--ff-display);
-  font-weight: 500;
-  font-size: clamp(1.125rem, 1rem + 0.7vw, 1.4375rem);   /* same size as a question */
-  line-height: 1.7;
-  color: var(--tg-ink);
-  max-width: 30em;
   text-wrap: pretty;
 }
-.tg-close__line:nth-child(1) { padding-block: clamp(1.4rem, 1rem + 1.8vw, 2.4rem);   border-color: rgba(26, 59, 50, 0.09); }
-.tg-close__line:nth-child(2) { padding-block: clamp(1.2rem, 0.9rem + 1.4vw, 2rem);   border-color: rgba(26, 59, 50, 0.07); }
-.tg-close__line:nth-child(3) { padding-block: clamp(1rem,   0.8rem + 1vw,   1.6rem); border-color: rgba(26, 59, 50, 0.05); }
-.tg-close__line:nth-child(4) { padding-block: clamp(0.85rem, 0.7rem + 0.7vw, 1.25rem) 0; border-color: rgba(26, 59, 50, 0.03); }
 
 /* ---------------------------------------------------------------------
-   06 · The last words — follows 同行 directly, then leaves the footer air
+   04 · The last words — follows the questions, then leaves the footer air
    --------------------------------------------------------------------- */
 .tg-cta {
   padding-top: clamp(3.5rem, 2.4rem + 4.5vw, 7rem);
@@ -188,11 +278,15 @@
   text-align: center;
 }
 .tg-cta__sub {
+  margin-inline: auto;
   margin-top: clamp(1.5rem, 1.2rem + 1.6vw, 2.5rem);
+  max-width: 26em;
   font-size: var(--fs-lead);
   line-height: 1.9;
   color: var(--tg-ink-soft);
 }
+/* the invitation lands as its own beat, not as a third sentence */
+.tg-cta__sub--last { margin-top: clamp(0.75rem, 0.6rem + 0.6vw, 1.15rem); }
 .tg-cta__line {
   margin-inline: auto;
   max-width: 14em;
