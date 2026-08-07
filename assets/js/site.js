@@ -59,6 +59,28 @@
   }
 
   /* ---------------------------------------------------------------
+     Mobile chapter strip — the eight stops fit inside 360px, so this
+     normally does nothing. When a narrower viewport (or a larger text
+     size) makes the track scroll, the current chapter is brought to
+     the middle of it. Horizontal only: the page itself never moves.
+     --------------------------------------------------------------- */
+  var chapterTrack = document.querySelector('[data-chapter-track]');
+  if (chapterTrack) {
+    var centreCurrent = function () {
+      var current = chapterTrack.querySelector('[aria-current="page"]');
+      if (!current) return;
+      if (chapterTrack.scrollWidth <= chapterTrack.clientWidth) return;
+      var trackBox = chapterTrack.getBoundingClientRect();
+      var itemBox = current.getBoundingClientRect();
+      /* the browser clamps the result to the scrollable range */
+      chapterTrack.scrollLeft += (itemBox.left - trackBox.left)
+        - (trackBox.width - itemBox.width) / 2;
+    };
+    centreCurrent();
+    window.addEventListener('load', centreCurrent);
+  }
+
+  /* ---------------------------------------------------------------
      Contact form — POST /api/contact, which relays to the official
      LINE account. Same origin, so no CORS and no absolute URL.
      --------------------------------------------------------------- */

@@ -378,9 +378,305 @@ html .hero__title {
 html [data-nav="v2"] .nav__link,
 html [data-nav="v2"] .menu__link,
 html .btn,
+html .mobile-chapter-nav,
+html .mobile-chapter-pager,
 html .day-body, html .dtd-body, html .tr-body, html .mg-body, html .fu-body,
 html .dtd-points li, html .fu-card__list li, html .mg-cell__line,
 html .day-source__note, html .dtd-source__note, html .tr-source__note,
 html .mg-source__text, html .fu-note__text {
   font-family: var(--ff-ui);
+}
+
+/* ---------------------------------------------------------------------
+   8 · Mobile chapter navigation
+
+   On a phone the eight chapters must be visible without opening
+   anything. Two shared bars do that, and both are mobile-only — the
+   approved desktop navigation is never touched, never overridden, and
+   never even rendered against.
+
+     .mobile-chapter-nav    the strip under the header: CHAPTER n / 8,
+                            eight numbered stops, current one filled
+     .mobile-chapter-pager  the fixed foot: previous / next chapter
+
+   Both are `position: fixed`, so the page reserves their space on
+   <body> rather than in eight page stylesheets. Every chapter hero
+   already opens with `padding-top: calc(var(--header-h) + air)`; the
+   body padding shifts that whole column down by exactly the height of
+   the strip, so the air above each chapter name is unchanged.
+
+   Layering: header 100 > menu 90 > these bars 80. The open menu covers
+   both, which is why the menu needs no new rules to hide them.
+   --------------------------------------------------------------------- */
+:root {
+  --mobile-strip-h: 76px;
+  --mobile-pager-h: 60px;
+  --mobile-nav-mute: #7C8783;
+  --mobile-nav-line: rgba(26, 59, 50, 0.20);
+  --z-mobile-chapter-nav: 80;
+}
+
+/* Default is off. Everything below only ever switches them on inside
+   the phone/tablet query, so desktop cannot regress. */
+.mobile-chapter-nav,
+.mobile-chapter-pager { display: none; }
+
+@media (max-width: 899px) {
+
+  /* --- Reserved space ------------------------------------------------
+     Only pages that actually carry the bars get the padding. */
+  body.has-chapter-nav {
+    padding-top: var(--mobile-strip-h);
+    padding-bottom: calc(var(--mobile-pager-h) + env(safe-area-inset-bottom));
+  }
+  /* in-page anchors must clear the header *and* the strip */
+  html { scroll-padding-top: calc(var(--header-h) + var(--mobile-strip-h) + 1.5rem); }
+
+  /* --- Chapter strip -------------------------------------------------- */
+  .mobile-chapter-nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    z-index: var(--z-mobile-chapter-nav);
+    height: var(--mobile-strip-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding-inline: var(--grid-gutter);
+    background: rgba(247, 245, 242, 0.94);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+            backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid rgba(26, 59, 50, 0.10);
+    box-shadow: 0 10px 26px -24px rgba(26, 59, 50, 0.45);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .mobile-chapter-nav { background: #F7F5F2; }
+  }
+
+  .mobile-chapter-nav__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    font-size: 0.625rem;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mobile-nav-mute);
+  }
+  .mobile-chapter-nav__progress {
+    letter-spacing: 0.14em;
+    font-variant-numeric: tabular-nums;
+    color: var(--c-accent-deep);
+  }
+
+  /* Eight stops share the row. They only scroll when the viewport is
+     too narrow to seat them — at 360px they still all fit. */
+  .mobile-chapter-nav__track {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .mobile-chapter-nav__track::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+  .mobile-chapter-nav__item {
+    position: relative;
+    flex: 1 0 auto;
+    min-width: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 5px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-chapter-nav__index {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--mobile-nav-line);
+    background: #FFFFFF;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text);
+    transition: background var(--dur-fast) var(--ease-out),
+                border-color var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out);
+  }
+  .mobile-chapter-nav__label {
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: var(--c-text-soft);
+  }
+
+  /* Current chapter: filled mark, deep-green name, a short rule under
+     it. Three signals, so it reads at a glance. */
+  .mobile-chapter-nav__item[aria-current="page"] .mobile-chapter-nav__index {
+    background: var(--c-accent-deep);
+    border-color: var(--c-accent-deep);
+    color: var(--c-text-invert);
+  }
+  .mobile-chapter-nav__item[aria-current="page"] .mobile-chapter-nav__label {
+    color: var(--c-accent-deep);
+    font-weight: 500;
+  }
+  .mobile-chapter-nav__item[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 14px;
+    height: 2px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    background: var(--c-accent-deep);
+  }
+
+  /* --- Bottom pager ---------------------------------------------------
+     The bar's own height is the link row; the safe area is padding
+     under it, so the reserved body padding matches exactly. */
+  .mobile-chapter-pager {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-mobile-chapter-nav);
+    display: flex;
+    align-items: stretch;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(247, 245, 242, 0.96);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+            backdrop-filter: saturate(1.4) blur(10px);
+    /* the top hairline is inset, not a border: a border would make the
+       bar 1px taller than the space <body> reserves for it, and the
+       footer would end up one pixel underneath */
+    box-shadow: inset 0 1px 0 rgba(26, 59, 50, 0.12),
+                0 -10px 26px -24px rgba(26, 59, 50, 0.45);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .mobile-chapter-pager { background: #F7F5F2; }
+  }
+  .mobile-chapter-pager--next-only { justify-content: flex-end; }
+
+  .mobile-chapter-pager__link {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: var(--mobile-pager-h);
+    padding-inline: var(--sp-4);
+    color: var(--c-text);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-chapter-pager__link--prev { padding-left: var(--grid-gutter); }
+  .mobile-chapter-pager__link--next {
+    justify-content: flex-end;
+    padding-right: var(--grid-gutter);
+  }
+  .mobile-chapter-pager__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .mobile-chapter-pager__link--next .mobile-chapter-pager__text { align-items: flex-end; }
+  .mobile-chapter-pager__kicker {
+    font-size: 0.625rem;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    color: var(--mobile-nav-mute);
+  }
+  .mobile-chapter-pager__name {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    color: var(--c-accent-deep);
+  }
+  .mobile-chapter-pager__arrow {
+    flex: none;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--c-accent-deep);
+  }
+  .mobile-chapter-pager__rule {
+    flex: none;
+    align-self: center;
+    width: 1px;
+    height: 26px;
+    background: rgba(26, 59, 50, 0.14);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   9 · Mobile menu — now the full directory, not the only way in
+
+   The strip already carries the eight chapters, so the menu's job is to
+   name the whole site. It gains a section label and a numbered index
+   per chapter; the panel, its scroll behaviour and its foot are
+   untouched. `.menu` is already display:none from 900px up, so none of
+   this needs its own query.
+   --------------------------------------------------------------------- */
+.menu__top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  flex-shrink: 0;          /* must overflow, never be squeezed — see .menu */
+}
+.menu__eyebrow {
+  font-family: var(--ff-ui);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mobile-nav-mute, #7C8783);
+  padding-inline: 0.9rem;
+}
+[data-nav="v2"] .menu__link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+[data-nav="v2"] .menu__text { min-width: 0; }
+[data-nav="v2"] .menu__index {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--mobile-nav-line, rgba(26, 59, 50, 0.20));
+  font-family: var(--ff-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-text);
+}
+[data-nav="v2"] .menu__link[aria-current="page"] .menu__index {
+  border-color: rgba(247, 245, 242, 0.45);
+  color: var(--c-text-invert);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-chapter-nav__index { transition: none; }
 }

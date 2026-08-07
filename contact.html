@@ -74,7 +74,7 @@
 </script>
 </head>
 
-<body>
+<body class="has-chapter-nav">
 <a class="skip-link" href="#main">跳至主要內容</a>
 
 <header class="header" data-header data-nav="v2">
@@ -102,17 +102,41 @@
   </div>
 </header>
 
+<!-- =================================================================
+     Mobile chapter strip — the whole story in one row, no menu needed.
+     Shared markup; only aria-current and the count differ per chapter.
+     ================================================================= -->
+<nav class="mobile-chapter-nav" aria-label="章節導覽">
+  <p class="mobile-chapter-nav__head">
+    <span>Chapter</span>
+    <span class="mobile-chapter-nav__progress">7 / 8</span>
+  </p>
+  <div class="mobile-chapter-nav__track" data-chapter-track>
+      <a class="mobile-chapter-nav__item" href="index.html"><span class="mobile-chapter-nav__index" aria-hidden="true">1</span><span class="mobile-chapter-nav__label">緣起</span></a>
+      <a class="mobile-chapter-nav__item" href="day.html"><span class="mobile-chapter-nav__index" aria-hidden="true">2</span><span class="mobile-chapter-nav__label">一天</span></a>
+      <a class="mobile-chapter-nav__item" href="day-to-day.html"><span class="mobile-chapter-nav__index" aria-hidden="true">3</span><span class="mobile-chapter-nav__label">日常</span></a>
+      <a class="mobile-chapter-nav__item" href="trust.html"><span class="mobile-chapter-nav__index" aria-hidden="true">4</span><span class="mobile-chapter-nav__label">信任</span></a>
+      <a class="mobile-chapter-nav__item" href="management.html"><span class="mobile-chapter-nav__index" aria-hidden="true">5</span><span class="mobile-chapter-nav__label">經營</span></a>
+      <a class="mobile-chapter-nav__item" href="future.html"><span class="mobile-chapter-nav__index" aria-hidden="true">6</span><span class="mobile-chapter-nav__label">未來</span></a>
+      <a class="mobile-chapter-nav__item" href="contact.html" aria-current="page"><span class="mobile-chapter-nav__index" aria-hidden="true">7</span><span class="mobile-chapter-nav__label">啟程</span></a>
+      <a class="mobile-chapter-nav__item" href="together.html"><span class="mobile-chapter-nav__index" aria-hidden="true">8</span><span class="mobile-chapter-nav__label">同行</span></a>
+  </div>
+</nav>
+
 <div class="menu" id="site-menu" aria-hidden="true" data-menu data-nav="v2">
-  <nav class="menu__list" aria-label="行動版導覽">
-    <a class="menu__link" href="index.html">緣起<span class="menu__en">ORIGIN</span></a>
-    <a class="menu__link" href="day.html">一天<span class="menu__en">A DAY IN THE CLINIC</span></a>
-    <a class="menu__link" href="day-to-day.html">日常<span class="menu__en">DAILY OPERATIONS</span></a>
-    <a class="menu__link" href="trust.html">信任<span class="menu__en">TRUST</span></a>
-    <a class="menu__link" href="management.html">經營<span class="menu__en">MANAGEMENT</span></a>
-    <a class="menu__link" href="future.html">未來<span class="menu__en">FUTURE</span></a>
-    <a class="menu__link" href="contact.html" aria-current="page">啟程<span class="menu__en">START</span></a>
-    <a class="menu__link" href="together.html">同行<span class="menu__en">TOGETHER</span></a>
-  </nav>
+  <div class="menu__top">
+    <p class="menu__eyebrow">章節</p>
+    <nav class="menu__list" aria-label="行動版導覽">
+      <a class="menu__link" href="index.html"><span class="menu__index" aria-hidden="true">1</span><span class="menu__text">緣起<span class="menu__en">ORIGIN</span></span></a>
+      <a class="menu__link" href="day.html"><span class="menu__index" aria-hidden="true">2</span><span class="menu__text">一天<span class="menu__en">A DAY IN THE CLINIC</span></span></a>
+      <a class="menu__link" href="day-to-day.html"><span class="menu__index" aria-hidden="true">3</span><span class="menu__text">日常<span class="menu__en">DAILY OPERATIONS</span></span></a>
+      <a class="menu__link" href="trust.html"><span class="menu__index" aria-hidden="true">4</span><span class="menu__text">信任<span class="menu__en">TRUST</span></span></a>
+      <a class="menu__link" href="management.html"><span class="menu__index" aria-hidden="true">5</span><span class="menu__text">經營<span class="menu__en">MANAGEMENT</span></span></a>
+      <a class="menu__link" href="future.html"><span class="menu__index" aria-hidden="true">6</span><span class="menu__text">未來<span class="menu__en">FUTURE</span></span></a>
+      <a class="menu__link" href="contact.html" aria-current="page"><span class="menu__index" aria-hidden="true">7</span><span class="menu__text">啟程<span class="menu__en">START</span></span></a>
+      <a class="menu__link" href="together.html"><span class="menu__index" aria-hidden="true">8</span><span class="menu__text">同行<span class="menu__en">TOGETHER</span></span></a>
+    </nav>
+  </div>
   <div class="menu__foot">
     <a class="btn btn--primary" href="contact.html">預約產品展示</a>
     <p class="menu__meta">Clinic Operating Platform</p>
@@ -401,6 +425,28 @@
     </div>
   </div>
 </footer>
+
+<!-- =================================================================
+     Mobile chapter pager — the way to the chapter either side of this
+     one. Never wraps: 緣起 has no previous, 同行 has no next.
+     ================================================================= -->
+<nav class="mobile-chapter-pager" aria-label="前後章節">
+  <a class="mobile-chapter-pager__link mobile-chapter-pager__link--prev" href="future.html" rel="prev">
+    <span class="mobile-chapter-pager__arrow" aria-hidden="true">←</span>
+    <span class="mobile-chapter-pager__text">
+      <span class="mobile-chapter-pager__kicker">上一章</span>
+      <span class="mobile-chapter-pager__name">未來</span>
+    </span>
+  </a>
+  <span class="mobile-chapter-pager__rule" aria-hidden="true"></span>
+  <a class="mobile-chapter-pager__link mobile-chapter-pager__link--next" href="together.html" rel="next">
+    <span class="mobile-chapter-pager__text">
+      <span class="mobile-chapter-pager__kicker">下一章</span>
+      <span class="mobile-chapter-pager__name">同行</span>
+    </span>
+    <span class="mobile-chapter-pager__arrow" aria-hidden="true">→</span>
+  </a>
+</nav>
 
 <script src="assets/js/site.js" defer></script>
 </body>
