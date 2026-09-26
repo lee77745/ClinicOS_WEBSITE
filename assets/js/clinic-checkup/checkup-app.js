@@ -62,6 +62,7 @@
   /* ---------- 狀態 ---------- */
   var state = { phase: 'welcome', answers: {}, cursor: 0, startedAt: null };
   var payload = null;
+  var completeSent = false;   // 同一份 assessment 只送一次 complete；重新測一次才會重置
 
   /* ---------- Analytics：只在既有 dataLayer / gtag 存在時推送，不自帶 SDK ---------- */
   function track(name, params) {
@@ -71,6 +72,14 @@
       } else if (typeof window.gtag === 'function') {
         window.gtag('event', name, params || {});
       }
+    } catch (e) { /* analytics 永遠不能影響作答 */ }
+  }
+
+  /* Microsoft Clarity custom event：只送事件名稱，不送任何個資或答案。
+     Clarity 未載入（本機、被 AdBlock 擋掉、連不到 Microsoft）時直接略過。 */
+  function clarityEvent(name) {
+    try {
+      if (typeof window.clarity === 'function') window.clarity('event', name);
     } catch (e) { /* analytics 永遠不能影響作答 */ }
   }
 
@@ -349,7 +358,9 @@
       state.answers = {};
       state.cursor = 0;
       state.startedAt = new Date().toISOString();
+      completeSent = false;
       track('clinic_checkup_start', {});
+      clarityEvent('clinicCheckupStart');   // 真的按下「開始健檢」才算開始
     }
     setPhase('quiz');
     renderQuestion();
@@ -446,6 +457,11 @@
       sales_stage: payload.sales.stage,
       sales_timeline: payload.sales.implementationTimeline,
     });
+    /* 只有「答完最後一題進到結果頁」會走到這裡；重新整理結果頁是走還原流程，不會重送。 */
+    if (!completeSent) {
+      completeSent = true;
+      clarityEvent('clinicCheckupComplete');
+    }
     scrollToTop(phases.result);
     var title = $('[data-ck-result-title]');
     if (title) title.focus({ preventScroll: true });
@@ -455,6 +471,7 @@
     store.clear();
     state = { phase: 'welcome', answers: {}, cursor: 0, startedAt: null };
     payload = null;
+    completeSent = false;   // 重新測一次是新的 assessment，之後可以再送一次 complete
     setPhase('welcome');
     if (el.resume) el.resume.hidden = true;
     scrollToTop(phases.welcome);
@@ -534,6 +551,7 @@
         setBusy(false);
         if (r.ok) {
           track('clinic_checkup_lead_submit', { sales_stage: payload.sales.stage, sales_timeline: payload.sales.implementationTimeline });
+          clarityEvent('clinicCheckupLeadSubmit');   // 只在後端回 200 成功後；不送任何聯絡資料
           Array.prototype.forEach.call(el.leadForm.elements, function (c) { c.disabled = true; });
           showLeadStatus(['已收到，謝謝。', '我們會依照你的健檢結果先準備，再透過你留下的聯絡方式與你約時間。'], false, false);
         } else {

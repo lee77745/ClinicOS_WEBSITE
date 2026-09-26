@@ -257,6 +257,8 @@
       try {
         if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'clinic_checkup_floating_click' });
         else if (typeof window.gtag === 'function') window.gtag('event', 'clinic_checkup_floating_click');
+        // Microsoft Clarity：只送事件名稱，不送任何個資。Clarity 沒載入時直接略過。
+        if (typeof window.clarity === 'function') window.clarity('event', 'clinicCheckupFloatingClick');
       } catch (e) { /* tracking must never block navigation */ }
     });
 

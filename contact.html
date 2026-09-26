@@ -72,6 +72,8 @@
   ]
 }
 </script>
+<!-- Microsoft Clarity — 只在正式網域載入，見 assets/js/clarity.js -->
+<script src="assets/js/clarity.js"></script>
 </head>
 
 <body class="has-chapter-nav">
@@ -267,7 +269,8 @@
 
     <div class="st-form__body">
       <!-- 表單送出由 site.js 接手，POST /api/contact，後端轉為官方 LINE 通知 -->
-      <form class="form" data-form novalidate aria-describedby="form-hint">
+      <!-- data-clarity-mask：整個表單（含輸入值與文字）不回傳給 Clarity，個資不入 Session Recording -->
+      <form class="form" data-form novalidate aria-describedby="form-hint" data-clarity-mask="true">
         <div class="form__grid">
           <div class="field field--half">
             <label class="field__label" for="f-clinic">診所名稱 *</label>

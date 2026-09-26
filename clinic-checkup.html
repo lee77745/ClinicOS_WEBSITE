@@ -23,6 +23,8 @@
 <link rel="stylesheet" href="assets/css/chapter-system.css">
 <link rel="stylesheet" href="assets/css/page.css">
 <link rel="stylesheet" href="assets/css/clinic-checkup.css?v=1.1">
+<!-- Microsoft Clarity — 只在正式網域載入，見 assets/js/clarity.js -->
+<script src="assets/js/clarity.js"></script>
 </head>
 
 <body>
@@ -153,7 +155,8 @@
         <p class="ck-lead__note">留下診所名稱、聯絡人與電話就可以。這些資訊只用來安排這次 Demo，不會另作他用。標示 * 為必填。</p>
 
         <!-- 不用 data-form：site.js 的 Contact 流程不會接手；送出由 checkup-app.js 處理 -->
-        <form class="form" data-ck-lead-form novalidate>
+        <!-- data-clarity-mask：整個表單（含輸入值與文字）不回傳給 Clarity，個資不入 Session Recording -->
+        <form class="form" data-ck-lead-form novalidate data-clarity-mask="true">
           <div class="form__grid">
             <div class="field field--half">
               <label class="field__label" for="ck-clinic">診所名稱 *</label>
