@@ -59,7 +59,7 @@ const EMAIL_PATTERN = /^[^\s@]{1,64}@[^\s@]{1,186}\.[^\s@.]{2,}$/;
 const PHONE_PATTERN = /^[+()\-.\s\d#]{7,30}$/;
 
 /* 不對外提供的專案檔案 */
-const BLOCKED_PATH = /^\/(?:node_modules|tests|scripts)(?:\/|$)|^\/(?:package(?:-lock)?\.json|server\.js)$/i;
+const BLOCKED_PATH = /^\/(?:node_modules|tests|scripts|lib)(?:\/|$)|^\/(?:package(?:-lock)?\.json|server\.js)$/i;
 
 /* ---------------------------------------------------------------------
    工具
@@ -324,6 +324,8 @@ app.post(
    sanitize、rate limit、honeypot 與 LINE push；不落地、不進資料庫。
    摘要只接受白名單內的分類 key，顯示文字由伺服器端查表，不信任前端字串。 */
 const CHECKUP_CONFIG = require('./assets/js/clinic-checkup/checkup-config.js');
+const CHECKUP_REPORT = require('./lib/CheckupEmailReport.js');   // 完整報告：驗證 + 組資料 + HTML / text
+const CHECKUP_MAILER = require('./lib/CheckupMailer.js');        // SMTP 寄送（設定不全時自動停用）
 const CHECKUP_CATEGORY_LABELS = CHECKUP_CONFIG.CATEGORY_LABELS;
 const CHECKUP_PRIMARY_KEYS = CHECKUP_CONFIG.PRIMARY_CATEGORY_KEYS;     // TOP 3 只接受主要分類
 const CHECKUP_SYSTEMIC_KEYS = CHECKUP_CONFIG.SYSTEMIC_CATEGORY_KEYS;   // 系統性觀察只接受這兩個
@@ -369,7 +371,7 @@ function validateCheckupLead(body) {
   if (!lead || typeof lead !== 'object' || Array.isArray(lead)) return { ok: false };
   if (!summary || typeof summary !== 'object' || Array.isArray(summary)) return { ok: false };
 
-  const data = { lead: {}, summary: { topPainPoints: [], recommendedDemo: [], clinicProfile: {}, sales: { stage: '', implementationTimeline: '' }, systemicObservations: [] } };
+  const data = { lead: {}, answers: null, summary: { topPainPoints: [], recommendedDemo: [], clinicProfile: {}, sales: { stage: '', implementationTimeline: '' }, systemicObservations: [] } };
 
   for (const field of CHECKUP_LEAD_FIELDS) {
     const value = checkupString(lead[field.name], field.max, field.required);
@@ -405,6 +407,17 @@ function validateCheckupLead(body) {
   const intent = checkupString(summary.salesIntent, 80, false);
   if (intent === null) return { ok: false };
   data.summary.salesIntent = intent;
+
+  /* V1.2：完整 answers 只供 Email 報告使用；LINE 摘要不會用到它。
+     嚴格白名單驗證，任何未知題目／選項／痛苦指數越界一律 400。 */
+  if (body.assessmentVersion !== undefined) {
+    if (body.assessmentVersion !== CHECKUP_CONFIG.VERSION) return { ok: false };
+  }
+  if (body.answers !== undefined) {
+    const answers = CHECKUP_REPORT.validateAnswers(body.answers);
+    if (answers === null) return { ok: false };
+    data.answers = answers;
+  }
 
   if (summary.systemicObservations !== undefined) {
     if (!Array.isArray(summary.systemicObservations) || summary.systemicObservations.length > CHECKUP_SYSTEMIC_KEYS.length) return { ok: false };
@@ -511,10 +524,24 @@ app.post(
       return res.status(400).json(RESPONSES.invalid);
     }
 
-    const sent = await pushToLine(buildCheckupMessage(result.data, requestId, new Date()), requestId);
-    if (!sent) return res.status(502).json(RESPONSES.upstream);
+    const now = new Date();
 
-    console.log(`[checkup] ${requestId} 已送出 LINE 通知`);
+    /* LINE 摘要與 Email 完整報告是兩條獨立通道，平行送出。
+       只有兩邊都失敗才算整體失敗；一邊成功就不該讓另一邊的短暫故障蓋掉。 */
+    const lineTask = pushToLine(buildCheckupMessage(result.data, requestId, now), requestId);
+    const emailTask = result.data.answers
+      ? CHECKUP_MAILER.sendCheckupReport(
+        CHECKUP_REPORT.buildReportData({ answers: result.data.answers, lead: result.data.lead, requestId, now }),
+        requestId
+      )
+      : Promise.resolve({ ok: false, reason: 'no_answers' });
+
+    const [lineOk, emailResult] = await Promise.all([lineTask, emailTask]);
+    const emailOk = !!(emailResult && emailResult.ok);
+
+    console.log(`[checkup] ${requestId} lineOk=${lineOk} emailOk=${emailOk}${emailOk ? '' : ` emailReason=${emailResult && emailResult.reason}`}`);
+
+    if (!lineOk && !emailOk) return res.status(502).json(RESPONSES.upstream);
     return res.status(200).json(RESPONSES.success);
   }
 );
@@ -583,6 +610,8 @@ module.exports.__test = {
   CONTACT_FIELDS,
   buildCheckupMessage,
   validateCheckupLead,
+  CHECKUP_REPORT,
+  CHECKUP_MAILER,
   buildContactMessage,
   describeWebhookSources,
   formatTaipeiTime,

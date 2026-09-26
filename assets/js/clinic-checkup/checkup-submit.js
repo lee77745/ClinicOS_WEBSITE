@@ -21,6 +21,10 @@
   function buildLeadRequest(payload, lead, honeypot) {
     return {
       website: honeypot || '',
+      /* 完整答案只給伺服器組 Email 報告用；LINE 摘要與 Clarity 都不會拿到它。
+         伺服器會用白名單重新驗證，並自行重算分數。 */
+      assessmentVersion: payload.assessmentVersion,
+      answers: payload.answers || {},
       lead: {
         clinicName: lead.clinicName || '',
         contactName: lead.contactName || '',
