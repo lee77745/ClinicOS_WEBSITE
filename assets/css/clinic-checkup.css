@@ -1,0 +1,504 @@
+/* =====================================================================
+   ClinicOS — 診所營運健檢（/clinic-checkup.html）
+   只用 tokens.css 的變數與 components.css / page.css 的既有元件；
+   本檔只負責這一頁的版面：Welcome、Stepper、選項卡、痛苦指數、結果頁。
+   ===================================================================== */
+
+.ck {
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 1rem + 5vw, 5.5rem));
+  padding-bottom: clamp(4rem, 2.5rem + 6vw, 8rem);
+  min-height: 70vh;
+}
+.ck [hidden] { display: none !important; }
+
+.ck-shell {
+  width: 100%;
+  max-width: calc(820px + var(--grid-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--grid-gutter);
+}
+
+/* ---------------------------------------------------------------------
+   Welcome
+   --------------------------------------------------------------------- */
+.ck-welcome__title {
+  margin-top: var(--sp-6);
+  font-family: var(--ff-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-display);
+  font-weight: 500;
+  letter-spacing: var(--ls-display);
+  max-width: 16em;
+  text-wrap: balance;
+}
+.ck-welcome__lead {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-lead);
+  line-height: 1.85;
+  color: var(--c-text-soft);
+  max-width: 28em;
+  text-wrap: pretty;
+}
+.ck-welcome__note {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-small);
+  line-height: 1.9;
+  color: var(--c-text-mute);
+  max-width: 34em;
+}
+.ck-welcome__facts {
+  margin-top: var(--sp-7);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3) var(--sp-6);
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+}
+.ck-welcome__facts li { display: inline-flex; align-items: center; gap: var(--sp-3); }
+.ck-welcome__facts li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-accent-soft);
+}
+.ck-welcome__actions {
+  margin-top: var(--sp-8);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.ck-resume {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+}
+.ck-resume button { color: var(--c-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------------------------------------------------------------------
+   Progress — sticks under the fixed header
+   --------------------------------------------------------------------- */
+.ck-progress {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 5;
+  padding-block: var(--sp-4);
+  background: rgba(247, 245, 242, 0.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--c-line-soft);
+}
+.ck-progress__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-4);
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+}
+.ck-progress__num {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.14em;
+  color: var(--c-text-mute);
+  white-space: nowrap;
+}
+.ck-progress__bar {
+  margin-top: var(--sp-3);
+  height: 2px;
+  background: var(--c-line);
+  overflow: hidden;
+}
+.ck-progress__fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--c-accent);
+  transition: width var(--dur-base) var(--ease-out);
+}
+
+/* ---------------------------------------------------------------------
+   Question
+   --------------------------------------------------------------------- */
+.ck-q { padding-top: clamp(2rem, 1.2rem + 3vw, 3.5rem); }
+.ck-q__title {
+  margin-top: var(--sp-4);
+  font-family: var(--ff-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  font-weight: 500;
+  letter-spacing: var(--ls-display);
+  max-width: 20em;
+  text-wrap: balance;
+  outline: none;
+}
+.ck-q__hint {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-small);
+  color: var(--c-text-mute);
+}
+
+/* Options as tappable cards */
+.ck-options {
+  margin-top: var(--sp-6);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-3);
+}
+@media (min-width: 640px) {
+  .ck-options--cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ck-options--dense { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+}
+.ck-option {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  min-height: 56px;
+  padding: var(--sp-4) var(--sp-5);
+  text-align: left;
+  background: var(--c-paper-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--c-text);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.ck-option:hover { border-color: var(--c-text-mute); }
+.ck-option[aria-checked="true"] {
+  border-color: var(--c-accent);
+  background: var(--c-accent-wash);
+}
+.ck-option[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+.ck-option__mark {
+  flex: none;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--c-line);
+  border-radius: 50%;
+  background: var(--c-paper-raised);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.ck-option[role="checkbox"] .ck-option__mark { border-radius: var(--r-md); }
+.ck-option[aria-checked="true"] .ck-option__mark {
+  border-color: var(--c-accent);
+  background: var(--c-accent);
+}
+.ck-option[role="radio"][aria-checked="true"] .ck-option__mark::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+.ck-option[role="checkbox"][aria-checked="true"] .ck-option__mark::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid #FFFFFF;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+.ck-option__label { flex: 1 1 auto; min-width: 0; }
+
+.ck-other { margin-top: var(--sp-5); max-width: 34em; }
+
+/* Pain slider — appears once the question above has an answer */
+.ck-pain {
+  margin-top: clamp(2rem, 1.4rem + 2vw, 3rem);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--c-line);
+}
+.ck-pain__title {
+  display: block;
+  font-family: var(--ff-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  font-weight: 500;
+}
+.ck-pain__hint { margin-top: var(--sp-2); font-size: var(--fs-small); color: var(--c-text-mute); }
+.ck-pain__range {
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin-top: var(--sp-4);
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.ck-pain__range::-webkit-slider-runnable-track { height: 2px; background: var(--c-line); border-radius: var(--r-pill); }
+.ck-pain__range::-moz-range-track { height: 2px; background: var(--c-line); border-radius: var(--r-pill); }
+.ck-pain__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -13px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 0 0 1px var(--c-accent);
+}
+.ck-pain__range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 0 0 1px var(--c-accent);
+}
+.ck-pain.is-unset .ck-pain__range::-webkit-slider-thumb { background: var(--c-paper-raised); box-shadow: 0 0 0 1px var(--c-text-mute); }
+.ck-pain.is-unset .ck-pain__range::-moz-range-thumb { background: var(--c-paper-raised); box-shadow: 0 0 0 1px var(--c-text-mute); }
+.ck-pain__range:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; border-radius: var(--r-pill); }
+.ck-pain__scale {
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 12px;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.1em;
+  color: var(--c-text-mute);
+}
+.ck-pain__ends {
+  margin-top: var(--sp-2);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  font-size: var(--fs-small);
+  color: var(--c-text-soft);
+}
+.ck-pain__value {
+  margin-top: var(--sp-4);
+  min-height: 1.8em;
+  font-size: var(--fs-body);
+  color: var(--c-text);
+}
+.ck-pain.is-unset .ck-pain__value { color: var(--c-text-mute); }
+
+/* Prev / Next */
+.ck-nav {
+  margin-top: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line-soft);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.ck-nav__hint {
+  flex-basis: 100%;
+  min-height: 1.6em;
+  font-size: var(--fs-small);
+  color: var(--c-text);
+}
+@media (max-width: 480px) {
+  .ck-nav .btn { flex: 1 1 auto; }
+}
+
+/* ---------------------------------------------------------------------
+   Result
+   --------------------------------------------------------------------- */
+.ck-result__title {
+  margin-top: var(--sp-6);
+  font-family: var(--ff-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-display);
+  font-weight: 500;
+  letter-spacing: var(--ls-display);
+  max-width: 16em;
+  text-wrap: balance;
+}
+.ck-result__lead {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-lead);
+  line-height: 1.85;
+  color: var(--c-text-soft);
+  max-width: 28em;
+}
+
+.ck-top {
+  margin-top: var(--sp-8);
+  display: grid;
+  gap: var(--sp-5);
+}
+.ck-card {
+  padding: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  background: var(--c-paper-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--sp-5);
+  row-gap: var(--sp-3);
+}
+.ck-card__index {
+  grid-row: 1 / span 3;
+  padding-top: 0.45rem;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.16em;
+  color: var(--c-text-mute);
+}
+.ck-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3) var(--sp-4);
+}
+.ck-card__title {
+  font-family: var(--ff-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  font-weight: 500;
+}
+.ck-card__summary {
+  color: var(--c-text-soft);
+  max-width: 34em;
+  text-wrap: pretty;
+}
+.ck-card__help-label {
+  display: block;
+  margin-top: var(--sp-3);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  color: var(--c-text-mute);
+}
+.ck-chain {
+  margin-top: var(--sp-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-small);
+  color: var(--c-text);
+}
+.ck-chain li { display: inline-flex; align-items: center; gap: var(--sp-3); }
+.ck-chain li + li::before { content: "→"; color: var(--c-accent-soft); }
+@media (max-width: 480px) {
+  .ck-card { grid-template-columns: 1fr; }
+  .ck-card__index { grid-row: auto; padding-top: 0; }
+}
+
+/* 困擾程度 — 文字永遠一起出現，顏色不是唯一線索 */
+.ck-band {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-line);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.08em;
+  color: var(--c-text-mute);
+  white-space: nowrap;
+}
+.ck-band::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+.ck-band--critical { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-text-invert); }
+.ck-band--high { background: var(--c-accent-wash); border-color: var(--c-accent-soft); color: var(--c-accent-deep); }
+.ck-band--medium { background: var(--c-paper-sunken); border-color: var(--c-paper-edge); color: var(--c-text); }
+.ck-band--low { color: var(--c-text-soft); }
+
+.ck-rest { margin-top: var(--sp-9); }
+.ck-rest__title,
+.ck-demo__title,
+.ck-lead__title {
+  font-family: var(--ff-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  font-weight: 500;
+}
+.ck-rest__list { margin-top: var(--sp-5); }
+.ck-rest__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-4);
+  padding-block: var(--sp-4);
+  border-top: 1px solid var(--c-line);
+}
+.ck-rest__item:last-child { border-bottom: 1px solid var(--c-line); }
+.ck-rest__empty { margin-top: var(--sp-4); color: var(--c-text-soft); }
+
+.ck-demo {
+  margin-top: var(--sp-9);
+  padding: clamp(1.5rem, 1.2rem + 1.8vw, 2.75rem);
+  background: var(--c-paper-sunken);
+  border-radius: var(--r-lg);
+}
+.ck-demo__text { margin-top: var(--sp-3); color: var(--c-text-soft); max-width: 30em; }
+.ck-demo__list {
+  margin-top: var(--sp-5);
+  display: grid;
+  gap: var(--sp-3);
+  counter-reset: demo;
+}
+.ck-demo__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  counter-increment: demo;
+}
+.ck-demo__list li::before {
+  content: counter(demo);
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--c-accent-soft);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-meta);
+  color: var(--c-accent-deep);
+}
+
+.ck-cta {
+  margin-top: var(--sp-9);
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--c-line);
+}
+.ck-cta__title {
+  font-family: var(--ff-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  font-weight: 500;
+  max-width: 18em;
+  text-wrap: balance;
+}
+.ck-cta__actions {
+  margin-top: var(--sp-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4) var(--sp-6);
+}
+
+.ck-lead {
+  margin-top: var(--sp-8);
+  padding: clamp(1.5rem, 1.2rem + 1.8vw, 2.75rem);
+  background: var(--c-paper-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+}
+.ck-lead__note { margin-top: var(--sp-3); font-size: var(--fs-small); color: var(--c-text-mute); max-width: 36em; }
+.ck-lead .form { margin-top: var(--sp-6); }
+.ck-lead .form__foot { margin-top: var(--sp-7); }
+
+.ck-disclaimer {
+  margin-top: var(--sp-9);
+  font-size: var(--fs-small);
+  line-height: 1.9;
+  color: var(--c-text-mute);
+  max-width: 40em;
+}
+.ck-restart { margin-top: var(--sp-6); }

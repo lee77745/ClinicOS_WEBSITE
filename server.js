@@ -319,6 +319,169 @@ app.post(
   }
 );
 
+/* --- 診所營運健檢 Lead ----------------------------------------------
+   /clinic-checkup.html 結果頁的「準備 Demo」表單。與 Contact 共用
+   sanitize、rate limit、honeypot 與 LINE push；不落地、不進資料庫。
+   摘要只接受白名單內的分類 key，顯示文字由伺服器端查表，不信任前端字串。 */
+const CHECKUP_CONFIG = require('./assets/js/clinic-checkup/checkup-config.js');
+const CHECKUP_CATEGORY_LABELS = CHECKUP_CONFIG.CATEGORY_LABELS;
+const CHECKUP_INTENT_LABELS = Object.freeze(
+  CHECKUP_CONFIG.QUESTION_BY_ID.Q30.options.reduce((acc, o) => { acc[o.value] = o.label; return acc; }, {})
+);
+const CHECKUP_PROFILE_FIELDS = Object.freeze(['branchCount', 'doctorCount', 'staffCount', 'dailyCustomerCount', 'currentSystemState']);
+const CHECKUP_PROFILE_LABELS = Object.freeze(
+  CHECKUP_CONFIG.QUESTIONS.filter((q) => q.profile).reduce((acc, q) => {
+    acc[q.profile] = { title: q.title, options: q.options.reduce((m, o) => { m[o.value] = o.label; return m; }, {}) };
+    return acc;
+  }, {})
+);
+const CHECKUP_LEAD_FIELDS = Object.freeze([
+  { name: 'clinicName',  label: '診所名稱', required: true,  max: 100 },
+  { name: 'contactName', label: '聯絡人',   required: true,  max: 50 },
+  { name: 'phone',       label: '聯絡電話', required: true,  max: 30 },
+  { name: 'email',       label: 'Email',    required: false, max: 254 },
+  { name: 'lineId',      label: 'LINE ID',  required: false, max: 50 },
+]);
+const CHECKUP_TOP_MAX = 3;
+const CHECKUP_DEMO_MAX = 5;
+const CHECKUP_TEXT_MAX = 100;
+
+function checkupString(value, max, required) {
+  if (value === undefined || value === null) return required ? null : '';
+  if (typeof value !== 'string') return null;
+  const clean = sanitizeText(value, false);
+  if (!clean) return required ? null : '';
+  if (clean.length > max) return null;
+  return clean;
+}
+
+/** 驗證並清理健檢 Lead。失敗只回 ok:false，不說明哪一欄。 */
+function validateCheckupLead(body) {
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return { ok: false };
+  const lead = body.lead;
+  const summary = body.summary;
+  if (!lead || typeof lead !== 'object' || Array.isArray(lead)) return { ok: false };
+  if (!summary || typeof summary !== 'object' || Array.isArray(summary)) return { ok: false };
+
+  const data = { lead: {}, summary: { topPainPoints: [], recommendedDemo: [], clinicProfile: {} } };
+
+  for (const field of CHECKUP_LEAD_FIELDS) {
+    const value = checkupString(lead[field.name], field.max, field.required);
+    if (value === null) return { ok: false };
+    data.lead[field.name] = value;
+  }
+  if (!PHONE_PATTERN.test(data.lead.phone)) return { ok: false };
+  if ((data.lead.phone.match(/\d/g) || []).length < 7) return { ok: false };
+  if (data.lead.email && !EMAIL_PATTERN.test(data.lead.email)) return { ok: false };
+
+  if (!Array.isArray(summary.topPainPoints) || summary.topPainPoints.length > CHECKUP_TOP_MAX) return { ok: false };
+  for (const item of summary.topPainPoints) {
+    if (!item || typeof item !== 'object') return { ok: false };
+    if (!Object.prototype.hasOwnProperty.call(CHECKUP_CATEGORY_LABELS, item.key)) return { ok: false };
+    if (!Number.isInteger(item.score) || item.score < 0 || item.score > 100) return { ok: false };
+    data.summary.topPainPoints.push({ key: item.key, score: item.score });
+  }
+
+  const priority = checkupString(summary.primaryPriority, CHECKUP_TEXT_MAX, false);
+  if (priority === null) return { ok: false };
+  data.summary.primaryPriority = priority;
+
+  const intent = checkupString(summary.salesIntent, 40, false);
+  if (intent === null) return { ok: false };
+  data.summary.salesIntent = intent;
+
+  if (summary.recommendedDemo !== undefined) {
+    if (!Array.isArray(summary.recommendedDemo) || summary.recommendedDemo.length > CHECKUP_DEMO_MAX) return { ok: false };
+    for (const item of summary.recommendedDemo) {
+      const clean = checkupString(item, 40, true);
+      if (clean === null) return { ok: false };
+      data.summary.recommendedDemo.push(clean);
+    }
+  }
+
+  const profile = summary.clinicProfile;
+  if (profile !== undefined) {
+    if (!profile || typeof profile !== 'object' || Array.isArray(profile)) return { ok: false };
+    for (const key of CHECKUP_PROFILE_FIELDS) {
+      const clean = checkupString(profile[key], 40, false);
+      if (clean === null) return { ok: false };
+      data.summary.clinicProfile[key] = clean;
+    }
+  }
+
+  return { ok: true, data };
+}
+
+function buildCheckupMessage(data, requestId, now) {
+  const lines = ['【ClinicOS 官網營運健檢 Demo 需求】'];
+
+  for (const field of CHECKUP_LEAD_FIELDS) {
+    lines.push('', `${field.label}：`, data.lead[field.name] || EMPTY_PLACEHOLDER);
+  }
+
+  lines.push('', '── 健檢摘要 ──');
+  lines.push('', '最值得先改善：');
+  if (data.summary.topPainPoints.length) {
+    data.summary.topPainPoints.forEach((p, i) => {
+      lines.push(`${i + 1}. ${CHECKUP_CATEGORY_LABELS[p.key]}（${p.score}）`);
+    });
+  } else {
+    lines.push(EMPTY_PLACEHOLDER);
+  }
+
+  const priority = data.summary.primaryPriority;
+  lines.push('', '最想先解決：', priority ? (CHECKUP_CATEGORY_LABELS[priority] || priority) : EMPTY_PLACEHOLDER);
+  const intent = data.summary.salesIntent;
+  lines.push('', '目前階段：', intent ? (CHECKUP_INTENT_LABELS[intent] || intent) : EMPTY_PLACEHOLDER);
+  lines.push('', '建議 Demo：', data.summary.recommendedDemo.length ? data.summary.recommendedDemo.join(' → ') : EMPTY_PLACEHOLDER);
+
+  const profileLines = CHECKUP_PROFILE_FIELDS
+    .filter((key) => data.summary.clinicProfile[key])
+    .map((key) => {
+      const meta = CHECKUP_PROFILE_LABELS[key];
+      const value = data.summary.clinicProfile[key];
+      return `${meta ? meta.title : key} ${meta && meta.options[value] ? meta.options[value] : value}`;
+    });
+  if (profileLines.length) lines.push('', '診所概況：', ...profileLines);
+
+  lines.push('', '送出時間：', formatTaipeiTime(now));
+  lines.push('', 'Request ID：', requestId);
+
+  const text = lines.join('\n');
+  return text.length > LINE_TEXT_LIMIT ? text.slice(0, LINE_TEXT_LIMIT - 1) + '…' : text;
+}
+
+app.post(
+  '/api/clinic-checkup/lead',
+  contactLimiter,
+  express.json({ limit: CONTACT_BODY_LIMIT }),
+  async (req, res) => {
+    const requestId = crypto.randomUUID();
+    const body = req.body;
+
+    if (body && typeof body === 'object' && !Array.isArray(body)) {
+      const trap = body[HONEYPOT_FIELD];
+      const trapped = typeof trap === 'string' ? trap.trim() !== '' : trap !== undefined && trap !== null;
+      if (trapped) {
+        console.warn(`[checkup] ${requestId} honeypot 觸發，未呼叫 LINE`);
+        return res.status(200).json(RESPONSES.success);
+      }
+    }
+
+    const result = validateCheckupLead(body);
+    if (!result.ok) {
+      console.warn(`[checkup] ${requestId} 表單驗證未通過`); // 不記錄內容
+      return res.status(400).json(RESPONSES.invalid);
+    }
+
+    const sent = await pushToLine(buildCheckupMessage(result.data, requestId, new Date()), requestId);
+    if (!sent) return res.status(502).json(RESPONSES.upstream);
+
+    console.log(`[checkup] ${requestId} 已送出 LINE 通知`);
+    return res.status(200).json(RESPONSES.success);
+  }
+);
+
 /* --- 靜態網站 -------------------------------------------------------- */
 app.use((req, res, next) => {
   if (BLOCKED_PATH.test(req.path)) return res.status(404).type('text/plain; charset=utf-8').send('Not Found');
@@ -356,7 +519,7 @@ app.use('/api', (req, res) => res.status(404).json({ ok: false, message: '找不
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   // JSON 解析失敗 / body 超過上限 → 對 Contact 一律回 400，不外洩細節
-  if (req.path === '/api/contact') {
+  if (req.path === '/api/contact' || req.path === '/api/clinic-checkup/lead') {
     console.warn(`[contact] 請求本體無法解析或過大（${err && err.type ? err.type : 'unknown'}）`);
     return res.status(400).json(RESPONSES.invalid);
   }
@@ -381,6 +544,8 @@ if (require.main === module) {
 module.exports = app;
 module.exports.__test = {
   CONTACT_FIELDS,
+  buildCheckupMessage,
+  validateCheckupLead,
   buildContactMessage,
   describeWebhookSources,
   formatTaipeiTime,
