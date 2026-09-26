@@ -35,6 +35,14 @@
   var BONUS = 10;
   var MAX = 100;
   var FRICTION_WEIGHT = { 1: 0.6, 2: 0.8, 3: 1.0, 4: 1.1, 5: 1.2 };
+  var NO_PHOTO_MANAGEMENT_SCORE = 40;   // Q15「目前沒有固定拍攝／管理」→ 可以再優化，不當成痛點
+
+  /* 結果頁模式：依 TOP 1（主要分類）分數決定標題與 CTA 語氣 */
+  var RESULT_MODES = [
+    { min: 50, key: 'priority' },
+    { min: 30, key: 'optimize' },
+    { min: 0, key: 'healthy' },
+  ];
 
   var BANDS = [
     { min: 85, key: 'critical', label: '最值得先處理' },
@@ -108,6 +116,8 @@
     },
 
     PHOTO_MANAGEMENT: function (a) {
+      // 沒有固定拍攝／管理：不一定痛，給適度分數（level 2 的基本分，不乘權重、不加成）
+      if (has(a, 'Q15', 'no_regular')) return NO_PHOTO_MANAGEMENT_SCORE;
       if (!a.Q16) return 0;
       return painBase(a, 'Q16')
         + bonusIf(count(a, 'Q15') >= 3)                       // 照片散在 3 個以上地方
@@ -183,7 +193,7 @@
    * 使用者回頭改答案後，被跳過的條件題可能還留著舊答案，不能拿來計分。
    */
   function effectiveAnswers(answers) {
-    var a = answers || {};
+    var a = config.sanitizeAnswers(answers);   // 舊版 state 的無效選項先清掉，不會 crash
     var keep = {};
     config.visibleQuestions(a).forEach(function (q) {
       if (a[q.id] !== undefined) keep[q.id] = a[q.id];
@@ -210,21 +220,40 @@
     return BANDS[BANDS.length - 1];
   }
 
-  /** 依分數排序（同分時依 CATEGORY_KEYS 順序，保證穩定） */
-  function rank(scores) {
-    return config.CATEGORY_KEYS.slice().sort(function (x, y) {
-      return scores[y] - scores[x] || config.CATEGORY_KEYS.indexOf(x) - config.CATEGORY_KEYS.indexOf(y);
+  /** 依分數排序（同分時依 keys 原順序，保證 deterministic） */
+  function rankKeys(scores, keys) {
+    return keys.slice().sort(function (x, y) {
+      return scores[y] - scores[x] || keys.indexOf(x) - keys.indexOf(y);
     }).map(function (key) {
       return { key: key, label: config.CATEGORY_LABELS[key], score: scores[key], band: bandOf(scores[key]) };
     });
   }
 
-  function topN(scores, n) { return rank(scores).slice(0, n); }
+  /** 全部 12 類的排序（內部分析用） */
+  function rank(scores) { return rankKeys(scores, config.CATEGORY_KEYS); }
 
-  /** Q27 的動態選項：目前分數最高的 5 個分類（分數 > 0 者優先） */
+  /** 只有主要分類的排序 —— TOP 3、其他可優化、Q27、Demo 建議都用這個 */
+  function rankPrimary(scores) { return rankKeys(scores, config.PRIMARY_CATEGORY_KEYS); }
+
+  function topN(scores, n) { return rankPrimary(scores).slice(0, n); }
+
+  /** 系統性觀察：DATA_FRAGMENTATION / MANUAL_WORK >= 50 才列 */
+  var SYSTEMIC_THRESHOLD = 50;
+  function systemicObservations(scores) {
+    return config.SYSTEMIC_CATEGORY_KEYS
+      .filter(function (k) { return scores[k] >= SYSTEMIC_THRESHOLD; })
+      .map(function (k) { return { key: k, score: scores[k], band: bandOf(scores[k]), level: scores[k] >= 70 ? 'high' : 'medium' }; });
+  }
+
+  function resultModeOf(top1Score) {
+    for (var i = 0; i < RESULT_MODES.length; i += 1) if (top1Score >= RESULT_MODES[i].min) return RESULT_MODES[i].key;
+    return 'healthy';
+  }
+
+  /** Q27 的動態選項：目前分數最高的 5 個主要分類 */
   function priorityOptions(answers) {
     var scores = computeScores(answers, { priority: null });
-    return rank(scores).slice(0, 5).map(function (r) { return { value: r.key, label: r.label }; });
+    return rankPrimary(scores).slice(0, 5).map(function (r) { return { value: r.key, label: r.label }; });
   }
 
   return {
@@ -233,10 +262,15 @@
     MAX: MAX,
     FRICTION_WEIGHT: FRICTION_WEIGHT,
     BANDS: BANDS,
+    NO_PHOTO_MANAGEMENT_SCORE: NO_PHOTO_MANAGEMENT_SCORE,
+    SYSTEMIC_THRESHOLD: SYSTEMIC_THRESHOLD,
     computeScores: computeScores,
     bandOf: bandOf,
     rank: rank,
+    rankPrimary: rankPrimary,
     topN: topN,
+    systemicObservations: systemicObservations,
+    resultModeOf: resultModeOf,
     priorityOptions: priorityOptions,
   };
 });

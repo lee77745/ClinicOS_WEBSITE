@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="assets/css/components.css">
 <link rel="stylesheet" href="assets/css/chapter-system.css">
 <link rel="stylesheet" href="assets/css/page.css">
-<link rel="stylesheet" href="assets/css/clinic-checkup.css">
+<link rel="stylesheet" href="assets/css/clinic-checkup.css?v=1.1">
 </head>
 
 <body>
@@ -80,12 +80,12 @@
     <section class="ck-welcome" data-ck-phase="welcome" aria-labelledby="ck-welcome-title">
       <p class="eyebrow">ClinicOS 診所營運健檢</p>
       <h1 class="ck-welcome__title" id="ck-welcome-title">看看你的診所，<br>現在最卡在哪裡？</h1>
-      <p class="ck-welcome__lead">花 3～5 分鐘，快速看看目前診所的營運流程，<br>有哪些地方最值得先改善。</p>
-      <p class="ck-welcome__note">沒有標準答案，我們只是想先了解你們現在怎麼做。<br>完成後會整理出目前最值得優先改善的 3 個地方。</p>
+      <p class="ck-welcome__lead">花 3～5 分鐘，<br>快速看看目前哪些流程最值得先改善。</p>
+      <p class="ck-welcome__note">大多都是點一下就能回答，不用先準備資料，也不用先留下聯絡方式。<br>沒有標準答案，我們只是想先了解你們現在怎麼做。</p>
       <ul class="ck-welcome__facts" aria-label="健檢說明">
-        <li>7 個段落，約 30 題</li>
-        <li>大多是點選，不用打字</li>
-        <li>不用先留聯絡資料</li>
+        <li>約 3～5 分鐘</li>
+        <li>7 個段落</li>
+        <li>完成後整理出最值得先改善的地方</li>
       </ul>
       <div class="ck-welcome__actions">
         <button class="btn btn--primary" type="button" data-ck-start>開始健檢</button>
@@ -118,9 +118,15 @@
     <section class="ck-result" data-ck-phase="result" aria-labelledby="ck-result-title" hidden>
       <p class="eyebrow">健檢結果</p>
       <h1 class="ck-result__title" id="ck-result-title" tabindex="-1" data-ck-result-title>你的 ClinicOS<br>診所營運健檢結果</h1>
-      <p class="ck-result__lead">從你的回答來看，<br>目前最值得先改善的是這 3 個地方。</p>
+      <h2 class="ck-result__mode" data-ck-mode-title>目前最值得先改善的是這 3 個地方</h2>
+      <p class="ck-result__lead" data-ck-mode-lead>從你的回答來看，這幾個地方目前對日常營運的影響比較明顯。</p>
 
-      <ol class="ck-top" data-ck-top aria-label="最值得先改善的 3 個地方"></ol>
+      <ol class="ck-top" data-ck-top aria-label="最值得先改善的地方"></ol>
+
+      <div class="ck-systemic" data-ck-systemic hidden>
+        <h2 class="ck-systemic__title">另外，我們也注意到</h2>
+        <ul class="ck-systemic__list" data-ck-systemic-list></ul>
+      </div>
 
       <div class="ck-rest">
         <h2 class="ck-rest__title">其他可以慢慢優化的地方</h2>
@@ -129,12 +135,13 @@
 
       <div class="ck-demo">
         <h2 class="ck-demo__title">如果現在安排 Demo，我們建議先看這些</h2>
-        <p class="ck-demo__text">不用從頭看完整系統。如果安排 ClinicOS Demo，我們可以直接從你最在意的地方開始。</p>
+        <p class="ck-demo__text">如果安排 ClinicOS Demo，我們會依照你的結果，先從這幾個地方開始看。</p>
         <ol class="ck-demo__list" data-ck-demo aria-label="你的 Demo 建議"></ol>
       </div>
 
       <div class="ck-cta">
-        <h2 class="ck-cta__title">想看看 ClinicOS<br>怎麼處理這 3 個問題？</h2>
+        <h2 class="ck-cta__title" data-ck-cta-title>想看看 ClinicOS 怎麼處理這幾個問題？</h2>
+        <p class="ck-cta__body" data-ck-cta-body>不用從頭看完整系統，我們可以直接從你現在最在意的地方開始。</p>
         <div class="ck-cta__actions">
           <a class="btn btn--primary" href="#ck-lead" data-ck-demo-cta>預約 Demo</a>
           <a class="link-quiet" href="contact.html">或直接前往聯絡頁 <span class="arrow" aria-hidden="true">→</span></a>
@@ -234,11 +241,11 @@
 </footer>
 
 <script src="assets/js/site.js" defer></script>
-<script src="assets/js/clinic-checkup/checkup-config.js" defer></script>
-<script src="assets/js/clinic-checkup/checkup-scoring.js" defer></script>
-<script src="assets/js/clinic-checkup/checkup-results.js" defer></script>
-<script src="assets/js/clinic-checkup/checkup-state.js" defer></script>
-<script src="assets/js/clinic-checkup/checkup-submit.js" defer></script>
-<script src="assets/js/clinic-checkup/checkup-app.js" defer></script>
+<script src="assets/js/clinic-checkup/checkup-config.js?v=1.1" defer></script>
+<script src="assets/js/clinic-checkup/checkup-scoring.js?v=1.1" defer></script>
+<script src="assets/js/clinic-checkup/checkup-results.js?v=1.1" defer></script>
+<script src="assets/js/clinic-checkup/checkup-state.js?v=1.1" defer></script>
+<script src="assets/js/clinic-checkup/checkup-submit.js?v=1.1" defer></script>
+<script src="assets/js/clinic-checkup/checkup-app.js?v=1.1" defer></script>
 </body>
 </html>

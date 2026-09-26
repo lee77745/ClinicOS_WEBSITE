@@ -341,8 +341,10 @@
   column-gap: var(--sp-5);
   row-gap: var(--sp-3);
 }
+.ck-card > :not(.ck-card__index) { grid-column: 2; }   /* 內容一律在右欄，列數增減都不會掉到左欄 */
 .ck-card__index {
-  grid-row: 1 / span 3;
+  grid-column: 1;
+  grid-row: 1 / -1;
   padding-top: 0.45rem;
   font-family: var(--ff-mono);
   font-size: var(--fs-meta);
@@ -385,6 +387,7 @@
 .ck-chain li + li::before { content: "→"; color: var(--c-accent-soft); }
 @media (max-width: 480px) {
   .ck-card { grid-template-columns: 1fr; }
+  .ck-card > :not(.ck-card__index) { grid-column: 1; }
   .ck-card__index { grid-row: auto; padding-top: 0; }
 }
 
@@ -406,6 +409,49 @@
 .ck-band--high { background: var(--c-accent-wash); border-color: var(--c-accent-soft); color: var(--c-accent-deep); }
 .ck-band--medium { background: var(--c-paper-sunken); border-color: var(--c-paper-edge); color: var(--c-text); }
 .ck-band--low { color: var(--c-text-soft); }
+
+/* 依 TOP 1 分數切換的結果標題（V1.1） */
+.ck-result__mode {
+  margin-top: var(--sp-8);
+  font-family: var(--ff-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  font-weight: 500;
+  max-width: 20em;
+  text-wrap: balance;
+}
+.ck-result__mode + .ck-result__lead { margin-top: var(--sp-4); }
+
+/* 「你的狀況」— 依實際回答組出的 1～2 句 */
+.ck-card__evidence { margin-top: var(--sp-1); }
+.ck-card__evidence-text { margin-top: var(--sp-2); color: var(--c-text); max-width: 34em; text-wrap: pretty; }
+.ck-card__evidence + .ck-card__summary { margin-top: var(--sp-2); color: var(--c-text-mute); }
+
+/* 「另外，我們也注意到」— 系統性觀察，層級低於 TOP 3 */
+.ck-systemic { margin-top: var(--sp-8); }
+.ck-systemic__title {
+  font-size: var(--fs-small);
+  letter-spacing: 0.08em;
+  color: var(--c-text-mute);
+}
+.ck-systemic__list {
+  margin-top: var(--sp-4);
+  display: grid;
+  gap: var(--sp-3);
+}
+@media (min-width: 640px) { .ck-systemic__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ck-note {
+  padding: var(--sp-5);
+  border: 1px solid var(--c-line-soft);
+  border-radius: var(--r-lg);
+  background: transparent;
+}
+.ck-note__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--sp-2) var(--sp-4); }
+.ck-note__title { font-family: var(--ff-sans); font-size: var(--fs-body); font-weight: 500; color: var(--c-text); }
+.ck-note__level { font-size: var(--fs-meta); letter-spacing: 0.08em; color: var(--c-text-mute); white-space: nowrap; }
+.ck-note__text { margin-top: var(--sp-2); font-size: var(--fs-small); line-height: 1.85; color: var(--c-text-soft); }
+
+.ck-cta__body { margin-top: var(--sp-4); color: var(--c-text-soft); max-width: 32em; text-wrap: pretty; }
 
 .ck-rest { margin-top: var(--sp-9); }
 .ck-rest__title,

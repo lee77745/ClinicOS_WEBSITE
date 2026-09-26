@@ -10,7 +10,7 @@
 })(typeof window !== 'undefined' ? window : globalThis, function (root) {
   'use strict';
 
-  var KEY = 'clinicos_checkup_v1';
+  var KEY = 'clinicos_checkup_v1_1';   // V1.1：題目 schema 變動，換 key，舊 V1 state 不再載入
 
   function storage() {
     try { return root.sessionStorage || null; } catch (e) { return null; }

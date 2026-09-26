@@ -36,7 +36,11 @@
         primaryPriority: (payload.primaryPriority === 'OTHER' && payload.primaryPriorityNote)
           ? String(payload.primaryPriorityNote).slice(0, 100)
           : (payload.primaryPriority || ''),
-        salesIntent: payload.salesIntent || '',
+        sales: {
+          stage: (payload.sales && payload.sales.stage) || '',
+          implementationTimeline: (payload.sales && payload.sales.implementationTimeline) || '',
+        },
+        systemicObservations: (payload.systemicObservations || []).map(function (o) { return { key: o.key, score: o.score }; }),
         recommendedDemo: payload.recommendedDemo || [],
         clinicProfile: payload.clinicProfile || {},
       },

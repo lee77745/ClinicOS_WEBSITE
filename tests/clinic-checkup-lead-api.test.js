@@ -61,7 +61,8 @@ function validBody(overrides) {
         { key: 'INVENTORY', score: 76 },
       ],
       primaryPriority: 'BONUS',
-      salesIntent: 'within_3_months',
+      sales: { stage: 'COMPARING', implementationTimeline: 'WITHIN_3_MONTHS' },
+      systemicObservations: [{ key: 'DATA_FRAGMENTATION', score: 85 }, { key: 'MANUAL_WORK', score: 60 }],
       recommendedDemo: ['客戶分群與沉睡客', '喚回管理', '成交', 'KPI', '獎金'],
       clinicProfile: { branchCount: '2_3', doctorCount: '2_3', staffCount: '6_10', dailyCustomerCount: '31_60', currentSystemState: 'system_plus_tools' },
     },
@@ -88,10 +89,31 @@ test('01 · 合法 Lead → 200，LINE 訊息含標籤文字而非 key', async (
   assert.match(text, /ClinicOS 官網營運健檢/);
   assert.match(text, /1\. 客戶回流（92）/);
   assert.match(text, /最想先解決：\n獎金與績效/);
-  assert.match(text, /目前階段：\n3 個月內希望改善/);
+  assert.match(text, /目前階段：\n正在比較不同系統/);
+  assert.match(text, /希望時程：\n3 個月內/);
+  assert.match(text, /系統性觀察：\n資料分散：高\n人工整理：中/);
   assert.match(text, /2～3 間/);
   assert.doesNotMatch(text, /CUSTOMER_RETENTION/);
   assert.equal(lineCalls[0].body.to, 'Utest0000000000000000000000000000');
+});
+
+test('01b · V1.1：TOP 3 不接受系統性分類；系統性觀察 < 50 不列；未知 stage → 400', async () => {
+  const sys = validBody(); sys.summary.topPainPoints = [{ key: 'DATA_FRAGMENTATION', score: 90 }];
+  assert.equal((await post(sys)).status, 400);
+  const badStage = validBody(); badStage.summary.sales = { stage: 'NOPE', implementationTimeline: '' };
+  assert.equal((await post(badStage)).status, 400);
+  const low = validBody(); low.summary.systemicObservations = [{ key: 'MANUAL_WORK', score: 49 }];
+  const res = await post(low);
+  assert.equal(res.status, 200);
+  assert.doesNotMatch(lineCalls[0].body.messages[0].text, /系統性觀察/);
+});
+
+test('01c · V1 舊前端只帶 salesIntent 仍可送出，目前階段顯示該文字', async () => {
+  const legacy = validBody(); delete legacy.summary.sales; delete legacy.summary.systemicObservations; legacy.summary.salesIntent = '3 個月內希望改善';
+  const res = await post(legacy);
+  assert.equal(res.status, 200);
+  assert.match(lineCalls[0].body.messages[0].text, /目前階段：\n3 個月內希望改善/);
+  assert.match(lineCalls[0].body.messages[0].text, /希望時程：\n未填寫/);
 });
 
 test('02 · Email 選填：空白可過，格式錯 → 400', async () => {

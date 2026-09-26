@@ -325,9 +325,15 @@ app.post(
    摘要只接受白名單內的分類 key，顯示文字由伺服器端查表，不信任前端字串。 */
 const CHECKUP_CONFIG = require('./assets/js/clinic-checkup/checkup-config.js');
 const CHECKUP_CATEGORY_LABELS = CHECKUP_CONFIG.CATEGORY_LABELS;
-const CHECKUP_INTENT_LABELS = Object.freeze(
-  CHECKUP_CONFIG.QUESTION_BY_ID.Q30.options.reduce((acc, o) => { acc[o.value] = o.label; return acc; }, {})
-);
+const CHECKUP_PRIMARY_KEYS = CHECKUP_CONFIG.PRIMARY_CATEGORY_KEYS;     // TOP 3 只接受主要分類
+const CHECKUP_SYSTEMIC_KEYS = CHECKUP_CONFIG.SYSTEMIC_CATEGORY_KEYS;   // 系統性觀察只接受這兩個
+const CHECKUP_SYSTEMIC_LABELS = Object.freeze({ DATA_FRAGMENTATION: '資料分散', MANUAL_WORK: '人工整理' });
+const CHECKUP_SYSTEMIC_MIN = 50;
+function optionLabelMap(qid) {
+  return Object.freeze(CHECKUP_CONFIG.QUESTION_BY_ID[qid].options.reduce((acc, o) => { acc[o.value] = o.label; return acc; }, {}));
+}
+const CHECKUP_STAGE_LABELS = optionLabelMap('Q30A');
+const CHECKUP_TIMELINE_LABELS = optionLabelMap('Q30B');
 const CHECKUP_PROFILE_FIELDS = Object.freeze(['branchCount', 'doctorCount', 'staffCount', 'dailyCustomerCount', 'currentSystemState']);
 const CHECKUP_PROFILE_LABELS = Object.freeze(
   CHECKUP_CONFIG.QUESTIONS.filter((q) => q.profile).reduce((acc, q) => {
@@ -363,7 +369,7 @@ function validateCheckupLead(body) {
   if (!lead || typeof lead !== 'object' || Array.isArray(lead)) return { ok: false };
   if (!summary || typeof summary !== 'object' || Array.isArray(summary)) return { ok: false };
 
-  const data = { lead: {}, summary: { topPainPoints: [], recommendedDemo: [], clinicProfile: {} } };
+  const data = { lead: {}, summary: { topPainPoints: [], recommendedDemo: [], clinicProfile: {}, sales: { stage: '', implementationTimeline: '' }, systemicObservations: [] } };
 
   for (const field of CHECKUP_LEAD_FIELDS) {
     const value = checkupString(lead[field.name], field.max, field.required);
@@ -377,7 +383,7 @@ function validateCheckupLead(body) {
   if (!Array.isArray(summary.topPainPoints) || summary.topPainPoints.length > CHECKUP_TOP_MAX) return { ok: false };
   for (const item of summary.topPainPoints) {
     if (!item || typeof item !== 'object') return { ok: false };
-    if (!Object.prototype.hasOwnProperty.call(CHECKUP_CATEGORY_LABELS, item.key)) return { ok: false };
+    if (!CHECKUP_PRIMARY_KEYS.includes(item.key)) return { ok: false };
     if (!Number.isInteger(item.score) || item.score < 0 || item.score > 100) return { ok: false };
     data.summary.topPainPoints.push({ key: item.key, score: item.score });
   }
@@ -386,9 +392,29 @@ function validateCheckupLead(body) {
   if (priority === null) return { ok: false };
   data.summary.primaryPriority = priority;
 
-  const intent = checkupString(summary.salesIntent, 40, false);
+  // V1.1：sales.stage / sales.implementationTimeline（白名單 key）；V1 的 salesIntent 仍可帶但只當顯示文字
+  if (summary.sales !== undefined) {
+    if (!summary.sales || typeof summary.sales !== 'object' || Array.isArray(summary.sales)) return { ok: false };
+    const stage = checkupString(summary.sales.stage, 40, false);
+    const timeline = checkupString(summary.sales.implementationTimeline, 40, false);
+    if (stage === null || timeline === null) return { ok: false };
+    if (stage && !CHECKUP_STAGE_LABELS[stage]) return { ok: false };
+    if (timeline && !CHECKUP_TIMELINE_LABELS[timeline]) return { ok: false };
+    data.summary.sales = { stage, implementationTimeline: timeline };
+  }
+  const intent = checkupString(summary.salesIntent, 80, false);
   if (intent === null) return { ok: false };
   data.summary.salesIntent = intent;
+
+  if (summary.systemicObservations !== undefined) {
+    if (!Array.isArray(summary.systemicObservations) || summary.systemicObservations.length > CHECKUP_SYSTEMIC_KEYS.length) return { ok: false };
+    for (const item of summary.systemicObservations) {
+      if (!item || typeof item !== 'object') return { ok: false };
+      if (!CHECKUP_SYSTEMIC_KEYS.includes(item.key)) return { ok: false };
+      if (!Number.isInteger(item.score) || item.score < 0 || item.score > 100) return { ok: false };
+      if (item.score >= CHECKUP_SYSTEMIC_MIN) data.summary.systemicObservations.push({ key: item.key, score: item.score });
+    }
+  }
 
   if (summary.recommendedDemo !== undefined) {
     if (!Array.isArray(summary.recommendedDemo) || summary.recommendedDemo.length > CHECKUP_DEMO_MAX) return { ok: false };
@@ -431,8 +457,19 @@ function buildCheckupMessage(data, requestId, now) {
 
   const priority = data.summary.primaryPriority;
   lines.push('', '最想先解決：', priority ? (CHECKUP_CATEGORY_LABELS[priority] || priority) : EMPTY_PLACEHOLDER);
-  const intent = data.summary.salesIntent;
-  lines.push('', '目前階段：', intent ? (CHECKUP_INTENT_LABELS[intent] || intent) : EMPTY_PLACEHOLDER);
+
+  const { stage, implementationTimeline } = data.summary.sales;
+  const legacyIntent = data.summary.salesIntent;   // V1 前端相容：沒有 sales.* 時退回顯示 salesIntent
+  lines.push('', '目前階段：', stage ? CHECKUP_STAGE_LABELS[stage] : (legacyIntent || EMPTY_PLACEHOLDER));
+  lines.push('', '希望時程：', implementationTimeline ? CHECKUP_TIMELINE_LABELS[implementationTimeline] : EMPTY_PLACEHOLDER);
+
+  if (data.summary.systemicObservations.length) {
+    lines.push('', '系統性觀察：');
+    data.summary.systemicObservations.forEach((o) => {
+      lines.push(`${CHECKUP_SYSTEMIC_LABELS[o.key]}：${o.score >= 70 ? '高' : '中'}`);
+    });
+  }
+
   lines.push('', '建議 Demo：', data.summary.recommendedDemo.length ? data.summary.recommendedDemo.join(' → ') : EMPTY_PLACEHOLDER);
 
   const profileLines = CHECKUP_PROFILE_FIELDS

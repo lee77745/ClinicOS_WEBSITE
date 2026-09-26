@@ -154,13 +154,14 @@ test('10 · Q27 動態選項：5 個分類 + 前端補「其他」；選到的�
 test('11 · payload 結構：canonical value、不含 label 當值、總分只留內部', () => {
   const a = Object.assign(worstAnswers(), { Q27: 'OTHER', Q27_other: '報表' });
   const p = results.buildPayload(a, new Date('2026-09-26T01:02:03Z'));
-  assert.equal(p.assessmentVersion, '1.0');
+  assert.equal(p.assessmentVersion, '1.1');
   assert.equal(p.completedAt, '2026-09-26T01:02:03.000Z');
   assert.deepEqual(Object.keys(p.clinicProfile), ['branchCount', 'doctorCount', 'staffCount', 'dailyCustomerCount', 'currentSystemState']);
   assert.deepEqual(Object.keys(p.painScores).sort(), config.CATEGORY_KEYS.slice().sort());
   assert.equal(p.primaryPriority, 'OTHER');
   assert.equal(p.primaryPriorityNote, '報表');
-  assert.equal(p.salesIntent, 'asap');
+  assert.deepEqual(p.sales, { stage: 'OTHER', implementationTimeline: 'ASAP' });
+  assert.equal(p.salesIntent, '其他 · 越快越好');
   assert.ok(p.recommendedDemo.length <= results.DEMO_MAX);
   assert.equal(typeof p.totalScore, 'number');
   p.topPainPoints.forEach((t) => {
@@ -177,6 +178,8 @@ test('12 · 每個分類都有完整結果文案', () => {
     assert.equal(typeof c.title, 'string');
     assert.equal(typeof c.problemSummary, 'string');
     assert.ok(Array.isArray(c.clinicOSHelp) && c.clinicOSHelp.length >= 3);
-    assert.ok(Array.isArray(c.recommendedDemo) && c.recommendedDemo.length >= 2);
+    // V1.1：只有主要分類有 Demo 路線；系統性分類不得自己製造 Demo
+    if (config.PRIMARY_CATEGORY_KEYS.includes(k)) assert.ok(Array.isArray(c.recommendedDemo) && c.recommendedDemo.length >= 2);
+    else assert.deepEqual(c.recommendedDemo, []);
   });
 });

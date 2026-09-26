@@ -21,14 +21,19 @@
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
 
-  var VERSION = '1.0';
+  var VERSION = '1.1';
 
-  /* ---------- 分類 ---------- */
-  var CATEGORY_KEYS = [
+  /* ---------- 分類 ----------
+     PRIMARY：診所功能領域，才能進 TOP 3 / Q27 / Demo 建議。
+     SYSTEMIC：橫跨所有流程的系統性問題，照常計分、留在 payload 與 Lead，
+               但只在結果頁「另外，我們也注意到」以低層級顯示。 */
+  var PRIMARY_CATEGORY_KEYS = [
     'CUSTOMER_DATA', 'APPOINTMENT', 'SALES_WORKFLOW', 'PAYMENT_BALANCE',
     'MEDICAL_RECORD', 'PHOTO_MANAGEMENT', 'INVENTORY', 'BONUS',
-    'CUSTOMER_RETENTION', 'MANAGEMENT_REPORT', 'DATA_FRAGMENTATION', 'MANUAL_WORK',
+    'CUSTOMER_RETENTION', 'MANAGEMENT_REPORT',
   ];
+  var SYSTEMIC_CATEGORY_KEYS = ['DATA_FRAGMENTATION', 'MANUAL_WORK'];
+  var CATEGORY_KEYS = PRIMARY_CATEGORY_KEYS.concat(SYSTEMIC_CATEGORY_KEYS);
 
   var CATEGORY_LABELS = {
     CUSTOMER_DATA: '客戶資料',
@@ -86,8 +91,20 @@
     return a.filter(function (v) { return ex.indexOf(v) === -1; }).length;
   }
 
+  /** 某題目前答案對應的選項 level（1～5）；未答或無 level → 0 */
+  function optionLevel(answers, id) {
+    var q = QUESTION_BY_ID[id];
+    if (!q) return 0;
+    for (var i = 0; i < q.options.length; i += 1) {
+      if (q.options[i].value === answers[id]) return q.options[i].level || 0;
+    }
+    return 0;
+  }
+
+  /* Q20 追問：選項 level >= 3（有點麻煩／很花時間／每個月都很痛苦）
+     或痛苦指數 >= 3，兩者任一成立就問。沒碰 slider 也不會漏問。 */
   function bonusFollowupNeeded(a) {
-    return (a.Q20_pain || 0) >= 3 || has(a, 'Q20', 'time_consuming') || has(a, 'Q20', 'painful');
+    return optionLevel(a, 'Q20') >= 3 || (Number(a.Q20_pain) || 0) >= 3;
   }
 
   /* ---------- 題目 ---------- */
@@ -121,7 +138,7 @@
         ['system_plus_tools', '有，但還是很多事情靠其他工具'],
         ['multiple_systems', '有好幾套不同系統'],
         ['no_system', '沒有，主要靠 Excel / LINE / 紙本'],
-        ['looking', '正在找新系統'],
+        // V1.1：「正在找新系統」不是使用現況，移到 Q30A 表達
       ]),
     },
 
@@ -227,16 +244,18 @@
       ]),
     },
     {
-      id: 'Q15', step: 'S4', type: 'multi',
+      id: 'Q15', step: 'S4', type: 'multi', exclusive: 'no_regular',
       title: '術前術後照片現在主要放在哪裡？',
       hint: '可以複選。',
       options: opts([
         ['system', '診所系統'], ['phone', '手機'], ['tablet', '平板'], ['gdrive', 'Google Drive'],
         ['nas', 'NAS / Server'], ['line', 'LINE'], ['pc_folder', '電腦資料夾'], ['other', '其他'],
+        ['no_regular', '目前沒有固定拍攝／管理術前術後照片'],
       ]),
     },
     {
       id: 'Q16', step: 'S4', type: 'single', category: 'PHOTO_MANAGEMENT', pain: true,
+      showIf: function (a) { return !has(a, 'Q15', 'no_regular'); },
       title: '要找某位客人過去所有照片，方便嗎？',
       options: opts([
         ['easy', '很方便', 1],
@@ -248,6 +267,7 @@
     },
     {
       id: 'Q17', step: 'S4', type: 'single',
+      showIf: function (a) { return !has(a, 'Q15', 'no_regular'); },
       title: '照片、療程日期、療程項目，目前有連在一起嗎？',
       options: opts([['yes', '有'], ['partial', '部分有'], ['no', '沒有'], ['unknown', '不確定']]),
     },
@@ -401,18 +421,57 @@
         ['less_churn', '客戶比較不容易流失'], ['clear_inventory_cost', '庫存成本更清楚'], ['bonus_no_dispute', '獎金比較沒有爭議'], ['other', '其他'],
       ]),
     },
+    /* V1.1：原 Q30 拆成「目前狀況」與「希望時程」兩題 */
     {
-      id: 'Q30', step: 'S7', type: 'single', intent: true,
-      title: '你目前是在：',
+      id: 'Q30A', step: 'S7', type: 'single', sales: 'stage',
+      title: '你現在比較接近哪一種狀況？',
       options: opts([
-        ['exploring', '純粹先了解'], ['comparing', '正在比較系統'], ['current_unhappy', '現有系統不好用'],
-        ['switching', '準備換系統'], ['new_clinic', '新診所準備導入'], ['within_3_months', '3 個月內希望改善'], ['asap', '越快越好'],
+        ['JUST_LOOKING', '純粹先了解'], ['COMPARING', '正在比較不同系統'], ['CURRENT_SYSTEM_ISSUES', '現有系統有些地方不好用'],
+        ['READY_TO_SWITCH', '已經準備換系統'], ['NEW_CLINIC', '新診所正在準備導入'], ['OTHER', '其他'],
+      ]),
+    },
+    {
+      id: 'Q30B', step: 'S7', type: 'single', sales: 'implementationTimeline',
+      title: '如果真的要改善，大概希望什麼時候開始？',
+      options: opts([
+        ['NO_TIMELINE', '目前沒有時間表'], ['WITHIN_6_MONTHS', '半年內'], ['WITHIN_3_MONTHS', '3 個月內'],
+        ['WITHIN_1_MONTH', '1 個月內'], ['ASAP', '越快越好'],
       ]),
     },
   ];
 
   var QUESTION_BY_ID = {};
   QUESTIONS.forEach(function (q) { QUESTION_BY_ID[q.id] = q; });
+
+  /**
+   * 清掉舊版 state 裡已不存在的題目與選項（例如 V1 的 Q5「正在找新系統」、舊 Q30）。
+   * 無效的單選 → 視為未回答；多選 → 只留仍存在的值；未知題目 → 丟掉。
+   * Q27 是動態選項（分類 key 或 OTHER），另外驗證。
+   */
+  function sanitizeAnswers(answers) {
+    var a = answers && typeof answers === 'object' ? answers : {};
+    var out = {};
+    QUESTIONS.forEach(function (q) {
+      var v = a[q.id];
+      if (v === undefined || v === null) return;
+      if (q.type === 'multi') {
+        if (!Array.isArray(v)) return;
+        var allowed = q.options.map(function (o) { return o.value; });
+        var kept = v.filter(function (x) { return allowed.indexOf(x) !== -1; });
+        if (kept.length) out[q.id] = kept;
+      } else if (q.dynamic === 'topCategories') {
+        if (v === 'OTHER' || PRIMARY_CATEGORY_KEYS.indexOf(v) !== -1) out[q.id] = v;
+      } else if (q.options.some(function (o) { return o.value === v; })) {
+        out[q.id] = v;
+      }
+      if (out[q.id] !== undefined) {
+        var p = Number(a[q.id + '_pain']);
+        if (q.pain && p >= 1 && p <= 5) out[q.id + '_pain'] = p;
+        if (q.allowOther && typeof a[q.id + '_other'] === 'string') out[q.id + '_other'] = a[q.id + '_other'].slice(0, 100);
+      }
+    });
+    return out;
+  }
 
   /** 依目前答案，回傳應該出現的題目（維持原順序） */
   function visibleQuestions(answers) {
@@ -434,6 +493,10 @@
   return {
     VERSION: VERSION,
     CATEGORY_KEYS: CATEGORY_KEYS,
+    PRIMARY_CATEGORY_KEYS: PRIMARY_CATEGORY_KEYS,
+    SYSTEMIC_CATEGORY_KEYS: SYSTEMIC_CATEGORY_KEYS,
+    optionLevel: optionLevel,
+    sanitizeAnswers: sanitizeAnswers,
     CATEGORY_LABELS: CATEGORY_LABELS,
     PAIN_LABELS: PAIN_LABELS,
     STEPS: STEPS,

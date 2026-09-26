@@ -40,8 +40,14 @@
     next: $('[data-ck-next]'),
     hint: $('[data-ck-hint]'),
     top: $('[data-ck-top]'),
+    modeTitle: $('[data-ck-mode-title]'),
+    modeLead: $('[data-ck-mode-lead]'),
+    systemic: $('[data-ck-systemic]'),
+    systemicList: $('[data-ck-systemic-list]'),
     rest: $('[data-ck-rest]'),
     demo: $('[data-ck-demo]'),
+    ctaTitle: $('[data-ck-cta-title]'),
+    ctaBody: $('[data-ck-cta-body]'),
     demoCta: $('[data-ck-demo-cta]'),
     leadForm: $('[data-ck-lead-form]'),
     leadStatus: $('[data-ck-lead-status]'),
@@ -360,6 +366,12 @@
   function renderResult() {
     payload = results.buildPayload(state.answers);
 
+    var mode = results.RESULT_MODE_COPY[payload.resultMode] || results.RESULT_MODE_COPY.priority;
+    if (el.modeTitle) el.modeTitle.textContent = mode.title;
+    if (el.modeLead) el.modeLead.textContent = mode.lead;
+    if (el.ctaTitle) el.ctaTitle.textContent = mode.ctaTitle;
+    if (el.ctaBody) el.ctaBody.textContent = mode.ctaBody;
+
     clear(el.top);
     payload.topPainPoints.forEach(function (item, i) {
       var copy = results.RESULT_COPY[item.key];
@@ -369,15 +381,36 @@
       head.appendChild(make('h3', 'ck-card__title', copy.title));
       head.appendChild(bandTag(item));
       card.appendChild(head);
+      if (item.evidenceSummary) {
+        var ev = make('div', 'ck-card__evidence');
+        ev.appendChild(make('span', 'ck-card__help-label', '你的狀況'));
+        ev.appendChild(make('p', 'ck-card__evidence-text', item.evidenceSummary));
+        card.appendChild(ev);
+      }
       card.appendChild(make('p', 'ck-card__summary', copy.problemSummary));
       var help = make('div', 'ck-card__help');
-      help.appendChild(make('span', 'ck-card__help-label', 'ClinicOS 可以協助'));
+      help.appendChild(make('span', 'ck-card__help-label', 'ClinicOS 可以怎麼協助'));
       var chain = make('ol', 'ck-chain');
       copy.clinicOSHelp.forEach(function (step) { chain.appendChild(make('li', null, step)); });
       help.appendChild(chain);
       card.appendChild(help);
       el.top.appendChild(card);
     });
+
+    /* 系統性觀察：只有 >= 50 才出現，層級低於 TOP 3 */
+    if (el.systemic && el.systemicList) {
+      clear(el.systemicList);
+      payload.systemicObservations.forEach(function (o) {
+        var li = make('li', 'ck-note');
+        var head = make('div', 'ck-note__head');
+        head.appendChild(make('h3', 'ck-note__title', o.title));
+        head.appendChild(make('span', 'ck-note__level', '程度：' + o.levelLabel));
+        li.appendChild(head);
+        li.appendChild(make('p', 'ck-note__text', o.text));
+        el.systemicList.appendChild(li);
+      });
+      el.systemic.hidden = payload.systemicObservations.length === 0;
+    }
 
     clear(el.rest);
     if (payload.otherPainPoints.length) {
@@ -409,7 +442,9 @@
     renderResult();
     track('clinic_checkup_complete', {
       top1: payload.topPainPoints[0] ? payload.topPainPoints[0].key : '',
-      sales_intent: payload.salesIntent,
+      result_mode: payload.resultMode,
+      sales_stage: payload.sales.stage,
+      sales_timeline: payload.sales.implementationTimeline,
     });
     scrollToTop(phases.result);
     var title = $('[data-ck-result-title]');
@@ -498,7 +533,7 @@
       submit.submitLead(payload, v, v.website).then(function (r) {
         setBusy(false);
         if (r.ok) {
-          track('clinic_checkup_lead_submit', { sales_intent: payload.salesIntent });
+          track('clinic_checkup_lead_submit', { sales_stage: payload.sales.stage, sales_timeline: payload.sales.implementationTimeline });
           Array.prototype.forEach.call(el.leadForm.elements, function (c) { c.disabled = true; });
           showLeadStatus(['已收到，謝謝。', '我們會依照你的健檢結果先準備，再透過你留下的聯絡方式與你約時間。'], false, false);
         } else {
@@ -525,7 +560,7 @@
   /* ---------- 還原 ---------- */
   var saved = store.load();
   if (saved && saved.answers && Object.keys(saved.answers).length) {
-    state.answers = saved.answers;
+    state.answers = config.sanitizeAnswers(saved.answers);   // 舊選項／舊題目一律視為未回答
     state.cursor = Number(saved.cursor) || 0;
     state.startedAt = saved.startedAt || null;
     if (saved.phase === 'result') {
