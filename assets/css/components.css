@@ -431,3 +431,78 @@
   letter-spacing: 0.08em;
   color: var(--c-text-mute);
 }
+
+/* ---------------------------------------------------------------------
+   Floating entry — 「診所營運健檢」pill, injected by site.js on every
+   public page except the checkup page. Sits below the header and the
+   mobile menu, above the mobile chapter pager.
+   --------------------------------------------------------------------- */
+.float-entry {
+  position: fixed;
+  right: clamp(16px, 2vw, 28px);
+  bottom: calc(clamp(16px, 2vw, 28px) + env(safe-area-inset-bottom));
+  z-index: 85;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 56px;
+  padding: 10px 18px 10px 12px;
+  background: var(--c-accent);
+  color: var(--c-text-invert);
+  border-radius: var(--r-pill);
+  box-shadow: 0 6px 20px -8px rgba(26, 59, 50, 0.45);
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out),
+              background var(--dur-fast) var(--ease-out),
+              visibility 0s linear var(--dur-base);
+}
+.float-entry.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+.float-entry:hover { background: var(--c-accent-deep); color: var(--c-text-invert); transform: translateY(-1px); }
+.float-entry:active { transform: translateY(0); }
+.float-entry:focus-visible {
+  outline: 2px solid var(--c-accent-deep);
+  outline-offset: 3px;
+  border-radius: var(--r-pill);
+}
+.float-entry__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+}
+.float-entry__text { display: flex; flex-direction: column; line-height: 1.3; }
+.float-entry__title { font-size: 0.9375rem; font-weight: 500; letter-spacing: 0.04em; }
+.float-entry__sub { font-size: var(--fs-meta); letter-spacing: 0.04em; opacity: 0.82; margin-top: 2px; }
+.float-entry__arrow { font-size: 1.25rem; line-height: 1; opacity: 0.85; margin-left: 2px; }
+
+/* the mobile menu owns the screen while open */
+body.is-locked .float-entry { opacity: 0; visibility: hidden; pointer-events: none; }
+
+@media (max-width: 899px) {
+  /* chapter pages carry a fixed bottom pager: sit just above it */
+  body.has-chapter-nav .float-entry {
+    bottom: calc(var(--mobile-pager-h, 60px) + env(safe-area-inset-bottom) + 12px);
+  }
+}
+@media (max-width: 480px) {
+  .float-entry { min-height: 52px; padding: 8px 16px 8px 10px; gap: 10px; }
+  .float-entry__icon { width: 32px; height: 32px; }
+  .float-entry__sub { font-size: 0.6875rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .float-entry { transition: none; transform: none; }
+}

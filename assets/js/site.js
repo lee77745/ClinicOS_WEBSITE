@@ -208,4 +208,71 @@
      --------------------------------------------------------------- */
   var year = document.querySelector('[data-year]');
   if (year) year.textContent = String(new Date().getFullYear());
+
+  /* ---------------------------------------------------------------
+     Floating entry — 「診所營運健檢」right-bottom pill on every public
+     page. Never rendered on the checkup page itself (any query/hash).
+     Appears after the reader scrolls 20% or stays 3 seconds.
+     Styles live in components.css (.float-entry).
+     --------------------------------------------------------------- */
+  (function floatingEntry() {
+    var CHECKUP_PATH = '/clinic-checkup';
+    var path = window.location.pathname.toLowerCase().replace(/\/+$/, '').replace(/\.html$/, '');
+    if (path === CHECKUP_PATH) return;                       // the questionnaire page: no entry
+    if (!document.querySelector('main')) return;             // not a content page (verification file etc.)
+    if (document.querySelector('.float-entry')) return;
+
+    var link = document.createElement('a');
+    link.className = 'float-entry';
+    link.href = CHECKUP_PATH + '?from=floating-entry';
+    link.setAttribute('aria-label', '診所營運健檢，3 到 5 分鐘看看診所哪裡最卡');
+
+    var icon = document.createElement('span');
+    icon.className = 'float-entry__icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v8M8 12h8"></path></svg>';
+
+    var text = document.createElement('span');
+    text.className = 'float-entry__text';
+    var title = document.createElement('span');
+    title.className = 'float-entry__title';
+    title.textContent = '診所營運健檢';
+    var sub = document.createElement('span');
+    sub.className = 'float-entry__sub';
+    sub.textContent = '3–5 分鐘看看哪裡最卡';
+    text.appendChild(title);
+    text.appendChild(sub);
+
+    var arrow = document.createElement('span');
+    arrow.className = 'float-entry__arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '›';
+
+    link.appendChild(icon);
+    link.appendChild(text);
+    link.appendChild(arrow);
+    document.body.appendChild(link);
+
+    link.addEventListener('click', function () {
+      try {
+        if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'clinic_checkup_floating_click' });
+        else if (typeof window.gtag === 'function') window.gtag('event', 'clinic_checkup_floating_click');
+      } catch (e) { /* tracking must never block navigation */ }
+    });
+
+    var shown = false;
+    var show = function () {
+      if (shown) return;
+      shown = true;
+      link.classList.add('is-visible');
+      window.removeEventListener('scroll', onScrollCheck);
+    };
+    var onScrollCheck = function () {
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - window.innerHeight;
+      if (max <= 0 || window.scrollY / max >= 0.2) show();
+    };
+    window.addEventListener('scroll', onScrollCheck, { passive: true });
+    window.setTimeout(show, 3000);
+  })();
 })();
