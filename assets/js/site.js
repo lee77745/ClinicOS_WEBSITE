@@ -210,10 +210,135 @@
   if (year) year.textContent = String(new Date().getFullYear());
 
   /* ---------------------------------------------------------------
-     Floating entry — 「診所營運健檢」right-bottom pill on every public
-     page. Never rendered on the checkup page itself (any query/hash).
-     Appears after the reader scrolls 20% or stays 3 seconds.
-     Styles live in components.css (.float-entry).
+     Anonymous click events (WEB-GAME-001) — Microsoft Clarity only,
+     event name only (no names, contact details, game choices or
+     scores). Silently skipped when Clarity is not loaded (localhost,
+     blocked script); tracking must never break the page.
+     --------------------------------------------------------------- */
+  function trackEvent(name) {
+    try {
+      if (typeof window.clarity === 'function') window.clarity('event', name);
+    } catch (e) { /* never block the page */ }
+  }
+
+  /* ---------------------------------------------------------------
+     Game invite (WEB-GAME-001) — 首頁第一次進站約 1.5 秒後，邀請試玩
+     《院長，今天又出事了！》（同網域 /game/）。
+     - 只在首頁；同一瀏覽工作階段最多自動顯示一次（sessionStorage
+       clinicos_game_invite_v1，實際顯示的當下就記錄）。
+     - 從遊戲返回（?from=game）不顯示，並記錄為已處理。
+     - sessionStorage 不可用時不自動顯示；手機選單開著時這次不顯示
+       （不強行關閉選單）。
+     - X、點遮罩、Esc、「先逛逛官網」都能關閉；關閉後焦點回到原位。
+     - 沒有圖片、沒有輸入欄位；只送匿名的 Clarity 事件名稱。
+     Styles live in components.css (.game-invite).
+     --------------------------------------------------------------- */
+  (function gameInvite() {
+    var KEY = 'clinicos_game_invite_v1';
+    var path = window.location.pathname.toLowerCase().replace(/\/+$/, '').replace(/\.html$/, '');
+    if (path !== '' && path !== '/index') return;            // 首頁才自動邀請
+
+    var store = null;
+    try {
+      store = window.sessionStorage;
+      store.setItem('__clinicos_probe__', '1');
+      store.removeItem('__clinicos_probe__');
+    } catch (e) { store = null; }
+    if (!store) return;                                       // 無法記錄就不自動顯示，避免每次都彈出
+
+    try {
+      if (/(?:^|[?&])from=game(?:&|$)/.test(window.location.search)) {
+        store.setItem(KEY, 'from-game');                      // 從遊戲返回：不再邀請
+        return;
+      }
+      if (store.getItem(KEY)) return;
+    } catch (e) { return; }
+
+    window.setTimeout(function () {
+      if (document.body.classList.contains('is-locked')) return; // 選單開著：這次不顯示
+      if (document.querySelector('[data-game-invite]')) return;
+      try { store.setItem(KEY, 'shown'); } catch (e) { return; }
+      open();
+    }, 1500);
+
+    function open() {
+      var previousFocus = document.activeElement;
+      var root = document.createElement('div');
+      root.className = 'game-invite';
+      root.setAttribute('data-game-invite', '');
+      root.innerHTML =
+        '<div class="game-invite__backdrop" data-invite-close></div>' +
+        '<div class="game-invite__dialog" role="dialog" aria-modal="true" aria-labelledby="game-invite-title" aria-describedby="game-invite-desc" tabindex="-1">' +
+          '<button type="button" class="game-invite__close" aria-label="關閉遊戲邀請" data-invite-close>' +
+            '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>' +
+          '</button>' +
+          '<h2 class="game-invite__title" id="game-invite-title">院長，今天又出事了！</h2>' +
+          '<p class="game-invite__desc" id="game-invite-desc">選擇院長或店長，在 3D 診所面對一天的九個挑戰。</p>' +
+          '<div class="game-invite__actions">' +
+            '<a class="game-invite__start" href="/game/" data-invite-start>開始挑戰</a>' +
+            '<button type="button" class="game-invite__later" data-invite-close>先逛逛官網</button>' +
+          '</div>' +
+        '</div>';
+
+      var dialog = root.querySelector('.game-invite__dialog');
+      var inerted = [];
+      Array.prototype.forEach.call(document.body.children, function (el) {
+        if (el.tagName === 'SCRIPT' || el.hasAttribute('inert')) return;
+        el.setAttribute('inert', '');                          // 背景不接受鍵盤與點擊
+        inerted.push(el);
+      });
+      document.body.appendChild(root);
+      document.body.classList.add('has-game-invite');          // 背景不捲動、浮動入口暫時隱藏
+      dialog.focus();
+
+      var focusables = function () {
+        return Array.prototype.slice.call(dialog.querySelectorAll('a[href], button'));
+      };
+      var onKey = function (e) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          close(true);
+          return;
+        }
+        if (e.key !== 'Tab') return;
+        var items = focusables();
+        var first = items[0];
+        var last = items[items.length - 1];
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      };
+      function close(dismissed) {
+        document.removeEventListener('keydown', onKey, true);
+        inerted.forEach(function (el) { el.removeAttribute('inert'); });
+        document.body.classList.remove('has-game-invite');
+        if (root.parentNode) root.parentNode.removeChild(root);
+        if (dismissed) trackEvent('gameInviteDismiss');
+        if (previousFocus && typeof previousFocus.focus === 'function' && document.contains(previousFocus)) {
+          previousFocus.focus({ preventScroll: true });
+        }
+      }
+      document.addEventListener('keydown', onKey, true);
+      Array.prototype.forEach.call(root.querySelectorAll('[data-invite-close]'), function (el) {
+        el.addEventListener('click', function () { close(true); });
+      });
+      root.querySelector('[data-invite-start]').addEventListener('click', function () {
+        trackEvent('gameInviteStartClick');                    // 同一分頁前往 /game/（一般連結）
+      });
+    }
+  })();
+
+  /* ---------------------------------------------------------------
+     Floating entries — right-bottom stack on every public page:
+       上：「挑戰當一天院長」→ /game/（WEB-GAME-001）
+       下：「診所營運健檢」（原有入口；網址、文字、aria、出現時機與事件都不變）
+     Never rendered on the checkup page itself (any query/hash).
+     Appears after the reader scrolls 20% or stays 3 seconds (one shared timer).
+     Styles live in components.css (.float-stack / .float-entry).
      --------------------------------------------------------------- */
   (function floatingEntry() {
     var CHECKUP_PATH = '/clinic-checkup';
@@ -221,6 +346,19 @@
     if (path === CHECKUP_PATH) return;                       // the questionnaire page: no entry
     if (!document.querySelector('main')) return;             // not a content page (verification file etc.)
     if (document.querySelector('.float-entry')) return;
+
+    var stack = document.createElement('div');
+    stack.className = 'float-stack';
+
+    var game = document.createElement('a');
+    game.className = 'float-entry float-entry--game';
+    game.href = '/game/';
+    game.setAttribute('aria-label', '挑戰當一天院長：3D 診所經營小遊戲');
+    game.innerHTML =
+      '<span class="float-entry__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="11" rx="5.5"></rect><path d="M8 11v3M6.5 12.5h3"></path><circle cx="15.5" cy="11.5" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="17.5" cy="13.5" r="0.9" fill="currentColor" stroke="none"></circle></svg></span>' +
+      '<span class="float-entry__text"><span class="float-entry__title">挑戰當一天院長</span><span class="float-entry__sub">3D 診所經營小遊戲</span></span>' +
+      '<span class="float-entry__arrow" aria-hidden="true">›</span>';
+    game.addEventListener('click', function () { trackEvent('gameFloatingClick'); });
 
     var link = document.createElement('a');
     link.className = 'float-entry';
@@ -251,7 +389,9 @@
     link.appendChild(icon);
     link.appendChild(text);
     link.appendChild(arrow);
-    document.body.appendChild(link);
+    stack.appendChild(game);
+    stack.appendChild(link);
+    document.body.appendChild(stack);
 
     link.addEventListener('click', function () {
       try {
@@ -266,6 +406,7 @@
     var show = function () {
       if (shown) return;
       shown = true;
+      game.classList.add('is-visible');
       link.classList.add('is-visible');
       window.removeEventListener('scroll', onScrollCheck);
     };

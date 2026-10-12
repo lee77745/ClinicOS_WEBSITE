@@ -1,0 +1,93 @@
+{
+  "managedBy": "ClinicOS_GAME scripts/release-to-website.mjs",
+  "game": {
+    "name": "clinicos-game",
+    "version": "0.1.0",
+    "commit": "4c82fa1dd804e6a6b258bc8b44b756fbfc381ef0",
+    "dirty": false
+  },
+  "build": {
+    "mode": "production",
+    "builtAt": "2026-10-12T09:23:17.455Z",
+    "base": "./",
+    "debugDisabled": true,
+    "noindex": true
+  },
+  "files": [
+    {
+      "path": "assets/Game-X47geCkO.js",
+      "bytes": 853834,
+      "sha256": "005727ccda418796c27a997ca4a6719d8eaae66c44abcb34d07b2c914524cec9"
+    },
+    {
+      "path": "assets/index-B6tXDVv1.css",
+      "bytes": 39185,
+      "sha256": "31a1c72dd54a35c69f328a58ec3ddf5d6acecc796293a57d72eafed35d4cf56f"
+    },
+    {
+      "path": "assets/index-C8axDZxf.js",
+      "bytes": 62706,
+      "sha256": "4f46dd84fd31cc43dd6e566c328daa7ebdd326232d566db324bc1f0c149acf3e"
+    },
+    {
+      "path": "avatars/director_annoyed.png",
+      "bytes": 141854,
+      "sha256": "c7a1661658b82f2dbaecde75ad0c1d3960acda6f15e4496563bf43dd1367016a"
+    },
+    {
+      "path": "avatars/director_exploded.png",
+      "bytes": 205633,
+      "sha256": "d9e164bab4e87e1fde3de4f0f03664f96598abd342a5dd8cf8bdec9371afdd4b"
+    },
+    {
+      "path": "avatars/director_nervous.png",
+      "bytes": 163119,
+      "sha256": "b8f8ded75716d32e44b56b06c0c45ae81dcd938957e8b0f550282a4af1dca468"
+    },
+    {
+      "path": "avatars/director_normal.png",
+      "bytes": 154801,
+      "sha256": "4f4e03ec06a4614a0f619295c52467fb86876a6876e0fa886dddcbc8e433f6b9"
+    },
+    {
+      "path": "avatars/director_overwhelmed.png",
+      "bytes": 185126,
+      "sha256": "f36cadf10688562341291907f90ccd9f2e8948eeb2f1ffd5d3ffe894f2d499a0"
+    },
+    {
+      "path": "avatars/manager_annoyed.png",
+      "bytes": 128031,
+      "sha256": "72cd1bbdaf39d7ae4451146da71a858afd1b784c765e34fa7f8c184167b0669c"
+    },
+    {
+      "path": "avatars/manager_exploded.png",
+      "bytes": 205536,
+      "sha256": "e479cc1aab7a492cb52f30b5f7a027a1d5978085fd82d1499fc1523098e0582a"
+    },
+    {
+      "path": "avatars/manager_nervous.png",
+      "bytes": 147804,
+      "sha256": "f388042459ae4bebe80269d54085b826769da08b5169946b6f6e4edcfea193e8"
+    },
+    {
+      "path": "avatars/manager_normal.png",
+      "bytes": 135654,
+      "sha256": "c7387e8a5ffa6ff9054482765da476a34f92f69c529913a16776df6ea62eb495"
+    },
+    {
+      "path": "avatars/manager_overwhelmed.png",
+      "bytes": 169581,
+      "sha256": "9f4dd7bec8510e4fe09a582381c863841eb484586b78add9bff7efdf59166cc6"
+    },
+    {
+      "path": "brand/clinicos-logo.png",
+      "bytes": 160965,
+      "sha256": "5222edb69ff770df8ddaaf591aa13a69cc029c2d5f9610910848e46d26472b47"
+    },
+    {
+      "path": "index.html",
+      "bytes": 612,
+      "sha256": "45435dd855c81d7ceaf47ee1c90f665baf84d92ad640d4a4952bd1ef597fe950"
+    }
+  ]
+}
