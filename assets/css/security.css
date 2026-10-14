@@ -1,0 +1,81 @@
+/* =====================================================================
+   ClinicOS — 資訊安全與資料保護 (security.html)
+   Page-only additions on top of page.css. Consumes existing tokens and
+   the page.css --navy; adds no new colour, type or motion vocabulary.
+   ===================================================================== */
+
+.sec-hero__en {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-meta);
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+}
+
+/* Section head — eyebrow, title and a short reading column */
+.sec-head { max-width: 46ch; }
+.sec-head .h2 { margin-top: var(--sp-4); }
+.sec-head .body { margin-top: var(--sp-4); }
+
+.sec-aside {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-small);
+  line-height: 1.8;
+  color: var(--c-text-mute);
+}
+
+/* Attribution note — must stay visible, never folded away */
+.sec-note {
+  margin-top: var(--sp-5);
+  padding: var(--sp-4) var(--sp-5);
+  border-left: 2px solid var(--c-accent);
+  background: var(--c-accent-wash);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--c-text);
+}
+
+.sec-links {
+  margin-top: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+}
+.sec-links a { overflow-wrap: anywhere; }
+
+/* Status label — 已啟用 / 可設定 / 規劃中. Text first; colour only supports it. */
+.sec-status {
+  display: inline-block;
+  margin-bottom: var(--sp-2);
+  padding: 0.125rem 0.625rem;
+  border: 1px solid currentColor;
+  border-radius: var(--r-pill);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+}
+.sec-status--on      { color: var(--c-accent); }
+.sec-status--option  { color: var(--navy); }
+.sec-status--planned { color: var(--c-text-soft); border-style: dashed; }
+
+.sec-points {
+  margin-top: var(--sp-3);
+  padding-left: 1.25em;
+  list-style: disc;
+}
+.sec-points li {
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--c-text-soft);
+}
+.sec-follow { margin-top: var(--sp-3); }
+
+.sec-faq { margin-top: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem); }
+
+.sec-contact {
+  margin-top: var(--sp-7);
+  font-size: 0.9375rem;
+  color: var(--c-text-soft);
+}

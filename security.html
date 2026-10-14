@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F7F5F2">
+
+<title>資訊安全與資料保護｜ClinicOS 珂立雲</title>
+<meta name="description" content="了解 ClinicOS 的雲端部署、Render 平台安全認證、資料傳輸與儲存、診所資料管理及備份復原機制。">
+<link rel="canonical" href="https://clinicos.com.tw/security.html">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="ClinicOS">
+<meta property="og:title" content="資訊安全與資料保護｜ClinicOS 珂立雲">
+<meta property="og:description" content="了解 ClinicOS 的雲端部署、Render 平台安全認證、資料傳輸與儲存、診所資料管理及備份復原機制。">
+<meta property="og:url" content="https://clinicos.com.tw/security.html">
+<meta property="og:image" content="https://clinicos.com.tw/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="資訊安全與資料保護｜ClinicOS 珂立雲">
+<meta name="twitter:description" content="了解 ClinicOS 的雲端部署、Render 平台安全認證、資料傳輸與儲存、診所資料管理及備份復原機制。">
+
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Noto+Serif+TC:wght@200;300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/chapter-system.css">
+<link rel="stylesheet" href="assets/css/page.css">
+<link rel="stylesheet" href="assets/css/security.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebPage",
+        "FAQPage"
+      ],
+      "@id": "https://clinicos.com.tw/security.html#webpage",
+      "url": "https://clinicos.com.tw/security.html",
+      "name": "資訊安全與資料保護｜ClinicOS 珂立雲",
+      "description": "了解 ClinicOS 的雲端部署、Render 平台安全認證、資料傳輸與儲存、診所資料管理及備份復原機制。",
+      "inLanguage": "zh-Hant",
+      "isPartOf": {
+        "@id": "https://clinicos.com.tw/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://clinicos.com.tw/security.html#breadcrumb"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "ClinicOS 主機位於哪裡？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ClinicOS 雲端版本部署於 Render 雲端平台的新加坡區域。若診所選擇私有主機版本，系統則運行於診所自有的主機。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "病患資料是否儲存在國外？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ClinicOS 雲端版本的系統資料目前儲存於 Render 新加坡區域，位於台灣境外。若診所啟用臨床照片 Google Drive 上傳，照片會另外保存在 Google Drive，其儲存位置依 Google 服務而定，不一定位於新加坡。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "不同診所的資料是否獨立？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "每間診所使用獨立的 SQLite 資料庫檔案，診所資料不會與其他診所存放在同一個資料庫中，並透過帳號登入及功能權限管理控管使用範圍。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "資料傳輸是否加密？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "是。ClinicOS 使用 HTTPS/TLS 保護瀏覽器與系統之間的網路傳輸，TLS 憑證由 Render 平台自動簽發與更新。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ClinicOS 是否具備備份機制？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "有。Render 每日自動建立磁碟快照，依官方文件至少保留 7 天；臨床照片可設定自動上傳至 Google Drive。Google Drive 全系統自動異地備份目前仍在規劃中，尚未正式上線。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "主機故障時如何復原？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "主機發生異常時，可評估使用 Render 每日磁碟快照進行還原。快照只能回到建立當時的狀態，之後的資料變更可能無法透過快照回復。實際資料復原方式與可復原範圍，需依資料庫狀態及備份完整性評估。"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://clinicos.com.tw/security.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "緣起",
+          "item": "https://clinicos.com.tw/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "資訊安全與資料保護",
+          "item": "https://clinicos.com.tw/security.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Microsoft Clarity — 只在正式網域載入，見 assets/js/clarity.js -->
+<script src="assets/js/clarity.js"></script>
+</head>
+
+<body>
+<a class="skip-link" href="#main">跳至主要內容</a>
+
+<header class="header" data-header data-nav="v2">
+  <div class="header__inner">
+    <a class="brandmark brandmark--lockup" href="index.html" aria-label="ClinicOS 珂立雲首頁">
+      <img class="brandmark__logo brandmark__logo--on-light" src="assets/brand/clinicos-logo-light.png" alt="ClinicOS 珂立雲醫療雲端管理系統" width="766" height="326" decoding="async">
+      <img class="brandmark__logo brandmark__logo--on-dark" src="assets/brand/clinicos-logo-dark.png" alt="" width="727" height="250" decoding="async" aria-hidden="true">
+    </a>
+    <nav class="nav" aria-label="主要導覽">
+      <a class="nav__link" href="index.html">緣起<span class="nav__reveal" aria-hidden="true"><span class="nav__en">ORIGIN</span><span class="nav__say">讓診所營運，更專注在重要的事。</span></span></a>
+      <a class="nav__link" href="day.html">一天<span class="nav__reveal" aria-hidden="true"><span class="nav__en">A DAY IN THE CLINIC</span><span class="nav__say">一天，從還沒開門的時候開始。</span></span></a>
+      <a class="nav__link" href="day-to-day.html">日常<span class="nav__reveal" aria-hidden="true"><span class="nav__en">DAILY OPERATIONS</span><span class="nav__say">每一天的工作，都有人接著。</span></span></a>
+      <a class="nav__link" href="trust.html">信任<span class="nav__reveal" aria-hidden="true"><span class="nav__en">TRUST</span><span class="nav__say">信任，來自每一天都沒有遺漏。</span></span></a>
+      <a class="nav__link" href="management.html">經營<span class="nav__reveal" aria-hidden="true"><span class="nav__en">MANAGEMENT</span><span class="nav__say">每一天的累積，才是真正的經營。</span></span></a>
+      <a class="nav__link" href="future.html">未來<span class="nav__reveal" aria-hidden="true"><span class="nav__en">FUTURE</span><span class="nav__say">每一個今天，都在決定未來。</span></span></a>
+      <a class="nav__link" href="contact.html">啟程<span class="nav__reveal" aria-hidden="true"><span class="nav__en">START</span><span class="nav__say">開始，比想像中更簡單。</span></span></a>
+      <a class="nav__link" href="together.html">同行<span class="nav__reveal" aria-hidden="true"><span class="nav__en">TOGETHER</span><span class="nav__say">陪伴每一間診所，走向下一個十年。</span></span></a>
+    </nav>
+    <div class="header__actions">
+      <a class="btn btn--ghost btn--sm header__cta" href="contact.html">預約產品展示</a>
+      <button class="menu-toggle" type="button" aria-label="開啟選單" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="site-menu" aria-hidden="true" data-menu data-nav="v2">
+  <div class="menu__top">
+    <p class="menu__eyebrow">章節</p>
+    <nav class="menu__list" aria-label="行動版導覽">
+      <a class="menu__link" href="index.html"><span class="menu__index" aria-hidden="true">1</span><span class="menu__text">緣起<span class="menu__en">ORIGIN</span></span></a>
+      <a class="menu__link" href="day.html"><span class="menu__index" aria-hidden="true">2</span><span class="menu__text">一天<span class="menu__en">A DAY IN THE CLINIC</span></span></a>
+      <a class="menu__link" href="day-to-day.html"><span class="menu__index" aria-hidden="true">3</span><span class="menu__text">日常<span class="menu__en">DAILY OPERATIONS</span></span></a>
+      <a class="menu__link" href="trust.html"><span class="menu__index" aria-hidden="true">4</span><span class="menu__text">信任<span class="menu__en">TRUST</span></span></a>
+      <a class="menu__link" href="management.html"><span class="menu__index" aria-hidden="true">5</span><span class="menu__text">經營<span class="menu__en">MANAGEMENT</span></span></a>
+      <a class="menu__link" href="future.html"><span class="menu__index" aria-hidden="true">6</span><span class="menu__text">未來<span class="menu__en">FUTURE</span></span></a>
+      <a class="menu__link" href="contact.html"><span class="menu__index" aria-hidden="true">7</span><span class="menu__text">啟程<span class="menu__en">START</span></span></a>
+      <a class="menu__link" href="together.html"><span class="menu__index" aria-hidden="true">8</span><span class="menu__text">同行<span class="menu__en">TOGETHER</span></span></a>
+    </nav>
+  </div>
+  <div class="menu__foot">
+    <a class="btn btn--primary" href="contact.html">預約產品展示</a>
+    <p class="menu__meta">Clinic Operating Platform</p>
+  </div>
+</div>
+
+<main id="main" class="sec">
+
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="shell">
+    <p class="eyebrow" data-reveal>資訊安全與資料保護</p>
+    <p class="sec-hero__en" data-reveal>Security &amp; Data Protection</p>
+    <h1 class="display page-hero__title" id="page-title" data-reveal data-reveal-step="1">安心管理每一份重要資料</h1>
+    <p class="lead page-hero__lead" data-reveal data-reveal-step="2">從診所營運紀錄、病患資料到臨床影像，ClinicOS 重視資料安全、完整性與服務持續性，並持續完善資料保護及備份機制。</p>
+  </div>
+</section>
+
+<!-- ===== 01 雲端平台 ===== -->
+<section class="section section--tight" aria-labelledby="sec-cloud-title" data-sec="cloud">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">01．雲端平台</p>
+      <h2 class="h2" id="sec-cloud-title">穩定的國際雲端基礎架構</h2>
+      <p class="body">ClinicOS 採用 Render 雲端平台，服務部署於新加坡區域，透過雲端基礎架構提供診所日常營運所需的系統服務。</p>
+      <p class="sec-aside">本頁所述的雲端部署與備份機制，適用於 ClinicOS 雲端版本。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 國際安全認證與稽核 ===== -->
+<section class="section section--tight" aria-labelledby="sec-cert-title" data-sec="certification">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">02．國際安全認證與稽核</p>
+      <h2 class="h2" id="sec-cert-title">採用具備國際安全認證的雲端平台</h2>
+      <p class="body">ClinicOS 使用的 Render 平台已取得 ISO/IEC 27001 資訊安全管理認證，並接受 SOC 2 Type II 第三方稽核。</p>
+      <p class="sec-note" data-sec-attribution>上述認證與稽核適用於 Render 平台，並非 ClinicOS 本身取得。</p>
+      <div class="sec-links">
+        <a class="link-quiet" href="https://render.com/security" target="_blank" rel="noopener noreferrer">Render 安全性說明（英文） <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="link-quiet" href="https://render.com/docs/certifications-compliance" target="_blank" rel="noopener noreferrer">Render 認證與合規文件（英文） <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 資料安全 ===== -->
+<section class="section section--tight" aria-labelledby="sec-data-title" data-sec="data">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">03．資料安全</p>
+      <h2 class="h2" id="sec-data-title">重視每一份診所資料</h2>
+    </div>
+    <div class="rows">
+      <div class="row row--plain" data-reveal>
+        <h3 class="row__term">傳輸加密</h3>
+        <p class="body row__body">使用 HTTPS/TLS 保護網路傳輸，TLS 憑證由 Render 平台自動簽發與更新。</p>
+      </div>
+      <div class="row row--plain" data-reveal>
+        <h3 class="row__term">儲存加密</h3>
+        <p class="body row__body">Render 持久化磁碟及快照提供平台層級的靜態加密。</p>
+      </div>
+      <div class="row row--plain" data-reveal>
+        <h3 class="row__term">診所獨立資料庫</h3>
+        <p class="body row__body">診所採獨立 SQLite 資料庫檔案架構，每間診所的資料存放在各自的資料庫檔案中。</p>
+      </div>
+      <div class="row row--plain" data-reveal>
+        <h3 class="row__term">帳號與權限</h3>
+        <p class="body row__body">系統提供帳號登入及功能權限管理，可依人員職務設定可使用的功能。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04 資料備份與復原 ===== -->
+<section class="section section--tight" aria-labelledby="sec-backup-title" data-sec="backup">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">04．資料備份與復原</p>
+      <h2 class="h2" id="sec-backup-title">持續強化資料備份與復原能力</h2>
+    </div>
+    <div class="rows">
+      <div class="row row--plain" data-reveal data-backup="snapshot">
+        <div class="row__term">
+          <p class="sec-status sec-status--on">已啟用</p>
+          <h3 class="h3">Render 雲端磁碟快照</h3>
+        </div>
+        <div class="row__body">
+          <p class="body">Render 提供每日磁碟快照，依官方文件至少保留 7 天。</p>
+          <p class="sec-aside">實際資料復原方式與可復原範圍，需依資料庫狀態及備份完整性評估。</p>
+        </div>
+      </div>
+      <div class="row row--plain" data-reveal data-backup="drive-photos">
+        <div class="row__term">
+          <p class="sec-status sec-status--option">可設定</p>
+          <h3 class="h3">Google Drive 臨床照片上傳</h3>
+        </div>
+        <div class="row__body">
+          <p class="body">ClinicOS 臨床影像功能可設定將原始照片自動上傳至 Google Drive，提供額外的影像保存方式。</p>
+          <p class="sec-aside">此功能需由診所設定後使用。</p>
+        </div>
+      </div>
+      <div class="row row--plain" data-reveal data-backup="drive-full">
+        <div class="row__term">
+          <p class="sec-status sec-status--planned">規劃中</p>
+          <h3 class="h3">Google Drive 全系統自動異地備份</h3>
+        </div>
+        <div class="row__body">
+          <p class="body">ClinicOS 規劃增加 Google Drive 全系統自動異地備份機制，預計涵蓋：</p>
+          <ul class="sec-points">
+            <li>全部診所及平台資料庫</li>
+            <li>臨床影像</li>
+            <li>電子文件</li>
+            <li>系統完整還原所需資料</li>
+          </ul>
+          <p class="body sec-follow">規劃採 7 天循環保留及自動清理機制。</p>
+          <p class="sec-aside">此功能尚未正式上線。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 常見問題 ===== -->
+<section class="section section--tight" aria-labelledby="sec-faq-title" data-sec="faq">
+  <div class="shell">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">05．常見問題</p>
+      <h2 class="h2" id="sec-faq-title">關於資料安全，您可能會想問的。</h2>
+    </div>
+
+    <div class="sec-faq">
+      <details class="qa--open" data-reveal>
+        <summary class="qa__summary">
+          <h3 class="h3 qa__q">ClinicOS 主機位於哪裡？</h3>
+          <span class="qa__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="qa__answer"><p>ClinicOS 雲端版本部署於 Render 雲端平台的新加坡區域。若診所選擇私有主機版本，系統則運行於診所自有的主機。</p></div>
+      </details>
+      <details class="qa--open" data-reveal>
+        <summary class="qa__summary">
+          <h3 class="h3 qa__q">病患資料是否儲存在國外？</h3>
+          <span class="qa__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="qa__answer"><p>ClinicOS 雲端版本的系統資料目前儲存於 Render 新加坡區域，位於台灣境外。若診所啟用臨床照片 Google Drive 上傳，照片會另外保存在 Google Drive，其儲存位置依 Google 服務而定，不一定位於新加坡。</p></div>
+      </details>
+      <details class="qa--open" data-reveal>
+        <summary class="qa__summary">
+          <h3 class="h3 qa__q">不同診所的資料是否獨立？</h3>
+          <span class="qa__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="qa__answer"><p>每間診所使用獨立的 SQLite 資料庫檔案，診所資料不會與其他診所存放在同一個資料庫中，並透過帳號登入及功能權限管理控管使用範圍。</p></div>
+      </details>
+      <details class="qa--open" data-reveal>
+        <summary class="qa__summary">
+          <h3 class="h3 qa__q">資料傳輸是否加密？</h3>
+          <span class="qa__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="qa__answer"><p>是。ClinicOS 使用 HTTPS/TLS 保護瀏覽器與系統之間的網路傳輸，TLS 憑證由 Render 平台自動簽發與更新。</p></div>
+      </details>
+      <details class="qa--open" data-reveal>
+        <summary class="qa__summary">
+          <h3 class="h3 qa__q">ClinicOS 是否具備備份機制？</h3>
+          <span class="qa__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="qa__answer"><p>有。Render 每日自動建立磁碟快照，依官方文件至少保留 7 天；臨床照片可設定自動上傳至 Google Drive。Google Drive 全系統自動異地備份目前仍在規劃中，尚未正式上線。</p></div>
+      </details>
+      <details class="qa--open" data-reveal>
+        <summary class="qa__summary">
+          <h3 class="h3 qa__q">主機故障時如何復原？</h3>
+          <span class="qa__mark" aria-hidden="true"></span>
+        </summary>
+        <div class="qa__answer"><p>主機發生異常時，可評估使用 Render 每日磁碟快照進行還原。快照只能回到建立當時的狀態，之後的資料變更可能無法透過快照回復。實際資料復原方式與可復原範圍，需依資料庫狀態及備份完整性評估。</p></div>
+      </details>
+    </div>
+
+    <p class="sec-contact" data-reveal>對資料安全還有其他問題？ <a class="link-quiet" href="contact.html">聯絡顧問 <span class="arrow" aria-hidden="true">→</span></a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <a class="footer__logo" href="index.html" aria-label="ClinicOS 珂立雲首頁">
+          <img src="assets/brand/clinicos-logo-light.png" alt="ClinicOS 珂立雲醫療雲端管理系統" width="766" height="326" decoding="async">
+        </a>
+        <p class="footer__brand-name">珂立雲醫療雲端管理系統</p>
+        <p class="footer__blurb">讓診所管理，<br>更專注在重要的事。</p>
+      </div>
+
+      <div>
+        <p class="footer__col-title">章節</p>
+        <ul class="footer__list">
+          <li><a href="index.html">緣起</a></li>
+          <li><a href="day.html">一天</a></li>
+          <li><a href="day-to-day.html">日常</a></li>
+          <li><a href="trust.html">信任</a></li>
+          <li><a href="management.html">經營</a></li>
+          <li><a href="future.html">未來</a></li>
+          <li><a href="contact.html">啟程</a></li>
+          <li><a href="together.html">同行</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__col-title">支援</p>
+        <ul class="footer__list">
+          <li><a href="together.html">常見問題</a></li>
+          <li><a href="contact.html">預約產品導覽</a></li>
+          <li><a href="contact.html">聯絡顧問</a></li>
+          <li><a href="security.html" aria-current="page">資訊安全與資料保護</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span data-year>2026</span> ClinicOS 珂立雲醫療雲端管理系統</span>
+      <span>Clinic Operating Platform</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
